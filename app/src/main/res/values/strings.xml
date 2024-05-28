@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">BCash</string>
+
+    <string name="email_validation">Masukkan alamat email yang valid!</string>
+    <string name="password_length">Kolom ini tidak boleh kurang dari 6 karakter!</string>
+    <string name="required_field">This field is required!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="txt_dashboard">Home</string>
+    <string name="txt_shop">Shop</string>
+    <string name="txt_barter_trade">Barter Trade</string>
+    <string name="txt_favorite">Favorite</string>
+    <string name="txt_profile">Profile</string>
+</resources>

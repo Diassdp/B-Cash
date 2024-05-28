@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_dashboard">
+
+    <fragment
+        android:id="@+id/navigation_dashboard"
+        android:name="com.example.bcash.ui.dashboard.DashboardFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_dashboard" />
+
+    <fragment
+        android:id="@+id/navigation_shop"
+        android:name="com.example.bcash.ui.shop.ShopFragment"
+        android:label="Shop"
+        tools:layout="@layout/fragment_shop" />
+
+    <fragment
+        android:id="@+id/navigation_bartertrade"
+        android:name="com.example.bcash.ui.bartertrade.BarterTradeFragment"
+        android:label="Barter Trade"
+        tools:layout="@layout/fragment_barter_trade" />
+
+    <fragment
+        android:id="@+id/navigation_favorite"
+        android:name="com.example.bcash.ui.favorite.FavoriteFragment"
+        android:label="Favorite"
+        tools:layout="@layout/fragment_favorite" />
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.example.bcash.ui.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" >
+    <action
+        android:id="@+id/action_profileFragment_to_inventoryFragment"
+        app:destination="@id/navigation_inventory" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_inventory"
+        android:name="com.example.bcash.ui.inventory.InventoryFragment"
+        android:label="Inventory"
+        tools:layout="@layout/fragment_inventory" />
+</navigation>
