@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.bcash.MainActivity
+import com.example.bcash.ui.main.MainActivity
 import com.example.bcash.R
 
 class LoginActivity : AppCompatActivity() {

@@ -1,13 +1,12 @@
-package com.example.bcash
+package com.example.bcash.ui.main
 
 import android.os.Bundle
-import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.example.bcash.R
 import com.example.bcash.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -22,7 +21,11 @@ class MainActivity : AppCompatActivity() {
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_dashboard, R.id.navigation_shop, R.id.navigation_bartertrade, R.id.navigation_favorite, R.id.navigation_profile
+                R.id.navigation_dashboard,
+                R.id.navigation_shop,
+                R.id.navigation_bartertrade,
+                R.id.navigation_favorite,
+                R.id.navigation_profile
             )
         )
 
