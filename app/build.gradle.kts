@@ -26,10 +26,13 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "BASE_URL", "\"https://story-api.dicoding.dev/v1/\"")
+            // TODO: PUT API URL INTO THE VALUE SECTION
+            buildConfigField("String", "BASE_URL", "")
         }
+
+        // TODO: PUT API URL INTO THE VALUE SECTION
         debug {
-            buildConfigField("String", "BASE_URL", "\"https://story-api.dicoding.dev/v1/\"")
+            buildConfigField("String", "BASE_URL", "")
         }
     }
     compileOptions {

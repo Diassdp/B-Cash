@@ -1,15 +1,13 @@
 package com.example.bcash.service.api
 
-
 import com.example.bcash.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
-class ApicConfig {
-    private val BASE_URL = BuildConfig.BASE_URL
+object ApiConfig {
+    private const val BASE_URL = BuildConfig.BASE_URL
 
     fun getApiService(): ApiService {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
