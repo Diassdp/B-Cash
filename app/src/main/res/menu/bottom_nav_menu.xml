@@ -7,7 +7,7 @@
         android:title="@string/txt_dashboard" />
     <item
         android:id="@+id/navigation_shop"
-        android:icon="@drawable/ic_cart"
+        android:icon="@drawable/ic_shop"
         android:title="@string/txt_shop" />
     <item
         android:id="@+id/navigation_bartertrade"
