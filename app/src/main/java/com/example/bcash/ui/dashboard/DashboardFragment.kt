@@ -18,17 +18,17 @@ class DashboardFragment : Fragment() {
     private lateinit var popularAdapter: PopularAdapter
     private lateinit var recyclerView: RecyclerView
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_dashboard, container, false)
+        setupView(view)
 
+        return view
+    }
+
+    private fun setupView(view: View){
         setupViewFlipper(view)
         setupCategoryButtons(view)
         setupRecyclerView(view)
-
-        return view
     }
 
     private fun setupViewFlipper(view: View) {

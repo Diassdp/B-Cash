@@ -3,7 +3,6 @@ package com.example.bcash.ui.login
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -11,7 +10,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.example.bcash.MainActivity
+import com.example.bcash.ui.main.MainActivity
 import com.example.bcash.R
 import com.example.bcash.databinding.ActivityLoginBinding
 import com.example.bcash.model.SessionModel
