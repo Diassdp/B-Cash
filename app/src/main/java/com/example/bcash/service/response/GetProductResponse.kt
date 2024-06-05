@@ -32,7 +32,11 @@ data class ProductItem(
     @field:SerializedName("price")
     val price: String? = null,
 
-    @field:SerializedName("createdAt")
-    val createdAt: String? = null
+    @field:SerializedName("category")
+    val category: String? = null,
+
+    @field:SerializedName("condition")
+    val condition: String? = null
+
 ): Parcelable
 

@@ -40,10 +40,11 @@ interface ApiService {
     @POST("product")
     fun addProduct(
         @Header("Authorization") token: String,
-        @Part(value = "name") name: String,
+        @Part(value = "product") product: String,
         @Part(value = "description") description: RequestBody,
-        @Part(value = "condition") condition: RequestBody,
-        @Part(value = "price") price: RequestBody,
+        @Part(value = "condition") condition: String,
+        @Part(value = "category") category: String,
+        @Part(value = "price") price: String,
         @Part photo: MultipartBody.Part
     ): Call<AddProductResponse>
 

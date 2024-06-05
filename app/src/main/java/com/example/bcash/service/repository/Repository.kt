@@ -115,9 +115,9 @@ class Repository(private val context: Context, private val preferences: SessionP
         })
     }
 
-    fun postAddProducts(token: String, name: String, price: RequestBody, description: RequestBody, condition: RequestBody, photo: MultipartBody.Part) {
+    fun postAddProducts(token: String, name: String, price: String, description: RequestBody, condition: String, category: String, photo: MultipartBody.Part) {
         toggleLoading(true)
-        val client = api.addProduct(token, name, description, condition, price, photo)
+        val client = api.addProduct(token, name, description, condition, price,category, photo)
 
         client.enqueue(object : Callback<AddProductResponse> {
             override fun onResponse(call: Call<AddProductResponse>, response: Response<AddProductResponse>) {

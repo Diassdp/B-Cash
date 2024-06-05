@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_bartertrade"
-        android:name="com.example.bcash.ui.bartertrade.BarterTradeFragment"
+        android:name="com.example.bcash.ui.bartertrade.feature.BarterTradeFragment"
         android:label="Barter Trade"
         tools:layout="@layout/fragment_barter_trade" />
 

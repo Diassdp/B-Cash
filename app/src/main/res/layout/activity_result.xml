@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.bartertrade.feature.BarterTradeActivity">
+
+  <include
+      android:id="@+id/Bcash_toolbar"
+      layout="@layout/custom_toolbar"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent" />
+
+  <androidx.core.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:fillViewport="true"
+      app:layout_constraintTop_toBottomOf="@+id/Bcash_toolbar"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintBottom_toBottomOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+      <com.google.android.material.textfield.TextInputLayout
+          android:id="@+id/textInputLayout3"
+          style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+          android:layout_width="349dp"
+          android:layout_height="68dp"
+          android:layout_marginTop="5dp"
+          android:hint="Nama Produk"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/tv_result_price">
+
+        <EditText
+            android:id="@+id/edt_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <TextView
+          android:id="@+id/tv_result_price"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginStart="24dp"
+          android:layout_marginTop="16dp"
+          android:fontFamily="@font/poppins_regular"
+          android:text="Your Result Price : 100k"
+          android:textColor="@color/black"
+          android:textSize="16sp"
+          android:textStyle="bold"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/result_image" />
+
+      <ImageView
+          android:id="@+id/result_image"
+          android:layout_width="359dp"
+          android:layout_height="250dp"
+          android:layout_marginStart="8dp"
+          android:layout_marginTop="10dp"
+          android:layout_marginEnd="8dp"
+          android:background="@color/primary_light"
+          android:scaleType="fitCenter"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:srcCompat="@drawable/ic_place_holder" />
+
+      <TextView
+          android:id="@+id/tv_result_category"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="5dp"
+          android:fontFamily="@font/poppins_regular"
+          android:text="(Your Category)"
+          android:textColor="@color/black"
+          android:textSize="16sp"
+          android:textStyle="bold"
+          app:layout_constraintStart_toStartOf="@+id/textInputLayout3"
+          app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+
+      <TextView
+          android:id="@+id/tv_result_condition"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="10dp"
+          android:fontFamily="@font/poppins_regular"
+          android:text="(Your Condition)"
+          android:textColor="@color/black"
+          android:textSize="16sp"
+          android:textStyle="bold"
+          app:layout_constraintStart_toStartOf="@+id/tv_result_category"
+          app:layout_constraintTop_toBottomOf="@+id/tv_result_category" />
+
+      <com.google.android.material.textfield.TextInputLayout
+          android:id="@+id/textInputLayout4"
+          style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+          android:layout_width="349dp"
+          android:layout_height="68dp"
+          android:layout_marginTop="10dp"
+          android:hint="Deskripsi (optional)"
+          app:layout_constraintStart_toStartOf="@+id/tv_result_condition"
+          app:layout_constraintTop_toBottomOf="@+id/tv_result_condition">
+
+        <EditText
+            android:id="@+id/edt_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <com.google.android.material.button.MaterialButton
+          android:id="@+id/btn_post"
+          android:layout_width="191dp"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="40dp"
+          android:background="@drawable/bg_lightblue1"
+          android:text="Post"
+          android:textAllCaps="false"
+          android:textColor="@color/white"
+          android:textSize="16sp"
+          app:backgroundTint="@color/accent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/textInputLayout4" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

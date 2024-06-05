@@ -10,6 +10,8 @@ import com.example.bcash.service.response.GetProfileResponse
 import kotlinx.coroutines.launch
 
 class ProfileViewModel(private val repository: Repository) : ViewModel() {
+    private val _profile = MutableLiveData<GetProfileResponse>()
+    val profile: LiveData<GetProfileResponse> = _profile
 
     fun getSession(): LiveData<SessionModel> {
         return repository.getSession()
