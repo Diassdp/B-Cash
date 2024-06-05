@@ -10,8 +10,8 @@ class RegisterViewModel(private val repository: Repository) : ViewModel() {
     val registerResponse: LiveData<RegisterResponse> = repository.registerResponse
     val isLoading: LiveData<Boolean> = repository.isLoading
 
-    fun postRegister(name: String, email: String, password: String) {
-        repository.postRegister(name, email, password)
+    fun postRegister(name: String, email: String, password: String, address: String, phone: String) {
+        repository.postRegister(name, email, password, address, phone)
         Log.d(TAG, "postRegister: Success")
     }
 

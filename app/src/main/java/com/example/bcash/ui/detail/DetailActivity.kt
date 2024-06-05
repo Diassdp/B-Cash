@@ -12,4 +12,8 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
     }
+
+    companion object {
+        const val EXTRA_DATA = "extra_data"
+    }
 }

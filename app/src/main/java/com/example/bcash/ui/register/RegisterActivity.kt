@@ -17,6 +17,7 @@ import com.example.bcash.databinding.ActivityRegisterBinding
 import com.example.bcash.model.ViewModelFactory
 import com.example.bcash.ui.login.LoginActivity
 import com.example.bcash.ui.login.LoginViewModel
+import okhttp3.Address
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
@@ -57,6 +58,8 @@ class RegisterActivity : AppCompatActivity() {
             val name = binding.edtName.text.toString()
             val email = binding.edtEmail.text.toString()
             val password = binding.edtPassword.text.toString()
+            val address = binding.edtAddress.text.toString()
+            val phone = binding.edtPhone.text.toString()
             if (email.isEmpty() || password.isEmpty() || name.isEmpty() || password.length < 8) {
                 if (name.isEmpty()) binding.edtName.error = "Email cannot be empty"
                 if (email.isEmpty()) binding.edtEmail.error = "Email cannot be empty"
@@ -65,7 +68,7 @@ class RegisterActivity : AppCompatActivity() {
                 toastMessage("Register Failed")
             } else {
                 loadingToggle()
-                registerAction(name, email, password)
+                registerAction(name, email, password,address, phone)
             }
         }
 
@@ -74,8 +77,8 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    private fun registerAction(name: String, email: String, password: String) {
-        registerViewModel.postRegister(name, email, password)
+    private fun registerAction(name: String, email: String, password: String, address: String, phone: String) {
+        registerViewModel.postRegister(name, email, password, address, phone)
         registerViewModel.registerResponse.observe(this@RegisterActivity) { response ->
             if (response.error != true) {
                 startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))

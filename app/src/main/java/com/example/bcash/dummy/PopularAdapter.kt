@@ -11,9 +11,9 @@ import com.example.bcash.R
 class PopularAdapter(private val itemList: List<PopularItem>) : RecyclerView.Adapter<PopularAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val imageView: ImageView = view.findViewById(R.id.pic)
-        val titleText: TextView = view.findViewById(R.id.titleTxt)
-        val feeText: TextView = view.findViewById(R.id.feeTxt)
+        val imageView: ImageView = view.findViewById(R.id.iv_image)
+        val titleText: TextView = view.findViewById(R.id.tv_name)
+        val feeText: TextView = view.findViewById(R.id.tv_price)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

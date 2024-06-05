@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.androidx.activity) // Activity library for managing the activity lifecycle
     implementation(libs.androidx.constraintlayout) // ConstraintLayout for flexible layouts
     implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
+    implementation(libs.androidx.paging.runtime.ktx)
 
     // Testing
     testImplementation(libs.junit) // Unit testing framework

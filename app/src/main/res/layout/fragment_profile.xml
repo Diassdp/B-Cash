@@ -124,6 +124,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
@@ -142,6 +143,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tv_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
@@ -160,6 +162,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tv_phone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
@@ -178,6 +181,7 @@
             android:textSize="15sp" />
 
         <TextView
+            android:id="@+id/tv_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -188,5 +192,23 @@
             android:textStyle="bold" />
 
     </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_photo"
+        android:layout_width="200dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_lightblue1"
+        android:text="Logout"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:drawableEnd="@drawable/ic_logout"
+        app:iconPadding="0dp"
+        android:textSize="16sp"
+        app:backgroundTint="@color/accent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ll_profile" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
