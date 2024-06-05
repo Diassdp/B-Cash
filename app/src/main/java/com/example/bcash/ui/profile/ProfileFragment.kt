@@ -20,6 +20,7 @@ class ProfileFragment : Fragment() {
         ViewModelFactory.getInstance(requireContext())
     }
 
+    // Inisialisasi ProfileViewModel di sini
     private val profileViewModel: ProfileViewModel by viewModels { factory }
 
     override fun onCreateView(
@@ -27,19 +28,21 @@ class ProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_profile, container, false)
-        view.findViewById<View>(R.id.cl_inventory).setOnClickListener {
-            findNavController().navigate(R.id.action_profileFragment_to_inventoryFragment)
-        }
-
-        return view
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = FragmentProfileBinding.bind(view)
-        setupView()
+//        setupView()
         setupListener()
+        // Ambil data profile ketika fragment di-create
+//        profileViewModel.fetchProfile()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     private fun setupView() {
@@ -55,9 +58,9 @@ class ProfileFragment : Fragment() {
         }
     }
 
-        private fun setupListener() {
-            binding.btnLogout.setOnClickListener {
-                profileViewModel.logout()
-            }
+    private fun setupListener() {
+        binding.btnLogout.setOnClickListener {
+            profileViewModel.logout()
         }
     }
+}

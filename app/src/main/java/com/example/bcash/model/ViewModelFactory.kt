@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.bcash.service.repository.Repository
 import com.example.bcash.ui.dashboard.DashboardViewModel
+import com.example.bcash.ui.favorite.FavoriteViewModel
 import com.example.bcash.ui.login.LoginViewModel
 import com.example.bcash.ui.register.RegisterViewModel
 import com.example.bcash.utils.Injection.Injection
@@ -23,6 +24,10 @@ class ViewModelFactory(private val repository: Repository) : ViewModelProvider.N
 
             modelClass.isAssignableFrom(DashboardViewModel::class.java) -> {
                 DashboardViewModel(repository) as T
+            }
+
+            modelClass.isAssignableFrom(FavoriteViewModel::class.java) -> {
+                FavoriteViewModel(repository) as T
             }
 
             else -> {
