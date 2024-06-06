@@ -8,16 +8,27 @@
     android:elevation="3dp"
     android:background="@drawable/bg_lightblue1">
 
-    <ImageView
-        android:id="@+id/iv_image"
-        android:layout_width="175dp"
-        android:layout_height="155dp"
-        android:padding="5dp"
-        tools:src="@tools:sample/avatars"
-        android:layout_margin="8dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="162dp"
+        android:layout_height="156dp"
+        android:background="@drawable/bg_portal"
+        app:layout_constraintBottom_toTopOf="@+id/view5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_image"
+            android:layout_width="151dp"
+            android:layout_height="136dp"
+            android:background="@color/primary_light"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/avatars" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
         android:id="@+id/view5"
