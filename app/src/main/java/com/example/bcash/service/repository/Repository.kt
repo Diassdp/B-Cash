@@ -20,6 +20,7 @@ import com.example.bcash.service.response.LoginResponse
 import com.example.bcash.service.response.ProductItem
 import com.example.bcash.service.response.Profile
 import com.example.bcash.service.response.RegisterResponse
+import com.example.bcash.service.response.TradeRequestResponse
 import com.example.bcash.utils.session.SessionPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -47,6 +48,9 @@ class Repository(private val context: Context, private val preferences: SessionP
 
     private val _getProfileResponse = MutableLiveData<GetProfileResponse>()
     val getProfileResponse: LiveData<GetProfileResponse> = _getProfileResponse
+
+    private val _tradeRequestResponse = MutableLiveData<TradeRequestResponse>()
+    val tradeRequestResponse: LiveData<TradeRequestResponse> = _tradeRequestResponse
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading

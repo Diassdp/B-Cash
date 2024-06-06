@@ -5,6 +5,7 @@ import com.example.bcash.service.response.GetProductResponse
 import com.example.bcash.service.response.GetProfileResponse
 import com.example.bcash.service.response.LoginResponse
 import com.example.bcash.service.response.RegisterResponse
+import com.example.bcash.service.response.TradeRequestResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -14,6 +15,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Multipart
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Query
@@ -62,6 +64,7 @@ interface ApiService {
         @Query("page") page: Int,
         @Query("size") size: Int
     ): Response<GetProductResponse>
+
     @GET("product")
     suspend fun getProductBySearch(
         @Header("Authorization") token: String,
@@ -77,6 +80,37 @@ interface ApiService {
     @GET("inventory")
     suspend fun getInventory(
         @Header("Authorization") token: String,
-        @Query("id") id: Int
+        @Query("name") id: Int
     ): Response<GetProductResponse>
+
+    @GET("wishlist")
+    suspend fun getWishlist(
+        @Header("Authorization") token: String,
+        @Query("name") id: Int
+    ): Response<GetProductResponse>
+
+    @FormUrlEncoded
+    @POST("trade-request")
+    fun createTradeRequest(
+        @Header("Authorization") token: String,
+        @Field("itemId1") itemId1: String,
+        @Field("itemId2") itemId2: String,
+        @Field("userId1") userId1: String,
+        @Field("userId2") userId2: String
+    ): Call<TradeRequestResponse>
+
+    @FormUrlEncoded
+    @PATCH("trade-request/{trade_id}/confirm")
+    fun confirmTradeRequest(
+        @Header("Authorization") token: String,
+        @Field("trade_id") tradeId: Int,
+        @Field("userId") userId: String,
+        @Field("confirmed") confirmed: Boolean
+    ): Call<TradeRequestResponse>
+
+    @GET("trade-request/{trade_id}")
+    fun getTradeRequest(
+        @Header("Authorization") token: String,
+        @Field("trade_id") tradeId: Int
+    ): Call<TradeRequestResponse>
 }

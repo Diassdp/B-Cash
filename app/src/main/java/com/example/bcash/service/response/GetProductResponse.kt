@@ -42,4 +42,3 @@ data class ProductItem(
     val username: String? = null,
 
 ): Parcelable
-
