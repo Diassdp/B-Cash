@@ -37,6 +37,8 @@ class DetailActivity : AppCompatActivity() {
             tvPrice.text = data.price
             tvCategory.text = data.category
             tvCondition.text = data.condition
+            tvNameUser.text = data.username
+
 
             Glide.with(this@DetailActivity)
                 .load(data.photo)

@@ -23,6 +23,9 @@ class BarterTradeFragment : Fragment() {
         binding.btnStart.setOnClickListener {
             moveToBarterTrade()
         }
+        binding.btnStarted.setOnClickListener {
+            moveToBarterTrade()
+        }
     }
 
     private fun moveToBarterTrade(){

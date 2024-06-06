@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupView(){
         binding = ActivityMainBinding.inflate(layoutInflater)
+        factory = ViewModelFactory.getInstance(this)
         setContentView(binding.root)
     }
 

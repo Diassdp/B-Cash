@@ -36,7 +36,10 @@ data class ProductItem(
     val category: String? = null,
 
     @field:SerializedName("condition")
-    val condition: String? = null
+    val condition: String? = null,
+
+    @field:SerializedName("username")
+    val username: String? = null,
 
 ): Parcelable
 
