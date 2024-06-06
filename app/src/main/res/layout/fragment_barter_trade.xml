@@ -11,10 +11,353 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_trade_barter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_portal"
+            android:padding="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.487"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_header1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="YOUR JOURNEY"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/tv_header2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="STARTS HERE."
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/tv_header1"
+                app:layout_constraintStart_toStartOf="@+id/tv_header1"
+                app:layout_constraintTop_toBottomOf="@+id/tv_header1"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/tv_sub_header"
+                android:layout_width="334dp"
+                android:layout_height="34dp"
+                android:layout_marginTop="5dp"
+                android:text="Barter Trade, an eco-friendly way to renew a zero-waste lifestyle"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_header2"
+                app:layout_constraintStart_toStartOf="@+id/tv_header2"
+                app:layout_constraintTop_toBottomOf="@+id/tv_header2"
+                tools:ignore="HardcodedText" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_start"
+                android:layout_width="138dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/bg_lightblue1"
+                android:text="Get Started"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:backgroundTint="@color/accent"
+                app:layout_constraintEnd_toEndOf="@+id/tv_sub_header"
+                app:layout_constraintStart_toStartOf="@+id/tv_sub_header"
+                app:layout_constraintTop_toBottomOf="@+id/tv_sub_header" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_how_it_work"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="HOW IT WORKS"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_trade_barter" />
+
+        <ImageView
+            android:id="@+id/imageView_packing"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_how_it_work"
+            app:layout_constraintTop_toBottomOf="@+id/tv_how_it_work"
+            app:srcCompat="@drawable/bg_splash" />
+
+        <TextView
+            android:id="@+id/tv_packing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="PACKING"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/imageView_packing"
+            app:layout_constraintTop_toTopOf="@+id/imageView_packing" />
+
+        <TextView
+            android:id="@+id/tv_txt_packing"
+            android:layout_width="289dp"
+            android:layout_height="67dp"
+            android:text="Prepare your used items that you want to exchange and take a photo of the item, then select the category and condition of the item and select analyze."
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/tv_packing"
+            app:layout_constraintTop_toBottomOf="@+id/tv_packing" />
+
+        <ImageView
+            android:id="@+id/imageView_analyze"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@+id/imageView_packing"
+            app:layout_constraintTop_toBottomOf="@+id/imageView_packing"
+            app:srcCompat="@drawable/bg_splash" />
+
+        <TextView
+            android:id="@+id/tv_analyze"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="ANALYZE"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/imageView_analyze"
+            app:layout_constraintTop_toTopOf="@+id/imageView_analyze" />
+
+        <TextView
+            android:id="@+id/tv_txt_analyze"
+            android:layout_width="289dp"
+            android:layout_height="67dp"
+            android:text="Our application will analyze the price of the items you have prepared based on the categories and conditions that have been previously selected."
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/tv_analyze"
+            app:layout_constraintTop_toBottomOf="@+id/tv_analyze" />
+
+        <ImageView
+            android:id="@+id/imageView_post"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@+id/imageView_analyze"
+            app:layout_constraintTop_toBottomOf="@+id/tv_txt_analyze"
+            app:srcCompat="@drawable/bg_splash" />
+
+        <TextView
+            android:id="@+id/tv_post"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="POST"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/imageView_post"
+            app:layout_constraintTop_toTopOf="@+id/imageView_post" />
+
+        <TextView
+            android:id="@+id/tv_txt_post"
+            android:layout_width="289dp"
+            android:layout_height="67dp"
+            android:text="Complete the Name and Description (optional) of your item to provide information about the item, once everything is ready you can post the item and the item will go to your My Inventory."
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_post"
+            app:layout_constraintTop_toBottomOf="@+id/tv_post" />
+
+        <!-- Section CHOOSE -->
+        <ImageView
+            android:id="@+id/imageView_choose"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@+id/imageView_post"
+            app:layout_constraintTop_toBottomOf="@+id/tv_txt_post"
+            app:srcCompat="@drawable/bg_splash" />
+
+        <TextView
+            android:id="@+id/tv_choose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="CHOOSE"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/imageView_choose"
+            app:layout_constraintTop_toTopOf="@+id/imageView_choose" />
+
+        <TextView
+            android:id="@+id/tv_txt_choose"
+            android:layout_width="289dp"
+            android:layout_height="67dp"
+            android:text="Select or search for the item you want to exchange with your item, select Barter Trade to start the transaction."
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_choose"
+            app:layout_constraintTop_toBottomOf="@+id/tv_choose" />
+
+        <!-- Section MY INVENTORY -->
+        <ImageView
+            android:id="@+id/imageView_inventory"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@+id/imageView_choose"
+            app:layout_constraintTop_toBottomOf="@+id/tv_txt_choose"
+            app:srcCompat="@drawable/bg_splash" />
+
+        <TextView
+            android:id="@+id/tv_inventory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="MY INVENTORY"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/imageView_inventory"
+            app:layout_constraintTop_toTopOf="@+id/imageView_inventory" />
+
+        <TextView
+            android:id="@+id/tv_txt_inventory"
+            android:layout_width="289dp"
+            android:layout_height="67dp"
+            android:text="Select an item in your My Inventory to trade with the item you want."
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_inventory"
+            app:layout_constraintTop_toBottomOf="@+id/tv_inventory" />
+
+        <!-- Section COMMUNICATION -->
+        <ImageView
+            android:id="@+id/imageView_communication"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@+id/imageView_inventory"
+            app:layout_constraintTop_toBottomOf="@+id/tv_txt_inventory"
+            app:srcCompat="@drawable/bg_splash" />
+
+        <TextView
+            android:id="@+id/tv_communication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="COMMUNICATION"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/imageView_communication"
+            app:layout_constraintTop_toTopOf="@+id/imageView_communication" />
+
+        <TextView
+            android:id="@+id/tv_txt_communication"
+            android:layout_width="289dp"
+            android:layout_height="67dp"
+            android:text="Interact with the seller to get an agreement from both parties"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_communication"
+            app:layout_constraintTop_toBottomOf="@+id/tv_communication" />
+
+        <!-- Section DEAL -->
+        <ImageView
+            android:id="@+id/imageView_deal"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@+id/imageView_communication"
+            app:layout_constraintTop_toBottomOf="@+id/tv_txt_communication"
+            app:srcCompat="@drawable/bg_splash" />
+
+        <TextView
+            android:id="@+id/tv_deal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="DEAL"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/imageView_deal"
+            app:layout_constraintTop_toTopOf="@+id/imageView_deal" />
+
+        <TextView
+            android:id="@+id/tv_txt_deal"
+            android:layout_width="289dp"
+            android:layout_height="67dp"
+            android:text="Both parties agree, you can return to the previous page and complete the transaction by selecting the checklist. "
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_deal"
+            app:layout_constraintTop_toBottomOf="@+id/tv_deal" />
+
+        <!-- Section DONE -->
+        <ImageView
+            android:id="@+id/imageView_done"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintStart_toStartOf="@+id/imageView_deal"
+            app:layout_constraintTop_toBottomOf="@+id/tv_txt_deal"
+            app:srcCompat="@drawable/bg_splash" />
+
+        <TextView
+            android:id="@+id/tv_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="DONE"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/imageView_done"
+            app:layout_constraintTop_toTopOf="@+id/imageView_done" />
+
+        <TextView
+            android:id="@+id/tv_txt_done"
+            android:layout_width="289dp"
+            android:layout_height="67dp"
+            android:text="Congratulations! The transaction is complete and you get the item you want."
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="@+id/tv_done"
+            app:layout_constraintTop_toBottomOf="@+id/tv_done" />
+
+
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_start"
-            android:layout_width="150dp"
-            android:layout_height="43dp"
+            android:id="@+id/btn_started"
+            android:layout_width="138dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="30dp"
             android:background="@drawable/bg_lightblue1"
             android:text="Get Started"
             android:textAllCaps="false"
@@ -24,17 +367,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="322dp"
-            android:layout_height="39dp"
-            android:text="a temporary portal containing a “how-to” guide of this feature. stay tune!"
-            app:layout_constraintBottom_toTopOf="@+id/btn_start"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_txt_done" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

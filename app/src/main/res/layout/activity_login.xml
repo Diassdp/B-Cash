@@ -17,7 +17,7 @@
         app:srcCompat="@drawable/background" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/imageView_analyze"
         android:layout_width="44dp"
         android:layout_height="41dp"
         android:layout_marginTop="32dp"

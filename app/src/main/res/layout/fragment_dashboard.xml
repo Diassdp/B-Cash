@@ -243,7 +243,7 @@
                 tools:ignore="HardcodedText" />
 
             <TextView
-                android:id="@+id/tv_trade_barter_description"
+                android:id="@+id/tv_sub_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Belanja makin seru dengan tukar menukar!"
@@ -268,7 +268,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_trade_barter_description" />
+                app:layout_constraintTop_toBottomOf="@id/tv_sub_header" />
 
             <ImageView
                 android:id="@+id/imageView2"
