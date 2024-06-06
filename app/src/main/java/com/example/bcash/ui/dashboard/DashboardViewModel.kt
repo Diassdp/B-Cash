@@ -15,4 +15,17 @@ class DashboardViewModel(private val repository: Repository) : ViewModel() {
     val listProduct : LiveData<GetProductResponse> = repository.list
     val isLoading: LiveData<Boolean> = repository.isLoading
     val getAllProduct: LiveData<PagingData<ProductItem>> = repository.getProduct().cachedIn(viewModelScope)
+
+    fun getProductBySearch(search: String){
+        viewModelScope.launch {
+
+        }
+    }
+
+    fun getProductByCategory(category: String){
+        viewModelScope.launch {
+
+        }
+    }
+
 }

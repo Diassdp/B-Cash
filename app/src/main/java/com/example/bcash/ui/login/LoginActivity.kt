@@ -27,12 +27,12 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setupView()
 
-        // TODO: Uncomment this If you want to test Register
+        // TODO: Uncomment this If you want to test Login
 //        setupListeners()
         //
 
 
-        // TODO: Delete this after Register worked & Comment this if you want to test register
+        // TODO: Delete this after Register worked & Comment this if you want to test Login
         findViewById<Button>(R.id.btn_login).setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
@@ -103,6 +103,7 @@ class LoginActivity : AppCompatActivity() {
                 toastMessage("Login Success")
                 saveSession(
                     SessionModel(
+                        response.loginResult?.userId.toString(),
                         TOKEN_KEY + (response.loginResult?.token.toString()),
                         response.loginResult?.name.toString(),
                         true

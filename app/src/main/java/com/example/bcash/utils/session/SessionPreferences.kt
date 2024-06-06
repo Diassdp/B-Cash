@@ -14,6 +14,7 @@ class SessionPreferences private constructor(private val dataStore: DataStore<Pr
     fun getSession(): Flow<SessionModel> {
         return dataStore.data.map { preferences ->
             SessionModel(
+                preferences[USER_ID_KEY] ?: "",
                 preferences[TOKEN_KEY] ?: "",
                 preferences[NAME_KEY] ?: "",
                 preferences[STATUS_KEY] ?: false,
@@ -23,6 +24,7 @@ class SessionPreferences private constructor(private val dataStore: DataStore<Pr
 
     suspend fun saveSession(session: SessionModel) {
         dataStore.edit { preferences ->
+            preferences[USER_ID_KEY] = session.userId
             preferences[TOKEN_KEY] = session.token
             preferences[NAME_KEY] = session.name
             preferences[STATUS_KEY] = session.statusLogin
@@ -46,6 +48,7 @@ class SessionPreferences private constructor(private val dataStore: DataStore<Pr
 
         @Volatile
         private var INSTANCE: SessionPreferences? = null
+        private val USER_ID_KEY = stringPreferencesKey("userId")
         private val NAME_KEY = stringPreferencesKey("name")
         private val TOKEN_KEY = stringPreferencesKey("token")
         private val STATUS_KEY = booleanPreferencesKey("status")

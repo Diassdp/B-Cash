@@ -14,8 +14,10 @@ import com.example.bcash.model.SessionModel
 import com.example.bcash.service.api.ApiService
 import com.example.bcash.service.paging.PagingSource
 import com.example.bcash.service.response.AddProductResponse
+import com.example.bcash.service.response.GetInventoryResponse
 import com.example.bcash.service.response.GetProductResponse
 import com.example.bcash.service.response.GetProfileResponse
+import com.example.bcash.service.response.GetWishlistResponse
 import com.example.bcash.service.response.LoginResponse
 import com.example.bcash.service.response.ProductItem
 import com.example.bcash.service.response.Profile
@@ -52,8 +54,109 @@ class Repository(private val context: Context, private val preferences: SessionP
     private val _tradeRequestResponse = MutableLiveData<TradeRequestResponse>()
     val tradeRequestResponse: LiveData<TradeRequestResponse> = _tradeRequestResponse
 
+    private val _getInventoryResponse = MutableLiveData<GetInventoryResponse>()
+    val getInventoryResponse: LiveData<GetInventoryResponse> = _getInventoryResponse
+
+    private val _getWishlistResponse = MutableLiveData<GetWishlistResponse>()
+    val getWishlistResponse: LiveData<GetWishlistResponse> = _getWishlistResponse
+
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
+
+    fun createTradeRequest(token: String, itemId1: String, itemId2: String, userId1: String, userId2: String) {
+        toggleLoading(true)
+        val client = api.createTradeRequest(token, itemId1, itemId2, userId1, userId2)
+
+        client.enqueue(object : Callback<TradeRequestResponse> {
+            override fun onResponse(call: Call<TradeRequestResponse>, response: Response<TradeRequestResponse>) {
+                toggleLoading(false)
+                if (response.isSuccessful) {
+                    _tradeRequestResponse.value = response.body()
+                    showToast("Trade Request Created")
+                } else {
+                    val message = extractErrorMessage(response)
+                    _tradeRequestResponse.value = TradeRequestResponse(error = true, message = message)
+                    showToast(message)
+                    Log.e("Repository", "createTradeRequest onResponse: ${response.message()}, ${response.code()} $message")
+                }
+            }
+
+            override fun onFailure(call: Call<TradeRequestResponse>, t: Throwable) {
+                toggleLoading(false)
+                val message = if (t is UnknownHostException) {
+                    "No Internet Connection"
+                } else {
+                    t.message.toString()
+                }
+                _tradeRequestResponse.value = TradeRequestResponse(error = true, message = message)
+                showToast(message)
+                Log.e("Repository", "createTradeRequest onFailure: $message")
+            }
+        })
+    }
+
+    fun confirmTradeRequest(token: String, tradeId: Int, userId: String, confirmed: Boolean) {
+        toggleLoading(true)
+        val client = api.confirmTradeRequest(token, tradeId, userId, confirmed)
+
+        client.enqueue(object : Callback<TradeRequestResponse> {
+            override fun onResponse(call: Call<TradeRequestResponse>, response: Response<TradeRequestResponse>) {
+                toggleLoading(false)
+                if (response.isSuccessful) {
+                    _tradeRequestResponse.value = response.body()
+                    showToast("Trade Request Confirmed")
+                } else {
+                    val message = extractErrorMessage(response)
+                    _tradeRequestResponse.value = TradeRequestResponse(error = true, message = message)
+                    showToast(message)
+                    Log.e("Repository", "confirmTradeRequest onResponse: ${response.message()}, ${response.code()} $message")
+                }
+            }
+
+            override fun onFailure(call: Call<TradeRequestResponse>, t: Throwable) {
+                toggleLoading(false)
+                val message = if (t is UnknownHostException) {
+                    "No Internet Connection"
+                } else {
+                    t.message.toString()
+                }
+                _tradeRequestResponse.value = TradeRequestResponse(error = true, message = message)
+                showToast(message)
+                Log.e("Repository", "confirmTradeRequest onFailure: $message")
+            }
+        })
+    }
+
+    fun getTradeRequest(token: String, tradeId: Int) {
+        toggleLoading(true)
+        val client = api.getTradeRequest(token, tradeId)
+
+        client.enqueue(object : Callback<TradeRequestResponse> {
+            override fun onResponse(call: Call<TradeRequestResponse>, response: Response<TradeRequestResponse>) {
+                toggleLoading(false)
+                if (response.isSuccessful) {
+                    _tradeRequestResponse.value = response.body()
+                } else {
+                    val message = extractErrorMessage(response)
+                    _tradeRequestResponse.value = TradeRequestResponse(error = true, message = message)
+                    showToast(message)
+                    Log.e("Repository", "getTradeRequest onResponse: ${response.message()}, ${response.code()} $message")
+                }
+            }
+
+            override fun onFailure(call: Call<TradeRequestResponse>, t: Throwable) {
+                toggleLoading(false)
+                val message = if (t is UnknownHostException) {
+                    "No Internet Connection"
+                } else {
+                    t.message.toString()
+                }
+                _tradeRequestResponse.value = TradeRequestResponse(error = true, message = message)
+                showToast(message)
+                Log.e("Repository", "getTradeRequest onFailure: $message")
+            }
+        })
+    }
 
     fun postRegister(name: String, email: String, password: String, address: String, phone: String) {
         toggleLoading(true)
@@ -151,6 +254,101 @@ class Repository(private val context: Context, private val preferences: SessionP
         })
     }
 
+    suspend fun getProfile(token: String, userId: String) {
+        toggleLoading(true)
+        withContext(Dispatchers.IO) {
+            try {
+                val response = api.getProfile(token, userId)
+                withContext(Dispatchers.Main) {
+                    toggleLoading(false)
+                    if (response.isSuccessful) {
+                        _getProfileResponse.value = response.body()
+                    } else {
+                        val message = extractErrorMessage(response)
+                        _getProfileResponse.value = GetProfileResponse(Profile(id = "", name = "", email = "", phone = "", address = ""), error = true, message = message)
+                        Log.e("Repository", "getProfile onResponse: ${response.message()}, ${response.code()} $message")
+                    }
+                }
+            } catch (t: Throwable) {
+                withContext(Dispatchers.Main) {
+                    toggleLoading(false)
+                    val message = if (t is UnknownHostException) {
+                        "No Internet Connection"
+                    } else {
+                        t.message.toString()
+                    }
+                    _getProfileResponse.value = GetProfileResponse(Profile(id = "", name = "", email = "", phone = "", address = ""), error = true, message = message)
+                    Log.e("Repository", "getProfile onFailure: $message")
+                }
+            }
+        }
+    }
+
+    suspend fun getWishlist(token: String, userId: String) {
+        toggleLoading(true)
+        val client = api.getWishlist(token, userId)
+
+        client.enqueue(object : Callback<GetWishlistResponse> {
+            override fun onResponse(call: Call<GetWishlistResponse>, response: Response<GetWishlistResponse>) {
+                toggleLoading(false)
+                if (response.isSuccessful) {
+                    _getWishlistResponse.value = response.body()
+                } else {
+                    val message = extractErrorMessage(response)
+                    _getWishlistResponse.value = GetWishlistResponse(wishlist = emptyList(), error = true, message = message)
+                    showToast(message)
+                    Log.e("Repository", "getWishlist onResponse: ${response.message()}, ${response.code()} $message")
+                }
+            }
+
+            override fun onFailure(call: Call<GetWishlistResponse>, t: Throwable) {
+                toggleLoading(false)
+                val message = if (t is UnknownHostException) {
+                    "No Internet Connection"
+                } else {
+                    t.message.toString()
+                }
+                _getWishlistResponse.value = GetWishlistResponse(wishlist = emptyList(), error = true, message = message)
+                showToast(message)
+                Log.e("Repository", "getWishlist onFailure: $message")
+            }
+        })
+    }
+
+    suspend fun getInventory(token: String, userId: String) {
+        toggleLoading(true)
+        val client = api.getUserInventory(token, userId)
+
+        client.enqueue(object : Callback<GetInventoryResponse> {
+            override fun onResponse(call: Call<GetInventoryResponse>, response: Response<GetInventoryResponse>) {
+                toggleLoading(false)
+                if (response.isSuccessful) {
+                    _getInventoryResponse.value = response.body()
+                } else {
+                    val message = extractErrorMessage(response)
+                    _getInventoryResponse.value = GetInventoryResponse(listProduct = emptyList(), error = true, message = message)
+                    showToast(message)
+                    Log.e("Repository", "getInventory onResponse: ${response.message()}, ${response.code()} $message")
+                }
+            }
+
+            override fun onFailure(call: Call<GetInventoryResponse>, t: Throwable) {
+                toggleLoading(false)
+                val message = if (t is UnknownHostException) {
+                    "No Internet Connection"
+                } else {
+                    t.message.toString()
+                }
+                _getInventoryResponse.value = GetInventoryResponse(listProduct = emptyList(), error = true, message = message)
+                showToast(message)
+                Log.e("Repository", "getInventory onFailure: $message")
+            }
+        })
+    }
+
+
+
+
     fun getProduct(): LiveData<PagingData<ProductItem>> {
         return Pager(config = PagingConfig(pageSize = 5), pagingSourceFactory = {
             PagingSource(preferences, api)
@@ -171,36 +369,6 @@ class Repository(private val context: Context, private val preferences: SessionP
 
     suspend fun logout() {
         preferences.logout()
-    }
-
-    suspend fun getProfile(token: String, name: String) {
-        toggleLoading(true)
-        withContext(Dispatchers.IO) {
-            try {
-                val response = api.getProfile(token, name)
-                withContext(Dispatchers.Main) {
-                    toggleLoading(false)
-                    if (response.isSuccessful) {
-                        _getProfileResponse.value = response.body()
-                    } else {
-                        val message = extractErrorMessage(response)
-                        _getProfileResponse.value = GetProfileResponse(Profile(id = "", name = "", email = "", phone = "", address = "", photoUrl = ""), error = true, message = message)
-                        Log.e("Repository", "getProfile onResponse: ${response.message()}, ${response.code()} $message")
-                    }
-                }
-            } catch (t: Throwable) {
-                withContext(Dispatchers.Main) {
-                    toggleLoading(false)
-                    val message = if (t is UnknownHostException) {
-                        "No Internet Connection"
-                    } else {
-                        t.message.toString()
-                    }
-                    _getProfileResponse.value = GetProfileResponse(Profile(id = "", name = "", email = "", phone = "", address = "", photoUrl = ""), error = true, message = message)
-                    Log.e("Repository", "getProfile onFailure: $message")
-                }
-            }
-        }
     }
 
     private fun toggleLoading(state: Boolean) {

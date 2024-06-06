@@ -20,7 +20,7 @@ class BarterTradeFragment : Fragment() {
     }
 
     private fun setupListener(){
-        binding.btnStart.setOnClickListener {
+        binding.btnStarted.setOnClickListener {
             moveToBarterTrade()
         }
         binding.btnStarted.setOnClickListener {

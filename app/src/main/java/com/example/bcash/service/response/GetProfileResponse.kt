@@ -27,8 +27,5 @@ data class Profile(
     val phone: String? = null,
 
     @field:SerializedName("address")
-    val address: String? = null,
-
-    @field:SerializedName("photoUrl")
-    val photoUrl: String? = null,
+    val address: String? = null
 )

@@ -12,23 +12,23 @@ import com.example.bcash.databinding.FragmentProfileBinding
 import com.example.bcash.model.ViewModelFactory
 
 class ProfileFragment : Fragment() {
-
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var token: String
+    private lateinit var userId: String
 
     private val factory: ViewModelFactory by lazy {
         ViewModelFactory.getInstance(requireContext())
     }
+    private val viewModel: ProfileViewModel by viewModels { factory }
 
-    // Inisialisasi ProfileViewModel di sini
-    private val profileViewModel: ProfileViewModel by viewModels { factory }
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
+
+        binding.clInventory.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_inventoryFragment)
+        }
         return binding.root
 
     }
@@ -47,7 +47,17 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setupView() {
-        profileViewModel.profile.observe(viewLifecycleOwner) { user ->
+
+    }
+
+    private fun setupViewModel() {
+        viewModel.getSession().observe(viewLifecycleOwner) { session ->
+            session?.let {
+                viewModel.getProfile(it.token, it.userId)
+            }
+        }
+
+        viewModel.profile.observe(viewLifecycleOwner) { user ->
             if (user != null) {
                 binding.tvName.text = user.profile.name
                 binding.tvMyname.text = user.profile.name
@@ -61,7 +71,7 @@ class ProfileFragment : Fragment() {
 
     private fun setupListener() {
         binding.btnLogout.setOnClickListener {
-            profileViewModel.logout()
+            viewModel.logout()
         }
     }
 }

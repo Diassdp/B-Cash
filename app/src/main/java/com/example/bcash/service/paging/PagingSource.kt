@@ -8,10 +8,7 @@ import com.example.bcash.service.response.ProductItem
 import com.example.bcash.utils.session.SessionPreferences
 import kotlinx.coroutines.flow.first
 
-class PagingSource (
-    private val preferences: SessionPreferences,
-    private val apiService: ApiService
-) : PagingSource<Int, ProductItem>() {
+class PagingSource (private val preferences: SessionPreferences, private val apiService: ApiService) : PagingSource<Int, ProductItem>() {
 
     override fun getRefreshKey(state: PagingState<Int, ProductItem>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
@@ -32,9 +29,9 @@ class PagingSource (
                 if (responseData.isSuccessful) {
                     val responseBody = responseData.body()
                     LoadResult.Page(
-                        data = responseBody?.listStory ?: emptyList(),
+                        data = responseBody?.listProduct ?: emptyList(),
                         prevKey = if (page == 1) null else page - 1,
-                        nextKey = if (responseBody?.listStory.isNullOrEmpty()) null else page + 1
+                        nextKey = if (responseBody?.listProduct.isNullOrEmpty()) null else page + 1
                     )
                 } else {
                     val message = responseData.errorBody()?.string() ?: "Unknown error"
@@ -49,7 +46,7 @@ class PagingSource (
     }
 
     companion object {
-        private const val TAG = "StoryPagingSource"
+        private const val TAG = "PagingSource"
         private const val INITIAL_PAGE_INDEX = 1
     }
 }

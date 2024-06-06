@@ -1,8 +1,10 @@
 package com.example.bcash.service.api
 
 import com.example.bcash.service.response.AddProductResponse
+import com.example.bcash.service.response.GetInventoryResponse
 import com.example.bcash.service.response.GetProductResponse
 import com.example.bcash.service.response.GetProfileResponse
+import com.example.bcash.service.response.GetWishlistResponse
 import com.example.bcash.service.response.LoginResponse
 import com.example.bcash.service.response.RegisterResponse
 import com.example.bcash.service.response.TradeRequestResponse
@@ -74,20 +76,20 @@ interface ApiService {
     @GET("profile")
     suspend fun getProfile(
         @Header("Authorization") token: String,
-        @Query("name") name: String
+        @Query("userId") userId: String
     ): Response<GetProfileResponse>
-
-    @GET("inventory")
-    suspend fun getInventory(
-        @Header("Authorization") token: String,
-        @Query("name") id: Int
-    ): Response<GetProductResponse>
 
     @GET("wishlist")
     suspend fun getWishlist(
         @Header("Authorization") token: String,
-        @Query("name") id: Int
-    ): Response<GetProductResponse>
+        @Query("userId") userId: String
+    ): Call<GetWishlistResponse>
+
+    @GET("inventory")
+    suspend fun getUserInventory(
+        @Header("Authorization") token: String,
+        @Query("userId") userId: String
+    ): Call<GetInventoryResponse>
 
     @FormUrlEncoded
     @POST("trade-request")

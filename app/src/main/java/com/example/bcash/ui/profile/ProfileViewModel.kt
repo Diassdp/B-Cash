@@ -13,6 +13,12 @@ class ProfileViewModel(private val repository: Repository) : ViewModel() {
     private val _profile = MutableLiveData<GetProfileResponse>()
     val profile: LiveData<GetProfileResponse> = _profile
 
+    fun getProfile(token: String, userId: String) {
+        viewModelScope.launch {
+            repository.getProfile(token,userId)
+        }
+    }
+
     fun getSession(): LiveData<SessionModel> {
         return repository.getSession()
     }
