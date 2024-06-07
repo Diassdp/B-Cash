@@ -9,7 +9,7 @@
         android:id="@+id/navigation_dashboard"
         android:name="com.example.bcash.ui.dashboard.DashboardFragment"
         android:label="Home"
-        tools:layout="@layout/fragment_dashboard">
+        tools:layout="@layout/fragment_dashboard" >
         <action
             android:id="@+id/action_dashboard_to_shop"
             app:destination="@id/navigation_shop">
