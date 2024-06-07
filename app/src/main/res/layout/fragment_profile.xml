@@ -95,12 +95,12 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginEnd="40dp"
-            app:tint="@color/primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.514"
-            app:srcCompat="@drawable/ic_inventory" />
+            app:srcCompat="@drawable/ic_inventory"
+            app:tint="@color/primary" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Profile Layout -->
@@ -199,13 +199,13 @@
         android:layout_height="43dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/bg_lightblue1"
+        android:drawableEnd="@drawable/ic_logout"
         android:text="Logout"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:drawableEnd="@drawable/ic_logout"
-        app:iconPadding="0dp"
         android:textSize="16sp"
         app:backgroundTint="@color/accent"
+        app:iconPadding="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"

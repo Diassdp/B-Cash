@@ -5,8 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.login.LoginActivity"
-    android:background="@drawable/bg_gradient">
+    android:background="@drawable/bg_gradient"
+    tools:context=".ui.login.LoginActivity">
 
     <ImageView
         android:id="@+id/iv_background"
@@ -98,9 +98,9 @@
             android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins_regular"
             android:text="Welcome to"
+            android:textColor="@color/primary"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:textColor="@color/primary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -126,8 +126,8 @@
             android:layout_marginTop="40dp"
             android:fontFamily="@font/poppins_regular"
             android:text="Login to your account and continue selling on B’Cash"
-            android:textSize="10sp"
             android:textColor="@color/primary"
+            android:textSize="10sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -139,8 +139,8 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/poppins_regular"
             android:text="Email"
-            android:textSize="12sp"
             android:textColor="@color/primary"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
@@ -171,8 +171,8 @@
             android:layout_marginTop="6dp"
             android:fontFamily="@font/poppins_regular"
             android:text="Password"
-            android:textSize="12sp"
             android:textColor="@color/primary"
+            android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tl_email" />
 

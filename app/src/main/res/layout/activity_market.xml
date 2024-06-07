@@ -10,9 +10,9 @@
     <include
         android:id="@+id/Bcash_toolbar"
         layout="@layout/custom_toolbar"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_header"
@@ -32,13 +32,13 @@
             android:layout_height="wrap_content"
             android:drawablePadding="5dp"
             android:maxLines="3"
-            tools:text="Jl. Brazilia Blok F15 No.11, Setu, Kec. Setu, Kota Tangerang, Banten 15314"
             android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
             android:textColor="@color/black"
             android:textSize="14sp"
             app:drawableStartCompat="@drawable/ic_location"
             app:layout_constraintStart_toStartOf="@+id/tv_phone"
-            app:layout_constraintTop_toBottomOf="@+id/tv_phone" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_phone"
+            tools:text="Jl. Brazilia Blok F15 No.11, Setu, Kec. Setu, Kota Tangerang, Banten 15314" />
 
         <TextView
             android:id="@+id/tv_phone"
@@ -48,13 +48,13 @@
             android:layout_marginTop="20dp"
             android:drawablePadding="5dp"
             android:maxLines="1"
-            tools:text="081221323456"
             android:textAppearance="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle"
             android:textColor="@color/black"
             android:textSize="14sp"
             app:drawableStartCompat="@drawable/ic_phone"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_user" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_user"
+            tools:text="081221323456" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_user"
@@ -76,23 +76,23 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="44dp"
             android:fontFamily="@font/poppins_regular"
-            tools:text="Orb Shop"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/iv_user"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Orb Shop" />
 
         <TextView
             android:id="@+id/tv_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
-            tools:text="orbshop@gmail.com"
             android:textColor="@color/black"
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="@+id/tv_myname"
-            app:layout_constraintTop_toBottomOf="@+id/tv_myname" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_myname"
+            tools:text="orbshop@gmail.com" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -102,12 +102,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:fontFamily="@font/poppins_regular"
-        tools:text="Products"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/cl_header"
-        app:layout_constraintTop_toBottomOf="@+id/cl_header" />
+        app:layout_constraintTop_toBottomOf="@+id/cl_header"
+        tools:text="Products" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

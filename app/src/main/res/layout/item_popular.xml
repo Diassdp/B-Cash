@@ -5,8 +5,8 @@
     android:layout_width="175dp"
     android:layout_height="240dp"
     android:layout_margin="8dp"
-    android:elevation="3dp"
-    android:background="@drawable/bg_lightblue1">
+    android:background="@drawable/bg_lightblue1"
+    android:elevation="3dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="150dp"
@@ -42,9 +42,9 @@
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Product Name"
-        android:singleLine="true"
         android:layout_margin="8dp"
+        android:singleLine="true"
+        android:text="Product Name"
         app:layout_constraintStart_toStartOf="@+id/view5"
         app:layout_constraintTop_toTopOf="@+id/view5" />
 
