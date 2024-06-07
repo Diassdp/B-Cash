@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +16,6 @@ import com.example.bcash.databinding.FragmentDashboardBinding
 import com.example.bcash.model.ViewModelFactory
 import com.example.bcash.service.response.ProductItem
 import com.example.bcash.ui.bartertrade.feature.BarterTradeActivity
-import com.example.bcash.ui.shop.ShopFragment
 
 class DashboardFragment : Fragment() {
     private var _binding: FragmentDashboardBinding? = null
@@ -80,15 +78,9 @@ class DashboardFragment : Fragment() {
 
     private fun setupCategoryButtons() {
         val btnBarang1 = binding.btnBarang1
-        var category = binding.tvBarang1.text.toString()
-
         btnBarang1.setOnClickListener {
-            navigateToShopFragment(category)
+            // TODO: Implement Category Logic
         }
-    }
-
-    private fun navigateToShopFragment(category: String) {
-
     }
 
     private fun setupAdapter() {

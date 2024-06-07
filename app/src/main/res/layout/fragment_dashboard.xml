@@ -103,7 +103,8 @@
                 android:orientation="horizontal">
 
                 <!-- Item 1 -->
-                <LinearLayout style="@style/CategoryItemStyle">
+                <LinearLayout style="@style/CategoryItemStyle"
+                    android:id="@+id/btn_category1">
 
                     <ImageButton
                         android:id="@+id/btn_barang1"
@@ -117,7 +118,8 @@
                 </LinearLayout>
 
                 <!-- Item 2 -->
-                <LinearLayout style="@style/CategoryItemStyle">
+                <LinearLayout style="@style/CategoryItemStyle"
+                    android:id="@+id/btn_category2">
 
                     <ImageButton
                         android:id="@+id/btn_barang2"
@@ -131,7 +133,8 @@
                 </LinearLayout>
 
                 <!-- Item 3 -->
-                <LinearLayout style="@style/CategoryItemStyle">
+                <LinearLayout style="@style/CategoryItemStyle"
+                    android:id="@+id/btn_category3">
 
                     <ImageButton
                         android:id="@+id/btn_barang3"
@@ -145,7 +148,8 @@
                 </LinearLayout>
 
                 <!-- Item 4 -->
-                <LinearLayout style="@style/CategoryItemStyle">
+                <LinearLayout style="@style/CategoryItemStyle"
+                    android:id="@+id/btn_category4">
 
                     <ImageButton
                         android:id="@+id/btn_barang4"
@@ -159,7 +163,8 @@
                 </LinearLayout>
 
                 <!-- Item 5 -->
-                <LinearLayout style="@style/CategoryItemStyle">
+                <LinearLayout style="@style/CategoryItemStyle"
+                    android:id="@+id/btn_category5">
 
                     <ImageButton
                         android:id="@+id/btn_barang5"
@@ -173,7 +178,8 @@
                 </LinearLayout>
 
                 <!-- Item 6 -->
-                <LinearLayout style="@style/CategoryItemStyle">
+                <LinearLayout style="@style/CategoryItemStyle"
+                    android:id="@+id/btn_category6">
 
                     <ImageButton
                         android:id="@+id/btn_barang6"
@@ -187,7 +193,8 @@
                 </LinearLayout>
 
                 <!-- Item 7 -->
-                <LinearLayout style="@style/CategoryItemStyle">
+                <LinearLayout style="@style/CategoryItemStyle"
+                    android:id="@+id/btn_category7">
 
                     <ImageButton
                         android:id="@+id/btn_barang7"
@@ -201,7 +208,8 @@
                 </LinearLayout>
 
                 <!-- Item 8 -->
-                <LinearLayout style="@style/CategoryItemStyle">
+                <LinearLayout style="@style/CategoryItemStyle"
+                    android:id="@+id/btn_category8">
 
                     <ImageButton
                         android:id="@+id/btn_barang8"
