@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.setFragmentResultListener
 import com.bumptech.glide.Glide
 import com.example.bcash.R
 import com.example.bcash.databinding.ActivityTransactionBinding
@@ -23,13 +24,24 @@ class TransactionActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setupView()
         setupViewModel()
+        supportFragmentManager.setFragmentResultListener("requestKey", this) { key, bundle ->
+            val result = bundle.getString("bundleKey")
+            // Handle the result
+            handleFragmentResult(result)
+        }
+    }
+
+    private fun setupListener(){
+        binding.apply {
+            clBuyer.setOnClickListener {
+                //
+            }
+        }
     }
 
     private fun setupView(){
         binding = ActivityTransactionBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        // Use binding.root to set the OnApplyWindowInsetsListener
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -64,6 +76,13 @@ class TransactionActivity : AppCompatActivity() {
 
     private fun setupViewModel(){
         // Implement ViewModel setup logic here
+    }
+
+    private fun handleFragmentResult(result: String?) {
+        // Implement your logic to handle the result from the fragment
+        if (result != null) {
+            // Use the result without directly affecting the existing data in the activity
+        }
     }
 
     companion object {

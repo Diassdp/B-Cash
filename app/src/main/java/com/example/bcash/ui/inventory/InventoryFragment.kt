@@ -24,6 +24,7 @@ class InventoryFragment : Fragment() {
     private val factory: ViewModelFactory by lazy {
         ViewModelFactory.getInstance(requireContext())
     }
+
     private val viewModel: InventoryViewModel by viewModels { factory }
     private lateinit var recyclerView: RecyclerView
 

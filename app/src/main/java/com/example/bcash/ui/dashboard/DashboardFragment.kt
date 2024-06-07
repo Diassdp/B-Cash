@@ -80,35 +80,35 @@ class DashboardFragment : Fragment() {
     private fun setupCategoryButtons() {
         var category = binding.btnBarang1.toString()
         binding.btnBarang1.setOnClickListener {
-            category = binding.btnBarang1.toString()
+            category = binding.tvBarang1.text.toString()
             navigateToShopFragment(category)
         }
         binding.btnBarang2.setOnClickListener {
-            category = binding.btnBarang2.toString()
+            category = binding.tvBarang2.text.toString()
             navigateToShopFragment(category)
         }
         binding.btnBarang3.setOnClickListener {
-            category = binding.btnBarang3.toString()
+            category = binding.tvBarang3.text.toString()
             navigateToShopFragment(category)
         }
         binding.btnBarang4.setOnClickListener {
-            category = binding.btnBarang4.toString()
+            category = binding.tvBarang4.text.toString()
             navigateToShopFragment(category)
         }
         binding.btnBarang5.setOnClickListener {
-            category = binding.btnBarang5.toString()
+            category = binding.tvBarang5.text.toString()
             navigateToShopFragment(category)
         }
         binding.btnBarang6.setOnClickListener {
-            category = binding.btnBarang6.toString()
+            category = binding.tvBarang6.toString()
             navigateToShopFragment(category)
         }
         binding.btnBarang7.setOnClickListener {
-            category = binding.btnBarang7.toString()
+            category = binding.tvBarang7.toString()
             navigateToShopFragment(category)
         }
         binding.btnBarang8.setOnClickListener {
-            category = binding.btnBarang8.toString()
+            category = binding.tvBarang8.toString()
             navigateToShopFragment(category)
         }
     }
