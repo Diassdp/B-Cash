@@ -65,6 +65,7 @@ class TransactionActivity : AppCompatActivity() {
                 tvSellerItem.text = it.name
                 tvSellerPriceItem.text = it.price
                 tvUserSeller.text = it.username
+                checkboxSeller.isChecked = true
 
                 Glide.with(this@TransactionActivity)
                     .load(it.photo)
