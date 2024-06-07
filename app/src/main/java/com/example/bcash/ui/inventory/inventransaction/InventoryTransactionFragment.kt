@@ -53,8 +53,8 @@ class InventoryTransactionFragment : Fragment() {
     private fun setupView() {
         setupAdapter()
         dummyView()
+//      setupViewModel()
         countInventoryItems()
-//        setupViewModel()
     }
 
     private fun setupViewModel() {

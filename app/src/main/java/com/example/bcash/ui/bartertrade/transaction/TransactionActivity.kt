@@ -1,6 +1,9 @@
 package com.example.bcash.ui.bartertrade.transaction
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -12,22 +15,22 @@ import com.example.bcash.R
 import com.example.bcash.databinding.ActivityTransactionBinding
 import com.example.bcash.model.ViewModelFactory
 import com.example.bcash.service.response.ProductItem
+import com.example.bcash.ui.bartertrade.endportal.EndPortalActivity
 import com.example.bcash.ui.inventory.inventransaction.InventoryTransactionAdapter
 import com.example.bcash.ui.inventory.inventransaction.InventoryTransactionFragment
 
 class TransactionActivity : AppCompatActivity(), InventoryTransactionAdapter.ItemClickListener {
     private lateinit var binding: ActivityTransactionBinding
     private lateinit var factory: ViewModelFactory
-
+    private var dataSeller : ProductItem? = null
+    private var dataBuyer : ProductItem? = null
     private val viewModel: TransactionViewModel by viewModels { factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setupView()
-        setupViewModel()
         setupListener()
-
         supportFragmentManager.setFragmentResultListener("requestKey", this) { key, bundle ->
             val result = bundle.getParcelable<ProductItem>("selectedProduct")
             handleFragmentResult(result)
@@ -38,6 +41,13 @@ class TransactionActivity : AppCompatActivity(), InventoryTransactionAdapter.Ite
         binding.apply {
             clBuyer.setOnClickListener {
                 openInventoryFragment()
+            }
+            btnTransaction.setOnClickListener {
+                if(binding.checkboxSeller != null ||  binding.checkboxBuyer != null){
+                    showToast("Data Incomplete, Please Check Again")
+                } else {
+                    actionTransaction()
+                }
             }
         }
     }
@@ -77,7 +87,7 @@ class TransactionActivity : AppCompatActivity(), InventoryTransactionAdapter.Ite
     }
 
     private fun setupSeller() {
-        val dataSeller = intent.getParcelableExtra<ProductItem>(EXTRA_DATA)
+        dataSeller = intent.getParcelableExtra<ProductItem>(EXTRA_DATA)
         dataSeller?.let {
             binding.apply {
                 tvSellerItem.text = it.name
@@ -93,12 +103,36 @@ class TransactionActivity : AppCompatActivity(), InventoryTransactionAdapter.Ite
         }
     }
 
-    private fun setupViewModel() {
-        // Implement ViewModel setup logic here
+    private fun actionTransaction() {
+        viewModel.getSession().observe(this@TransactionActivity){session ->
+            session?.let {
+//                viewModel.createTradeRequest(it.token, dataSeller.id, dataBuyer.id,dataSeller.username,dataBuyer.username)
+            }
+        }
+
+        viewModel.tradeRequestReponse.observe(this@TransactionActivity){response ->
+            if(response.error != true){
+                showToast("Trade successfully")
+                moveToEndPortal()
+            }else {
+                showToast("Failed to Trade ")
+            }
+        }
+    }
+
+    private fun moveToEndPortal(){
+        val intent = Intent(this@TransactionActivity,EndPortalActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun handleFragmentResult(result: ProductItem?) {
-        setupBuyer(result)
+        dataBuyer = result
+        setupBuyer(dataBuyer)
     }
 
     override fun onItemClick(data: ProductItem) {

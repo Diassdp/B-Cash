@@ -64,9 +64,9 @@ class Repository(private val context: Context, private val preferences: SessionP
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun createTradeRequest(token: String, itemId1: String, itemId2: String, userId1: String, userId2: String) {
+    fun createTradeRequest(token: String, itemIdSeller: String, itemIdBuyer: String, usernameSeller: String, usernameBuyer: String) {
         toggleLoading(true)
-        val client = api.createTradeRequest(token, itemId1, itemId2, userId1, userId2)
+        val client = api.createTradeRequest(token, itemIdSeller, itemIdBuyer, usernameSeller, usernameBuyer)
 
         client.enqueue(object : Callback<TradeRequestResponse> {
             override fun onResponse(call: Call<TradeRequestResponse>, response: Response<TradeRequestResponse>) {
