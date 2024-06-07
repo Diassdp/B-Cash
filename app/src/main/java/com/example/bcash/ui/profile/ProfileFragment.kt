@@ -29,6 +29,7 @@ class ProfileFragment : Fragment() {
         binding.clInventory.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_inventoryFragment)
         }
+
         return binding.root
 
     }
@@ -37,8 +38,6 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 //        setupView()
         setupListener()
-        // Ambil data profile ketika fragment di-create
-//        profileViewModel.fetchProfile()
     }
 
     override fun onDestroyView() {
@@ -47,7 +46,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setupView() {
-
+        setupViewModel()
     }
 
     private fun setupViewModel() {

@@ -12,6 +12,7 @@ import androidx.paging.PagingData
 import androidx.paging.liveData
 import com.example.bcash.model.SessionModel
 import com.example.bcash.service.api.ApiService
+import com.example.bcash.service.paging.CategoryPagingSource
 import com.example.bcash.service.paging.PagingSource
 import com.example.bcash.service.response.AddProductResponse
 import com.example.bcash.service.response.GetInventoryResponse
@@ -346,12 +347,15 @@ class Repository(private val context: Context, private val preferences: SessionP
         })
     }
 
-
-
-
     fun getProduct(): LiveData<PagingData<ProductItem>> {
         return Pager(config = PagingConfig(pageSize = 5), pagingSourceFactory = {
             PagingSource(preferences, api)
+        }).liveData
+    }
+
+    fun getProductbyCategory(category: String): LiveData<PagingData<ProductItem>> {
+        return Pager(config = PagingConfig(pageSize = 5), pagingSourceFactory = {
+            CategoryPagingSource(preferences, api,category)
         }).liveData
     }
 

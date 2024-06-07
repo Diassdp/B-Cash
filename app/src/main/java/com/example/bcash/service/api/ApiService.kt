@@ -71,6 +71,8 @@ interface ApiService {
     suspend fun getProductBySearch(
         @Header("Authorization") token: String,
         @Query("search") search: String,
+        @Query("page") page: Int,
+        @Query("size") size: Int
     ): Response<GetProductResponse>
 
     @GET("profile")
@@ -98,7 +100,7 @@ interface ApiService {
         @Field("itemId1") itemId1: String,
         @Field("itemId2") itemId2: String,
         @Field("userId1") userId1: String,
-        @Field("userId2") userId2: String
+        @Field("userId2") userId2: String,
     ): Call<TradeRequestResponse>
 
     @FormUrlEncoded
