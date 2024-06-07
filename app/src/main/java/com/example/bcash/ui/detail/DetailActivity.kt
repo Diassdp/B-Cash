@@ -35,6 +35,7 @@ class DetailActivity : AppCompatActivity() {
         val intent = Intent(this@DetailActivity, TransactionActivity::class.java)
         intent.putExtra(TransactionActivity.EXTRA_DATA, data)
         startActivity(intent)
+        finish()
     }
 
     private fun wishlist(){

@@ -22,8 +22,8 @@ import com.example.bcash.ui.inventory.inventransaction.InventoryTransactionFragm
 class TransactionActivity : AppCompatActivity(), InventoryTransactionAdapter.ItemClickListener {
     private lateinit var binding: ActivityTransactionBinding
     private lateinit var factory: ViewModelFactory
-    private var dataSeller : ProductItem? = null
-    private var dataBuyer : ProductItem? = null
+    private var dataSeller: ProductItem? = null
+    private var dataBuyer: ProductItem? = null
     private val viewModel: TransactionViewModel by viewModels { factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,10 +43,10 @@ class TransactionActivity : AppCompatActivity(), InventoryTransactionAdapter.Ite
                 openInventoryFragment()
             }
             btnTransaction.setOnClickListener {
-                if(binding.checkboxSeller != null ||  binding.checkboxBuyer != null){
+                if (binding.checkboxSeller.isChecked.not() || binding.checkboxBuyer.isChecked.not()) {
                     showToast("Data Incomplete, Please Check Again")
                 } else {
-                    actionTransaction()
+                    moveToEndPortal()
                 }
             }
         }
@@ -76,7 +76,7 @@ class TransactionActivity : AppCompatActivity(), InventoryTransactionAdapter.Ite
                 tvBuyerItem.text = it.name
                 tvBuyerPriceItem.text = it.price
                 tvUserBuyer.text = it.username
-                checkboxBuyer.isChecked = true
+                clChooseItem.visibility = View.GONE
 
                 Glide.with(this@TransactionActivity)
                     .load(it.photo)
@@ -104,24 +104,33 @@ class TransactionActivity : AppCompatActivity(), InventoryTransactionAdapter.Ite
     }
 
     private fun actionTransaction() {
-        viewModel.getSession().observe(this@TransactionActivity){session ->
+        viewModel.getSession().observe(this@TransactionActivity) { session ->
             session?.let {
-//                viewModel.createTradeRequest(it.token, dataSeller.id, dataBuyer.id,dataSeller.username,dataBuyer.username)
+                val sellerId = dataSeller?.id
+                val buyerId = dataBuyer?.id
+                val sellerUsername = dataSeller?.username
+                val buyerUsername = dataBuyer?.username
+
+                if (sellerId != null && buyerId != null && sellerUsername != null && buyerUsername != null) {
+                    viewModel.createTradeRequest(it.token, sellerId, buyerId, sellerUsername, buyerUsername)
+                } else {
+                    showToast("Data Incomplete, Please Check Again")
+                }
             }
         }
 
-        viewModel.tradeRequestReponse.observe(this@TransactionActivity){response ->
-            if(response.error != true){
+        viewModel.tradeRequestReponse.observe(this@TransactionActivity) { response ->
+            if (response.error != true) {
                 showToast("Trade successfully")
                 moveToEndPortal()
-            }else {
-                showToast("Failed to Trade ")
+            } else {
+                showToast("Failed to Trade")
             }
         }
     }
 
-    private fun moveToEndPortal(){
-        val intent = Intent(this@TransactionActivity,EndPortalActivity::class.java)
+    private fun moveToEndPortal() {
+        val intent = Intent(this@TransactionActivity, EndPortalActivity::class.java)
         startActivity(intent)
         finish()
     }

@@ -14,23 +14,23 @@ class TransactionViewModel(private val repository: Repository) : ViewModel() {
     private val _tradeRequestResponse = MutableLiveData<TradeRequestResponse>()
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
-    val tradeRequestReponse: MutableLiveData<TradeRequestResponse>
-        get() = _tradeRequestResponse
+    val tradeRequestReponse: LiveData<TradeRequestResponse> get() = _tradeRequestResponse
 
-    fun getSession(): LiveData<SessionModel> {
-        return repository.getSession()
-    }
-    fun createTradeRequest(token: String, itemId1: String, itemId2: String, userId1: String, userId2: String) {
-        _isLoading.value = true
-        viewModelScope.launch {
-            repository.createTradeRequest(token, itemId1, itemId2, userId1, userId2)
-            _isLoading.value = false
-        }
-    }
     init {
         repository.tradeRequestResponse.observeForever {
             _tradeRequestResponse.postValue(it)
         }
     }
 
+    fun getSession(): LiveData<SessionModel> {
+        return repository.getSession()
+    }
+
+    fun createTradeRequest(token: String, itemIdSeller: String, itemIdBuyer: String, usernameSeller: String, usernameBuyer: String) {
+        _isLoading.value = true
+        viewModelScope.launch {
+            repository.createTradeRequest(token, itemIdSeller, itemIdBuyer, usernameSeller, usernameBuyer)
+            _isLoading.value = false
+        }
+    }
 }
