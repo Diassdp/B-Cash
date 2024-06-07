@@ -6,14 +6,16 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.fragment.app.setFragmentResultListener
+import androidx.fragment.app.commit
 import com.bumptech.glide.Glide
 import com.example.bcash.R
 import com.example.bcash.databinding.ActivityTransactionBinding
 import com.example.bcash.model.ViewModelFactory
 import com.example.bcash.service.response.ProductItem
+import com.example.bcash.ui.inventory.inventransaction.InventoryTransactionAdapter
+import com.example.bcash.ui.inventory.inventransaction.InventoryTransactionFragment
 
-class TransactionActivity : AppCompatActivity() {
+class TransactionActivity : AppCompatActivity(), InventoryTransactionAdapter.ItemClickListener {
     private lateinit var binding: ActivityTransactionBinding
     private lateinit var factory: ViewModelFactory
 
@@ -24,22 +26,30 @@ class TransactionActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setupView()
         setupViewModel()
+        setupListener()
+
         supportFragmentManager.setFragmentResultListener("requestKey", this) { key, bundle ->
-            val result = bundle.getString("bundleKey")
-            // Handle the result
+            val result = bundle.getParcelable<ProductItem>("selectedProduct")
             handleFragmentResult(result)
         }
     }
 
-    private fun setupListener(){
+    private fun setupListener() {
         binding.apply {
             clBuyer.setOnClickListener {
-                //
+                openInventoryFragment()
             }
         }
     }
 
-    private fun setupView(){
+    private fun openInventoryFragment() {
+        supportFragmentManager.commit {
+            replace(R.id.fragment_container, InventoryTransactionFragment())
+            addToBackStack(null)  // Optional: adds transaction to the back stack
+        }
+    }
+
+    private fun setupView() {
         binding = ActivityTransactionBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
@@ -50,16 +60,24 @@ class TransactionActivity : AppCompatActivity() {
         setupSeller()
     }
 
-    private fun setupTrade() {
-        // Implement trade setup logic here
+    private fun setupBuyer(data: ProductItem?) {
+        data?.let {
+            binding.apply {
+                tvBuyerItem.text = it.name
+                tvBuyerPriceItem.text = it.price
+                tvUserBuyer.text = it.username
+                checkboxBuyer.isChecked = true
+
+                Glide.with(this@TransactionActivity)
+                    .load(it.photo)
+                    .fitCenter()
+                    .into(ivBuyerItem)
+            }
+        }
     }
 
-    private fun setupBuyer(){
-        // Implement buyer setup logic here
-    }
-
-    private fun setupSeller(){
-        val dataSeller = intent.getParcelableExtra<ProductItem>(EXTRA_DATA) as? ProductItem
+    private fun setupSeller() {
+        val dataSeller = intent.getParcelableExtra<ProductItem>(EXTRA_DATA)
         dataSeller?.let {
             binding.apply {
                 tvSellerItem.text = it.name
@@ -75,14 +93,26 @@ class TransactionActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupViewModel(){
+    private fun setupViewModel() {
         // Implement ViewModel setup logic here
     }
 
-    private fun handleFragmentResult(result: String?) {
-        // Implement your logic to handle the result from the fragment
-        if (result != null) {
-            // Use the result without directly affecting the existing data in the activity
+    private fun handleFragmentResult(result: ProductItem?) {
+        setupBuyer(result)
+    }
+
+    override fun onItemClick(data: ProductItem) {
+        openInventoryFragment(data)
+    }
+
+    private fun openInventoryFragment(data: ProductItem) {
+        supportFragmentManager.commit {
+            replace(R.id.fragment_container, InventoryTransactionFragment().apply {
+                arguments = Bundle().apply {
+                    putParcelable("selectedProduct", data)
+                }
+            })
+            addToBackStack(null)  // Optional: adds transaction to the back stack
         }
     }
 
