@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.bcash.service.repository.Repository
+import com.example.bcash.ui.bartertrade.transaction.TransactionViewModel
 import com.example.bcash.ui.dashboard.DashboardViewModel
 import com.example.bcash.ui.favorite.FavoriteViewModel
 import com.example.bcash.ui.inventory.InventoryViewModel
@@ -33,6 +34,9 @@ class ViewModelFactory(private val repository: Repository) : ViewModelProvider.N
 
             modelClass.isAssignableFrom(InventoryViewModel::class.java) -> {
                 InventoryViewModel(repository) as T
+            }
+            modelClass.isAssignableFrom(TransactionViewModel::class.java) -> {
+                TransactionViewModel(repository) as T
             }
 
             else -> {

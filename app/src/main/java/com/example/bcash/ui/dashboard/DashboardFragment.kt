@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -77,10 +78,44 @@ class DashboardFragment : Fragment() {
     }
 
     private fun setupCategoryButtons() {
-        val btnBarang1 = binding.btnBarang1
-        btnBarang1.setOnClickListener {
-            // TODO: Implement Category Logic
+        var category = binding.btnBarang1.toString()
+        binding.btnBarang1.setOnClickListener {
+            category = binding.btnBarang1.toString()
+            navigateToShopFragment(category)
         }
+        binding.btnBarang2.setOnClickListener {
+            category = binding.btnBarang2.toString()
+            navigateToShopFragment(category)
+        }
+        binding.btnBarang3.setOnClickListener {
+            category = binding.btnBarang3.toString()
+            navigateToShopFragment(category)
+        }
+        binding.btnBarang4.setOnClickListener {
+            category = binding.btnBarang4.toString()
+            navigateToShopFragment(category)
+        }
+        binding.btnBarang5.setOnClickListener {
+            category = binding.btnBarang5.toString()
+            navigateToShopFragment(category)
+        }
+        binding.btnBarang6.setOnClickListener {
+            category = binding.btnBarang6.toString()
+            navigateToShopFragment(category)
+        }
+        binding.btnBarang7.setOnClickListener {
+            category = binding.btnBarang7.toString()
+            navigateToShopFragment(category)
+        }
+        binding.btnBarang8.setOnClickListener {
+            category = binding.btnBarang8.toString()
+            navigateToShopFragment(category)
+        }
+    }
+
+    private fun navigateToShopFragment(category: String) {
+        val action = DashboardFragmentDirections.actionDashboardToShop(category)
+        findNavController().navigate(action)
     }
 
     private fun setupAdapter() {
