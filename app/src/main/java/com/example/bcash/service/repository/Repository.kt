@@ -316,6 +316,37 @@ class Repository(private val context: Context, private val preferences: SessionP
         })
     }
 
+    suspend fun postWishlist(token: String, userId: String, productId: String) {
+        toggleLoading(true)
+        val client = api.addToWishlist(token,userId,productId)
+
+        client.enqueue(object : Callback<GetWishlistResponse>{
+            override fun onResponse(call: Call<GetWishlistResponse>, response: Response<GetWishlistResponse>) {
+                toggleLoading(false)
+                if (response.isSuccessful) {
+                    _getWishlistResponse.value = response.body()
+                    showToast("Product Added to Wishlist")
+                } else {
+                    val message = extractErrorMessage(response)
+                    _getWishlistResponse.value = GetWishlistResponse(wishlist = emptyList(), error = true, message = message)
+                    showToast(message)
+                    Log.e("Repository", "PostWishlist onResponse: ${response.message()}, ${response.code()} $message")
+                }
+            }
+            override fun onFailure(call: Call<GetWishlistResponse>, t: Throwable) {
+                toggleLoading(false)
+                val message = if (t is UnknownHostException) {
+                    "No Internet Connection"
+                } else {
+                    t.message.toString()
+                }
+                _getWishlistResponse.value = GetWishlistResponse(wishlist = emptyList(), error = true, message = message)
+                showToast(message)
+                Log.e("Repository", "PostWishlist onFailure: $message")
+            }
+        })
+    }
+
     suspend fun getInventory(token: String, userId: String) {
         toggleLoading(true)
         val client = api.getUserInventory(token, userId)

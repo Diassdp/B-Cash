@@ -87,6 +87,14 @@ interface ApiService {
         @Query("userId") userId: String
     ): Call<GetWishlistResponse>
 
+    @FormUrlEncoded
+    @POST("wishlist")
+    fun addToWishlist(
+        @Header("Authorization") token: String,
+        @Field("userId") userId: String,
+        @Field("productId") productId: String
+    ): Call<GetWishlistResponse>
+
     @GET("inventory")
     suspend fun getUserInventory(
         @Header("Authorization") token: String,

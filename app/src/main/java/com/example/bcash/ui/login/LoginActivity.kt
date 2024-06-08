@@ -22,7 +22,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var factory: ViewModelFactory
     private val loginViewModel: LoginViewModel by viewModels { factory }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupView()
@@ -63,7 +62,6 @@ class LoginActivity : AppCompatActivity() {
                 if (password.isEmpty()) binding.edtPassword.error = "Password cannot be empty"
                 toastMessage("Login Failed")
             } else {
-                loadingToggle()
                 loginAction()
                 loginViewModel.login()
                 moveToMain()
@@ -81,12 +79,6 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                 finish()
             }
-        }
-    }
-
-    private fun loadingToggle() {
-        loginViewModel.isLoading.observe(this) {
-//            binding.ProgressBar.visibility = if (it) View.VISIBLE else View.GONE
         }
     }
 
