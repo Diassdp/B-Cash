@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         setupView()
 //        setupUser()
         setupNavigation()
+        setupToolbar()
     }
 
     private fun setupUser() {
@@ -63,4 +66,30 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
     }
 
+    private fun setupToolbar() {
+        findViewById<ImageView>(R.id.iv_logo).setOnClickListener {
+            navigateTo(R.id.navigation_dashboard)
+        }
+
+        findViewById<TextView>(R.id.tv_logo).setOnClickListener {
+            navigateTo(R.id.navigation_dashboard)
+        }
+
+        findViewById<ImageView>(R.id.iv_account).setOnClickListener {
+            navigateTo(R.id.navigation_profile)
+        }
+
+        findViewById<ImageView>(R.id.iv_inventory).setOnClickListener {
+            navigateTo(R.id.navigation_inventory)
+        }
+
+        findViewById<ImageView>(R.id.iv_favorite).setOnClickListener {
+            navigateTo(R.id.navigation_favorite)
+        }
+    }
+
+    private fun navigateTo(fragmentId: Int) {
+        val navController = findNavController(R.id.nav_host_fragment)
+        navController.navigate(fragmentId)
+    }
 }
