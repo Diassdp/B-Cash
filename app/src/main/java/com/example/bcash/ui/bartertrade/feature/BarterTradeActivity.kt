@@ -17,17 +17,26 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.bcash.ui.bartertrade.result.ResultActivity
+import com.example.bcash.utils.getImageUri
+import com.yalantis.ucrop.UCrop
+import java.io.File
 
 class BarterTradeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBarterTradeBinding
     private var currentImageUri: Uri? = null
+    private var croppedImageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        setupView()
+        setupListener()
+        setupPermissions()
+    }
+
+    private fun setupView() {
         binding = ActivityBarterTradeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         // List of items for the dropdowns
         val categories = listOf("Elektronik", "Pakaian", "Buku", "Peralatan Rumah Tangga")
         val conditions = listOf("Baru", "Bekas", "Rusak")
@@ -46,33 +55,55 @@ class BarterTradeActivity : AppCompatActivity() {
             view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        setupView()
-        setupListener()
-        setupPermissions()
     }
 
-    private fun setupView(){
-
-    }
-
-    private fun setupListener(){
+    private fun setupListener() {
         binding.btnGalery.setOnClickListener {
             startGallery()
         }
         binding.btnPhoto.setOnClickListener {
-            // Implement photo capture logic
+            startCamera()
         }
         binding.btnAnalyse.setOnClickListener {
             analyzeImage()
         }
     }
 
+    private fun startCamera() {
+        currentImageUri = getImageUri(this)
+        launcherIntentCamera.launch(currentImageUri!!)
+    }
+
+    private val launcherIntentCamera = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
+        if (isSuccess) {
+            val uri = currentImageUri
+            if (uri != null) {
+                startUCrop(uri)
+                Glide.with(this)
+                    .load(uri)
+                    .into(binding.resultImage)
+            } else {
+                showToast("Failed to get image URI")
+            }
+        }
+    }
+
+    private fun startUCrop(sourceUri: Uri) {
+        val fileName = "cropped_image_${System.currentTimeMillis()}.jpg"
+        val destinationUri = Uri.fromFile(File(cacheDir, fileName))
+        UCrop.of(sourceUri, destinationUri)
+            .withAspectRatio(1f, 1f)
+            .withMaxResultSize(1000, 1000)
+            .start(this)
+    }
+
     private fun analyzeImage() {
         val category = binding.dropdownCategory.text.toString()
         val condition = binding.dropdownCondition.text.toString()
 
-        if (currentImageUri != null && category.isNotEmpty() && condition.isNotEmpty()) {
-            moveToResult(category, condition, currentImageUri.toString())
+        val uri = currentImageUri
+        if (uri != null && category.isNotEmpty() && condition.isNotEmpty()) {
+            moveToResult(category, condition, uri.toString())
         } else {
             showToast("Please select an image, category, and condition")
         }
@@ -86,7 +117,7 @@ class BarterTradeActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun startGallery(){
+    private fun startGallery() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
         val chooser = Intent.createChooser(intent, "Choose a Picture")
@@ -98,15 +129,17 @@ class BarterTradeActivity : AppCompatActivity() {
     ) { result ->
         if (result.resultCode == RESULT_OK) {
             val selectedImg = result.data?.data
-            selectedImg?.let { uri ->
-                currentImageUri = uri
+            if (selectedImg != null) {
+                currentImageUri = selectedImg
+                startUCrop(selectedImg)
                 Glide.with(this)
-                    .load(currentImageUri)
+                    .load(selectedImg)
                     .into(binding.resultImage)
-            } ?: showToast("Failed to get image URI")
+            } else {
+                showToast("Failed to get image URI")
+            }
         }
     }
-
 
     private fun setupPermissions() {
         if (!allPermissionsGranted()) {

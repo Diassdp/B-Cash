@@ -116,4 +116,6 @@ dependencies {
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2") // Coroutines for asynchronous programming
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2") // Coroutines for Android
+
+    implementation("com.github.yalantis:ucrop:2.2.8")
 }
