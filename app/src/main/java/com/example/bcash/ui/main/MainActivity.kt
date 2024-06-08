@@ -3,6 +3,8 @@ package com.example.bcash.ui.main
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
@@ -20,7 +22,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var factory: ViewModelFactory
     private var token = ""
     private val mainViewModel: MainViewModel by viewModels { factory }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupView(){
+    private fun setupView() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         factory = ViewModelFactory.getInstance(this)
         setContentView(binding.root)
@@ -59,7 +60,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_profile
             )
         )
-
         navView.setupWithNavController(navController)
     }
+
 }
