@@ -64,8 +64,23 @@ class MainActivity : AppCompatActivity() {
             )
         )
         navView.setupWithNavController(navController)
-    }
 
+        navView.setOnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.navigation_dashboard,
+                R.id.navigation_shop,
+                R.id.navigation_bartertrade,
+                R.id.navigation_favorite,
+                R.id.navigation_profile -> {
+                    menuItem.isChecked = true
+                    navigateTo(menuItem.itemId)
+                    true
+                }
+                else -> false
+            }
+        }
+    }
+    
     private fun setupToolbar() {
         findViewById<ImageView>(R.id.iv_logo).setOnClickListener {
             navigateTo(R.id.navigation_dashboard)
@@ -90,6 +105,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun navigateTo(fragmentId: Int) {
         val navController = findNavController(R.id.nav_host_fragment)
+        navController.popBackStack()
         navController.navigate(fragmentId)
     }
 }

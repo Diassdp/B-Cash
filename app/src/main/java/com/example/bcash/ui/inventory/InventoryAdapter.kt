@@ -14,6 +14,7 @@ import com.example.bcash.R
 import com.example.bcash.databinding.ItemPopularBinding
 import com.example.bcash.service.response.ProductItem
 import com.example.bcash.ui.detail.DetailActivity
+import com.example.bcash.ui.detail.DetailInventoryActivity
 
 class InventoryAdapter : PagingDataAdapter<ProductItem, InventoryAdapter.ListViewHolder>(DIFF_ITEM_CALLBACK) {
 
@@ -48,8 +49,8 @@ class InventoryAdapter : PagingDataAdapter<ProductItem, InventoryAdapter.ListVie
         }
 
         private fun navigateToDetail(data: ProductItem) {
-            val intent = Intent(itemView.context, DetailActivity::class.java).apply {
-                putExtra(DetailActivity.EXTRA_DATA, data)
+            val intent = Intent(itemView.context, DetailInventoryActivity::class.java).apply {
+                putExtra(DetailInventoryActivity.EXTRA_DATA, data)
             }
 
             val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
