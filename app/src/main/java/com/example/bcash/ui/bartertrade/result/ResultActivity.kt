@@ -3,6 +3,7 @@ package com.example.bcash.ui.bartertrade.result
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -10,11 +11,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
-import com.example.bcash.R
 import com.example.bcash.databinding.ActivityResultBinding
 import com.example.bcash.model.ViewModelFactory
 import com.example.bcash.ui.main.MainActivity
 import com.example.bcash.utils.ImageSettings.compressFileImage
+import com.example.bcash.utils.ImageSettings.convertUriToFile
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -32,9 +33,12 @@ class ResultActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        
+
         setupView()
         setupListener()
+
+        // Initialize the factory
+        factory = ViewModelFactory.getInstance(this)
 
         // Set OnApplyWindowInsetsListener on the root view
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
@@ -42,7 +46,6 @@ class ResultActivity : AppCompatActivity() {
             view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
     }
 
     private fun setupView(){
@@ -50,9 +53,12 @@ class ResultActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val imageUriString = intent.getStringExtra("imageUri")
-        val imageUri: Uri? = imageUriString?.let { Uri.parse(it) }
+        val imageUri: Uri = imageUriString.let { Uri.parse(it) }
         val category = intent.getStringExtra("category")
         val condition = intent.getStringExtra("condition")
+
+        val convertedFile = convertUriToFile(imageUri, this)
+        file = convertedFile
 
         if (imageUri != null) {
             Glide.with(this)
@@ -67,6 +73,7 @@ class ResultActivity : AppCompatActivity() {
     private fun setupListener(){
         binding.btnPost.setOnClickListener {
             postProduct()
+            Log.d("TAG", "setupListener")
         }
     }
 
@@ -75,18 +82,15 @@ class ResultActivity : AppCompatActivity() {
             if (file != null) {
                 val compressedFile = compressFileImage(file as File)
                 val requestImageFile = compressedFile.asRequestBody("image/".toMediaTypeOrNull())
-                val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                    "photo",
-                    compressedFile.name,
-                    requestImageFile
-                )
+                val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData("photo", compressedFile.name, requestImageFile)
+
                 val name = binding.edtName.text.toString()
                 val price = binding.tvResultPrice.text.toString()
                 val condition = binding.tvResultCondition.text.toString()
                 val category = binding.tvResultCondition.text.toString()
                 val description = binding.edtDescription.text.toString().takeIf { it.isNotBlank() }?.toRequestBody("text/plain".toMediaType()) ?: "".toRequestBody("text/plain".toMediaType())
 
-                resultViewModel.uploadProduct(it.token, name, price,description,condition, category, imageMultipart)
+                resultViewModel.uploadProduct(it.token, name, price, description, condition, category, imageMultipart, it.name, it.userId)
 
                 resultViewModel.uploadProductResponse.observe(this@ResultActivity) { response ->
                     if (response.error != true && !binding.edtName.text.isNullOrEmpty()) {
@@ -96,15 +100,18 @@ class ResultActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     } else {
+                        Log.d("TAG", "postProduct: ${response.message}")
                         showToast("Failed to upload story")
                     }
                 }
             }
+            else {
+                showToast("File is null")
+            }
         }
-
     }
+
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
-
 }

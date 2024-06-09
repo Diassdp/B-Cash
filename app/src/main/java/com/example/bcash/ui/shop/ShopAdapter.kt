@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.bcash.R
 import com.example.bcash.databinding.ItemPopularBinding
-import com.example.bcash.service.response.ProductItem
+import com.example.bcash.service.response.data.ProductItem
 import com.example.bcash.ui.detail.DetailActivity
 
 class ShopAdapter : PagingDataAdapter<ProductItem, ShopAdapter.ListViewHolder>(DIFF_ITEM_CALLBACK) {

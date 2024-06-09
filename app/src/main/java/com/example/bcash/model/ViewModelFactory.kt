@@ -4,12 +4,15 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.bcash.service.repository.Repository
+import com.example.bcash.ui.bartertrade.result.ResultViewModel
 import com.example.bcash.ui.bartertrade.transaction.TransactionViewModel
 import com.example.bcash.ui.dashboard.DashboardViewModel
 import com.example.bcash.ui.detail.DetailViewModel
 import com.example.bcash.ui.favorite.FavoriteViewModel
 import com.example.bcash.ui.inventory.InventoryViewModel
 import com.example.bcash.ui.login.LoginViewModel
+import com.example.bcash.ui.main.MainViewModel
+import com.example.bcash.ui.profile.ProfileViewModel
 import com.example.bcash.ui.register.RegisterViewModel
 import com.example.bcash.utils.Injection.Injection
 
@@ -17,6 +20,10 @@ class ViewModelFactory(private val repository: Repository) : ViewModelProvider.N
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
+            modelClass.isAssignableFrom(MainViewModel::class.java) -> {
+                MainViewModel(repository) as T
+            }
+
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(repository) as T
             }
@@ -25,12 +32,20 @@ class ViewModelFactory(private val repository: Repository) : ViewModelProvider.N
                 RegisterViewModel(repository) as T
             }
 
+            modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
+                ProfileViewModel(repository) as T
+            }
+
             modelClass.isAssignableFrom(DashboardViewModel::class.java) -> {
                 DashboardViewModel(repository) as T
             }
 
             modelClass.isAssignableFrom(FavoriteViewModel::class.java) -> {
                 FavoriteViewModel(repository) as T
+            }
+
+            modelClass.isAssignableFrom(ResultViewModel::class.java) -> {
+                ResultViewModel(repository) as T
             }
 
             modelClass.isAssignableFrom(InventoryViewModel::class.java) -> {

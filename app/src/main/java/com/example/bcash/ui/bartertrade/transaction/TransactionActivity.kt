@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.example.bcash.R
 import com.example.bcash.databinding.ActivityTransactionBinding
 import com.example.bcash.model.ViewModelFactory
-import com.example.bcash.service.response.ProductItem
+import com.example.bcash.service.response.data.ProductItem
 import com.example.bcash.ui.bartertrade.endportal.EndPortalActivity
 import com.example.bcash.ui.inventory.inventransaction.InventoryTransactionAdapter
 import com.example.bcash.ui.inventory.inventransaction.InventoryTransactionFragment

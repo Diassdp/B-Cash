@@ -3,7 +3,7 @@ package com.example.bcash.service.response
 import com.example.bcash.service.response.data.ProductItem
 import com.google.gson.annotations.SerializedName
 
-data class GetInventoryResponse (
+data class GetProductResponse (
     @field:SerializedName("listProduct")
     val listProduct: List<ProductItem>,
 
@@ -13,3 +13,12 @@ data class GetInventoryResponse (
     @field:SerializedName("message")
     val message: String? = null
 )
+
+data class AddProductResponse (
+    @field:SerializedName(value = "error")
+    val error: Boolean? = true,
+
+    @field:SerializedName(value = "message")
+    val message: String? = null
+)
+

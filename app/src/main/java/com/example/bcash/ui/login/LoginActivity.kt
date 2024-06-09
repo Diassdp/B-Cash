@@ -27,16 +27,16 @@ class LoginActivity : AppCompatActivity() {
         setupView()
 
         // TODO: Uncomment this If you want to test Login
-//        setupListeners()
+        setupListener()
         //
 
 
         // TODO: Delete this after Register worked & Comment this if you want to test Login
-        findViewById<Button>(R.id.btn_login).setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+//        findViewById<Button>(R.id.btn_login).setOnClickListener {
+//            val intent = Intent(this, MainActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//        }
         //
     }
 
@@ -44,6 +44,7 @@ class LoginActivity : AppCompatActivity() {
         enableEdgeToEdge()
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
+        factory = ViewModelFactory.getInstance(this)
         setContentView(binding.root)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -63,8 +64,6 @@ class LoginActivity : AppCompatActivity() {
                 toastMessage("Login Failed")
             } else {
                 loginAction()
-                loginViewModel.login()
-                moveToMain()
             }
         }
 
@@ -91,7 +90,9 @@ class LoginActivity : AppCompatActivity() {
         }
 
         loginViewModel.loginResponse.observe(this) { response ->
-            if (response.error != true) {
+            Log.d(TAG, "Login error response: ${response.error}")
+            Log.d(TAG, "Login error message: ${response.message}")
+            if (response.error == false) {
                 toastMessage("Login Success")
                 saveSession(
                     SessionModel(
@@ -101,12 +102,15 @@ class LoginActivity : AppCompatActivity() {
                         true
                     )
                 )
+                moveToMain()
             } else {
-                Log.e(TAG, "Registration error: ${response.message}")
-                Log.e(TAG, "Token: ${TOKEN_KEY + (response.loginResult?.token.toString())}")
+                Log.e(TAG, "Login error: ${response.message}")
+                Log.e(TAG, "Token: ${response.loginResult?.token}")
+                Log.e(TAG, "Username: ${response.loginResult?.name}")
+                Log.e(TAG, "UserId: ${response.loginResult?.userId}")
                 Toast.makeText(
                     this@LoginActivity,
-                    "Registration failed: ${response.message}",
+                    "Login failed: ${response.message}",
                     Toast.LENGTH_SHORT
                 ).show()
             }

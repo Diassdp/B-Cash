@@ -27,13 +27,11 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            // TODO: PUT API URL INTO THE VALUE SECTION
-            buildConfigField("String", "BASE_URL", "\"https://story-api.dicoding.dev/v1/\"")
+            buildConfigField("String", "BASE_URL", "\"https://backend-y2k4wvszia-et.a.run.app/\"")
         }
 
-        // TODO: PUT API URL INTO THE VALUE SECTION
         debug {
-            buildConfigField("String", "BASE_URL", "\"https://story-api.dicoding.dev/v1/\"")
+            buildConfigField("String", "BASE_URL", "\"https://backend-y2k4wvszia-et.a.run.app/\"")
         }
     }
     compileOptions {
@@ -53,7 +51,7 @@ android {
 }
 
 dependencies {
-// Core libraries
+    // Core libraries
     implementation(libs.androidx.core.ktx) // Kotlin extensions for core Android functionality
     implementation(libs.androidx.appcompat) // AppCompat library for backward compatibility
     implementation(libs.material) // Material Design components

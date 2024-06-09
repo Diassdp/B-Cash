@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.bcash.service.repository.Repository
-import com.example.bcash.service.response.ProductItem
+import com.example.bcash.service.response.data.ProductItem
 
 class ShopViewModel(private val repository: Repository) : ViewModel() {
     fun getProductsByCategory(category: String): LiveData<PagingData<ProductItem>> {

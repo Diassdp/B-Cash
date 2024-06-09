@@ -49,8 +49,10 @@ interface ApiService {
         @Part(value = "condition") condition: String,
         @Part(value = "category") category: String,
         @Part(value = "price") price: String,
-        @Part photo: MultipartBody.Part
-    ): Call<AddProductResponse>
+        @Part photo: MultipartBody.Part,
+        @Part(value = "username") username: String,
+        @Part(value = "userId") userId: String,
+        ): Call<AddProductResponse>
 
     @GET("product")
     suspend fun getAllProduct(
@@ -107,8 +109,8 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Field("itemId1") itemId1: String,
         @Field("itemId2") itemId2: String,
-        @Field("username1") username1: String,
-        @Field("username2") username2: String,
+        @Field("userId1") userId1: String,
+        @Field("userId2") userId2: String,
     ): Call<TradeRequestResponse>
 
     @FormUrlEncoded

@@ -1,5 +1,6 @@
 package com.example.bcash.service.response
 
+import com.example.bcash.service.response.data.Profile
 import com.google.gson.annotations.SerializedName
 
 data class GetProfileResponse (
@@ -11,21 +12,4 @@ data class GetProfileResponse (
 
     @field:SerializedName("message")
     val message: String? = null
-)
-
-data class Profile(
-    @field:SerializedName("id")
-    val id: String,
-
-    @field:SerializedName("name")
-    val name: String? = null,
-
-    @field:SerializedName("email")
-    val email: String? = null,
-
-    @field:SerializedName("phone")
-    val phone: String? = null,
-
-    @field:SerializedName("address")
-    val address: String? = null
 )

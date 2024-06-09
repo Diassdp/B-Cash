@@ -1,19 +1,8 @@
-package com.example.bcash.service.response
+package com.example.bcash.service.response.data
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
-
-data class GetProductResponse (
-    @field:SerializedName("listProduct")
-    val listProduct: List<ProductItem>,
-
-    @field:SerializedName("error")
-    val error: Boolean? = null,
-
-    @field:SerializedName("message")
-    val message: String? = null
-)
 
 @Parcelize
 data class ProductItem(
@@ -41,4 +30,6 @@ data class ProductItem(
     @field:SerializedName("username")
     val username: String,
 
+    @field:SerializedName("userId")
+    val userId: String,
 ): Parcelable

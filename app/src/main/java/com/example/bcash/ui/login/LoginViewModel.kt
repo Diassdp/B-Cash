@@ -16,25 +16,18 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
     fun postLogin(email: String, password: String) {
         viewModelScope.launch {
             repository.postLogin(email, password)
-            Log.d(TAG, "postLogin: Success")
         }
     }
 
     fun saveSession(session: SessionModel) {
         viewModelScope.launch {
             repository.saveSession(session)
-            Log.d(TAG, "saveSession: Success")
         }
     }
 
     fun login() {
         viewModelScope.launch {
             repository.login()
-            Log.d(TAG, "login: Success")
         }
-    }
-
-    companion object {
-        const val TAG = "LoginActivityViewModel"
     }
 }

@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bcash.databinding.FragmentInventoryBinding
 import com.example.bcash.model.ViewModelFactory
-import com.example.bcash.service.response.ProductItem
+import com.example.bcash.service.response.data.ProductItem
 
 class InventoryFragment : Fragment() {
     private var _binding: FragmentInventoryBinding? = null
@@ -42,9 +42,9 @@ class InventoryFragment : Fragment() {
 
     private fun setupView() {
         setupAdapter()
-        dummyView()
+//        dummyView()
         countInventoryItems()
-//        setupViewModel()
+        setupViewModel()
     }
 
     private fun setupViewModel() {
@@ -66,9 +66,9 @@ class InventoryFragment : Fragment() {
         })
     }
 
-    private fun dummyView(){
-        adapter.submitData(viewLifecycleOwner.lifecycle, PagingData.from(dummyData))
-    }
+//    private fun dummyView() {
+//        adapter.submitData(viewLifecycleOwner.lifecycle, PagingData.from(dummyData))
+//    }
 
     private fun setupAdapter() {
         recyclerView = binding.recyclerView
@@ -86,10 +86,10 @@ class InventoryFragment : Fragment() {
         binding.tvFavCount.text = "Inventory Items: $inventoryItemsCount"
     }
 
-    val dummyData = listOf(
-        ProductItem("1", "Product 1", "https://images-ext-1.discordapp.net/external/8YwJuF5LQA0QykOKHTHehSNHDbSnenl0QWtyVNszhe8/https/img.lazcdn.com/g/p/18de5a0582d6fbfbce7b3dffec049e6c.jpg_720x720q80.jpg_.webp?format=webp&width=676&height=676", "dummy_image_url","100K","baju","baru","Bob" ),
-        ProductItem("2", "Product 2", "https://images-ext-1.discordapp.net/external/UtxCvcjDcuhkd4iWogrAkZdxPITsyGppglQdRBc7nUo/https/static4.depositphotos.com/1007248/289/i/450/depositphotos_2891812-stock-photo-plastic-dummy.jpg?format=webp", "dummy_image_url","200K","baju","bekas","Builder"),
-        ProductItem("3", "Product 3", "https://images-ext-1.discordapp.net/external/UtxCvcjDcuhkd4iWogrAkZdxPITsyGppglQdRBc7nUo/https/static4.depositphotos.com/1007248/289/i/450/depositphotos_2891812-stock-photo-plastic-dummy.jpg?format=webp", "dummy_image_url","300K","elektronik","baru","opak"),
-        ProductItem("4", "Product 4", "https://images-ext-1.discordapp.net/external/UtxCvcjDcuhkd4iWogrAkZdxPITsyGppglQdRBc7nUo/https/static4.depositphotos.com/1007248/289/i/450/depositphotos_2891812-stock-photo-plastic-dummy.jpg?format=webp", "dummy_image_url","400K","elektronik","baru","yonathan"),
-    )
+//    val dummyData = listOf(
+//        ProductItem("1", "Product 1", "https://images-ext-1.discordapp.net/external/8YwJuF5LQA0QykOKHTHehSNHDbSnenl0QWtyVNszhe8/https/img.lazcdn.com/g/p/18de5a0582d6fbfbce7b3dffec049e6c.jpg_720x720q80.jpg_.webp?format=webp&width=676&height=676", "dummy_image_url","100K","baju","baru","Bob" ),
+//        ProductItem("2", "Product 2", "https://images-ext-1.discordapp.net/external/UtxCvcjDcuhkd4iWogrAkZdxPITsyGppglQdRBc7nUo/https/static4.depositphotos.com/1007248/289/i/450/depositphotos_2891812-stock-photo-plastic-dummy.jpg?format=webp", "dummy_image_url","200K","baju","bekas","Builder"),
+//        ProductItem("3", "Product 3", "https://images-ext-1.discordapp.net/external/UtxCvcjDcuhkd4iWogrAkZdxPITsyGppglQdRBc7nUo/https/static4.depositphotos.com/1007248/289/i/450/depositphotos_2891812-stock-photo-plastic-dummy.jpg?format=webp", "dummy_image_url","300K","elektronik","baru","opak"),
+//        ProductItem("4", "Product 4", "https://images-ext-1.discordapp.net/external/UtxCvcjDcuhkd4iWogrAkZdxPITsyGppglQdRBc7nUo/https/static4.depositphotos.com/1007248/289/i/450/depositphotos_2891812-stock-photo-plastic-dummy.jpg?format=webp", "dummy_image_url","400K","elektronik","baru","yonathan"),
+//    )
 }

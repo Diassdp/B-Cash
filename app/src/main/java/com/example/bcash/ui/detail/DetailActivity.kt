@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.bcash.databinding.ActivityDetailBinding
 import com.example.bcash.model.ViewModelFactory
-import com.example.bcash.service.response.ProductItem
+import com.example.bcash.service.response.data.ProductItem
 import com.example.bcash.ui.bartertrade.transaction.TransactionActivity
 import com.example.bcash.ui.dashboard.DashboardViewModel
 
@@ -82,8 +82,7 @@ class DetailActivity : AppCompatActivity() {
             tvCategory.text = data.category
             tvCondition.text = data.condition
             tvNameUser.text = data.username
-
-
+            
             Glide.with(this@DetailActivity)
                 .load(data.photo)
                 .fitCenter()

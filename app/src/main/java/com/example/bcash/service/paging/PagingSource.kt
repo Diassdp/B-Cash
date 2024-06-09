@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.bcash.service.api.ApiService
-import com.example.bcash.service.response.ProductItem
+import com.example.bcash.service.response.data.ProductItem
 import com.example.bcash.utils.session.SessionPreferences
 import kotlinx.coroutines.flow.first
 

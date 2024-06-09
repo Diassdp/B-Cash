@@ -13,10 +13,4 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     fun getSession(): LiveData<SessionModel> {
         return repository.getSession()
     }
-
-    fun logout() {
-        viewModelScope.launch {
-            repository.logout()
-        }
-    }
 }

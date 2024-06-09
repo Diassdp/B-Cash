@@ -1,5 +1,6 @@
 package com.example.bcash.service.response
 
+import com.example.bcash.service.response.data.ProductItem
 import com.google.gson.annotations.SerializedName
 
 data class GetWishlistResponse (

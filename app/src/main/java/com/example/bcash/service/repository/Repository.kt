@@ -20,8 +20,8 @@ import com.example.bcash.service.response.GetProductResponse
 import com.example.bcash.service.response.GetProfileResponse
 import com.example.bcash.service.response.GetWishlistResponse
 import com.example.bcash.service.response.LoginResponse
-import com.example.bcash.service.response.ProductItem
-import com.example.bcash.service.response.Profile
+import com.example.bcash.service.response.data.ProductItem
+import com.example.bcash.service.response.data.Profile
 import com.example.bcash.service.response.RegisterResponse
 import com.example.bcash.service.response.TradeRequestResponse
 import com.example.bcash.utils.session.SessionPreferences
@@ -223,9 +223,9 @@ class Repository(private val context: Context, private val preferences: SessionP
         })
     }
 
-    fun postAddProducts(token: String, name: String, price: String, description: RequestBody, condition: String, category: String, photo: MultipartBody.Part) {
+    fun postAddProducts(token: String, name: String, price: String, description: RequestBody, condition: String, category: String, photo: MultipartBody.Part,username: String,userId: String) {
         toggleLoading(true)
-        val client = api.addProduct(token, name, description, condition, price,category, photo)
+        val client = api.addProduct(token, name, description, condition, price,category, photo,username,userId)
 
         client.enqueue(object : Callback<AddProductResponse> {
             override fun onResponse(call: Call<AddProductResponse>, response: Response<AddProductResponse>) {

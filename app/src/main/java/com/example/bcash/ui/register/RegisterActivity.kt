@@ -28,24 +28,23 @@ class RegisterActivity : AppCompatActivity() {
         setupView()
 
         // TODO: Uncomment this If you want to test Register
-//        setupListeners()
+        setupListeners()
 
 
         // TODO: Delete this after Register worked & Comment this if you want to test register
-        findViewById<Button>(R.id.btn_register).setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+//        findViewById<Button>(R.id.btn_register).setOnClickListener {
+//            val intent = Intent(this, LoginActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//        }
         //
     }
 
     private fun setupView(){
         enableEdgeToEdge()
-
         binding = ActivityRegisterBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         factory = ViewModelFactory.getInstance(this)
+        setContentView(binding.root)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -67,7 +66,6 @@ class RegisterActivity : AppCompatActivity() {
                 if (password.length < 8) binding.edtPassword.error = "Password must be at least 8 characters"
                 toastMessage("Register Failed")
             } else {
-                loadingToggle()
                 registerAction(name, email, password,address, phone)
             }
         }
@@ -80,7 +78,10 @@ class RegisterActivity : AppCompatActivity() {
     private fun registerAction(name: String, email: String, password: String, address: String, phone: String) {
         registerViewModel.postRegister(name, email, password, address, phone)
         registerViewModel.registerResponse.observe(this@RegisterActivity) { response ->
-            if (response.error != true) {
+            Log.e(TAG, "Error: ${response.error}")
+            if (response.error == false) {
+                Log.e(TAG, "Registration success: ${response.message}")
+                toastMessage("Register Success")
                 startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
             } else {
                 Log.e(TAG, "Registration error: ${response.message}")
@@ -92,13 +93,6 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
     }
-
-    private fun loadingToggle() {
-        registerViewModel.isLoading.observe(this@RegisterActivity) {
-//            binding.ProgressBar.visibility = if (it) View.VISIBLE else View.GONE
-        }
-    }
-
     private fun toastMessage(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }

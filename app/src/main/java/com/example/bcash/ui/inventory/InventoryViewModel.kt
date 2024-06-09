@@ -9,7 +9,6 @@ import com.example.bcash.service.response.GetInventoryResponse
 import kotlinx.coroutines.launch
 
 class InventoryViewModel(private val repository: Repository) : ViewModel() {
-
     private val _inventoryResponse: LiveData<GetInventoryResponse> = repository.getInventoryResponse
     val inventoryResponse: LiveData<GetInventoryResponse> = _inventoryResponse
 

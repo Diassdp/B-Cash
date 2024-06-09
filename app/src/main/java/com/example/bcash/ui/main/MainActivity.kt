@@ -3,8 +3,6 @@ package com.example.bcash.ui.main
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -17,26 +15,29 @@ import com.example.bcash.R
 import com.example.bcash.databinding.ActivityMainBinding
 import com.example.bcash.model.ViewModelFactory
 import com.example.bcash.ui.login.LoginActivity
-import com.example.bcash.ui.login.LoginViewModel.Companion.TAG
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var factory: ViewModelFactory
     private var token = ""
+
     private val mainViewModel: MainViewModel by viewModels { factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupUser()
         setupView()
-//        setupUser()
         setupNavigation()
         setupToolbar()
     }
 
     private fun setupUser() {
+        factory = ViewModelFactory.getInstance(this)
+
         mainViewModel.getSession().observe(this@MainActivity) {
             token = it.token
             Log.d(TAG, "Token: $token")
+            Log.d(TAG, "statusLogin: ${it.statusLogin}")
             if (!it.statusLogin) {
                 startActivity(Intent(this@MainActivity, LoginActivity::class.java))
                 finish()
@@ -46,7 +47,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupView() {
         binding = ActivityMainBinding.inflate(layoutInflater)
-        factory = ViewModelFactory.getInstance(this)
         setContentView(binding.root)
     }
 
@@ -107,5 +107,9 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         navController.popBackStack()
         navController.navigate(fragmentId)
+    }
+
+    companion object {
+        private const val TAG = "MainActivity"
     }
 }

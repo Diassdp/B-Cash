@@ -8,7 +8,7 @@ import androidx.paging.cachedIn
 import com.example.bcash.model.SessionModel
 import com.example.bcash.service.repository.Repository
 import com.example.bcash.service.response.GetProductResponse
-import com.example.bcash.service.response.ProductItem
+import com.example.bcash.service.response.data.ProductItem
 import kotlinx.coroutines.launch
 
 class DashboardViewModel(private val repository: Repository) : ViewModel() {
@@ -22,10 +22,7 @@ class DashboardViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    fun getProductByCategory(category: String){
-        viewModelScope.launch {
-
-        }
+    fun getSession(): LiveData<SessionModel> {
+        return repository.getSession()
     }
-
 }
