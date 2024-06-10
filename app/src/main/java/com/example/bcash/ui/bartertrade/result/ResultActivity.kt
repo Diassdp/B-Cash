@@ -66,8 +66,8 @@ class ResultActivity : AppCompatActivity() {
                 .into(binding.resultImage)
         }
 
-        binding.tvResultCategory.text = category ?: "(No Category)"
-        binding.tvResultCondition.text = condition ?: "(No Condition)"
+        binding.edtCategory.setText("Category: $category")
+        binding.edtCondition.setText("Condition: $condition")
     }
 
     private fun setupListener(){
@@ -85,9 +85,9 @@ class ResultActivity : AppCompatActivity() {
                 val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData("photo", compressedFile.name, requestImageFile)
 
                 val name = binding.edtName.text.toString()
-                val price = binding.tvResultPrice.text.toString()
-                val condition = binding.tvResultCondition.text.toString()
-                val category = binding.tvResultCondition.text.toString()
+                val price = binding.edtPrice.text.toString()
+                val condition = binding.edtCondition.text.toString()
+                val category = binding.edtCategory.text.toString()
                 val description = binding.edtDescription.text.toString().takeIf { it.isNotBlank() }?.toRequestBody("text/plain".toMediaType()) ?: "".toRequestBody("text/plain".toMediaType())
 
                 resultViewModel.uploadProduct(it.token, name, price, description, condition, category, imageMultipart, it.name, it.userId)
