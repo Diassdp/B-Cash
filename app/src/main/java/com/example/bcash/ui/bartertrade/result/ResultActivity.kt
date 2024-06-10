@@ -1,9 +1,11 @@
 package com.example.bcash.ui.bartertrade.result
 
+import android.R
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -11,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
+import com.example.bcash.databinding.ActivityBarterTradeBinding
 import com.example.bcash.databinding.ActivityResultBinding
 import com.example.bcash.model.ViewModelFactory
 import com.example.bcash.ui.main.MainActivity
@@ -57,6 +60,9 @@ class ResultActivity : AppCompatActivity() {
         val category = intent.getStringExtra("category")
         val condition = intent.getStringExtra("condition")
 
+        val categories = listOf("Elektronik", "Pakaian", "Buku", "Peralatan Rumah Tangga")
+        val conditions = listOf("Baru", "Bekas", "Rusak")
+
         val convertedFile = convertUriToFile(imageUri, this)
         file = convertedFile
 
@@ -66,8 +72,21 @@ class ResultActivity : AppCompatActivity() {
                 .into(binding.resultImage)
         }
 
-        binding.edtCategory.setText("$category")
-        binding.edtCondition.setText("$condition")
+        binding.dropdownCategory.setText("$category")
+        binding.dropdownCondition.setText("$condition")
+
+        val categoryAdapter = ArrayAdapter(this, R.layout.simple_list_item_1, categories)
+        binding.dropdownCategory.setAdapter(categoryAdapter)
+
+        // Adapter for conditions
+        val conditionAdapter = ArrayAdapter(this, R.layout.simple_list_item_1, conditions)
+        binding.dropdownCondition.setAdapter(conditionAdapter)
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
     }
 
     private fun setupListener(){
@@ -86,8 +105,8 @@ class ResultActivity : AppCompatActivity() {
 
                 val name = binding.edtName.text.toString()
                 val price = binding.edtPrice.text.toString()
-                val condition = binding.edtCondition.text.toString()
-                val category = binding.edtCategory.text.toString()
+                val condition = binding.dropdownCategory.text.toString()
+                val category = binding.dropdownCondition.text.toString()
                 val description = binding.edtDescription.text.toString().takeIf { it.isNotBlank() }?.toRequestBody("text/plain".toMediaType()) ?: "".toRequestBody("text/plain".toMediaType())
 
                 resultViewModel.uploadProduct(it.token, name, price, description, condition, category, imageMultipart, it.name, it.userId)
