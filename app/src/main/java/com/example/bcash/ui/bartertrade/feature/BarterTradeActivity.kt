@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -70,22 +71,43 @@ class BarterTradeActivity : AppCompatActivity() {
     }
 
     private fun startCamera() {
-        currentImageUri = getImageUri(this)
-        launcherIntentCamera.launch(currentImageUri!!)
+        croppedImageUri = getImageUri(this)
+        launcherIntentCamera.launch(croppedImageUri!!)
     }
 
     private val launcherIntentCamera = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
         if (isSuccess) {
-            val uri = currentImageUri
-            if (uri != null) {
+            croppedImageUri?.let { uri ->
+                currentImageUri = uri
                 startUCrop(uri)
-                Glide.with(this)
-                    .load(uri)
-                    .into(binding.resultImage)
-            } else {
-                showToast("Failed to get image URI")
+                showImage()
+                } ?: showToast("Failed to get image URI")
             }
         }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
+            val resultUri = UCrop.getOutput(data!!)
+            resultUri?.let {
+                showCroppedImage(resultUri)
+            } ?: showToast("Failed to crop image")
+        } else if (resultCode == UCrop.RESULT_ERROR) {
+            val cropError = UCrop.getError(data!!)
+            showToast("Crop error: ${cropError?.message}")
+        }
+    }
+
+    private fun showCroppedImage(uri: Uri) {
+        binding.resultImage.setImageURI(uri)
+        croppedImageUri = uri
+    }
+
+    private fun showImage() {
+        croppedImageUri?.let { uri ->
+            Log.d("BarterTradeActivity", "Displaying image: $uri")
+            binding.resultImage.setImageURI(uri)
+        } ?: Log.d("BarterTradeActivity", "No image to display")
     }
 
     private fun startUCrop(sourceUri: Uri) {
@@ -100,10 +122,10 @@ class BarterTradeActivity : AppCompatActivity() {
     private fun analyzeImage() {
         val category = binding.dropdownCategory.text.toString()
         val condition = binding.dropdownCondition.text.toString()
-
-        val uri = currentImageUri
+        val uri = croppedImageUri
         if (uri != null && category.isNotEmpty() && condition.isNotEmpty()) {
             moveToResult(category, condition, uri.toString())
+            Log.d("BarterTradeActivity", "Image URI: $uri")
         } else {
             showToast("Please select an image, category, and condition")
         }
@@ -129,15 +151,11 @@ class BarterTradeActivity : AppCompatActivity() {
     ) { result ->
         if (result.resultCode == RESULT_OK) {
             val selectedImg = result.data?.data
-            if (selectedImg != null) {
-                currentImageUri = selectedImg
-                startUCrop(selectedImg)
-                Glide.with(this)
-                    .load(selectedImg)
-                    .into(binding.resultImage)
-            } else {
-                showToast("Failed to get image URI")
-            }
+            selectedImg?.let{uri ->
+                currentImageUri = uri
+                startUCrop(uri)
+                showImage()
+            }?: Log.d("launcherIntentGallery", "Failed to get image URI")
         }
     }
 

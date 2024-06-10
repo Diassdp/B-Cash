@@ -66,8 +66,8 @@ class ResultActivity : AppCompatActivity() {
                 .into(binding.resultImage)
         }
 
-        binding.edtCategory.setText("Category: $category")
-        binding.edtCondition.setText("Condition: $condition")
+        binding.edtCategory.setText("$category")
+        binding.edtCondition.setText("$condition")
     }
 
     private fun setupListener(){
