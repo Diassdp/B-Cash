@@ -12,7 +12,7 @@ data class ProductItem(
     @field:SerializedName("name")
     val name: String? = null,
 
-    @field:SerializedName("photoUrl")
+    @field:SerializedName("photo")
     val photo: String? = null,
 
     @field:SerializedName("description")

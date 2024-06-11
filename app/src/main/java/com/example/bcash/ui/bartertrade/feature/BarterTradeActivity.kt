@@ -80,6 +80,8 @@ class BarterTradeActivity : AppCompatActivity() {
             croppedImageUri?.let { uri ->
                 currentImageUri = uri
                 startUCrop(uri)
+                Log.d("BarterTradeActivity", "Image URI: $uri")
+                Log.d("BarterTradeActivity", "Cropped Image URI: $croppedImageUri")
                 showImage()
                 } ?: showToast("Failed to get image URI")
             }
@@ -105,7 +107,7 @@ class BarterTradeActivity : AppCompatActivity() {
 
     private fun showImage() {
         croppedImageUri?.let { uri ->
-            Log.d("BarterTradeActivity", "Displaying image: $uri")
+            Log.e("BarterTradeActivity", "Displaying image: $uri")
             binding.resultImage.setImageURI(uri)
         } ?: Log.d("BarterTradeActivity", "No image to display")
     }
@@ -132,6 +134,7 @@ class BarterTradeActivity : AppCompatActivity() {
     }
 
     private fun moveToResult(category: String, condition: String, imageUri: String) {
+        Log.e("BarterTradeActivity", "Moving to ResultActivity with Category: $category, Condition: $condition, Image URI: $imageUri")
         val intent = Intent(this, ResultActivity::class.java)
         intent.putExtra("category", category)
         intent.putExtra("condition", condition)
@@ -146,9 +149,7 @@ class BarterTradeActivity : AppCompatActivity() {
         launcherIntentGallery.launch(chooser)
     }
 
-    private val launcherIntentGallery = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
+    private val launcherIntentGallery = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             val selectedImg = result.data?.data
             selectedImg?.let{uri ->

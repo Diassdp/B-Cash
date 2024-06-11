@@ -12,4 +12,9 @@ class ShopViewModel(private val repository: Repository) : ViewModel() {
     fun getProductsByCategory(category: String): LiveData<PagingData<ProductItem>> {
         return repository.getProductbyCategory(category).cachedIn(viewModelScope)
     }
+
+    fun getProductsBySearch(search: String): LiveData<PagingData<ProductItem>> {
+        return repository.getProductbySearch(search).cachedIn(viewModelScope)
+    }
+
 }

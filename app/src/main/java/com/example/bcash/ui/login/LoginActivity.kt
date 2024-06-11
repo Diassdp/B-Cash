@@ -25,19 +25,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupView()
-
-        // TODO: Uncomment this If you want to test Login
         setupListener()
-        //
-
-
-        // TODO: Delete this after Register worked & Comment this if you want to test Login
-//        findViewById<Button>(R.id.btn_login).setOnClickListener {
-//            val intent = Intent(this, MainActivity::class.java)
-//            startActivity(intent)
-//            finish()
-//        }
-        //
     }
 
     private fun setupView() {
@@ -91,13 +79,13 @@ class LoginActivity : AppCompatActivity() {
 
         loginViewModel.loginResponse.observe(this) { response ->
             Log.d(TAG, "Login error response: ${response.error}")
-            Log.d(TAG, "Login error message: ${response.message}")
+            Log.d(TAG, "Login message response: ${response.message}")
             if (response.error == false) {
                 toastMessage("Login Success")
                 saveSession(
                     SessionModel(
                         response.loginResult?.userId.toString(),
-                        TOKEN_KEY + (response.loginResult?.token.toString()),
+                        response.loginResult?.token.toString(),
                         response.loginResult?.name.toString(),
                         true
                     )
@@ -128,6 +116,6 @@ class LoginActivity : AppCompatActivity() {
 
     companion object {
         private const val TAG = "LoginActivity"
-        private const val TOKEN_KEY = "Bearer "
+        private const val TOKEN_KEY = ""
     }
 }

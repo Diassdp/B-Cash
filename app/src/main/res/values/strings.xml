@@ -12,4 +12,5 @@
     <string name="txt_barter_trade">Barter Trade</string>
     <string name="txt_favorite">Favorite</string>
     <string name="txt_profile">Profile</string>
+    <string name="search_hint">Enter Product Name</string>
 </resources>

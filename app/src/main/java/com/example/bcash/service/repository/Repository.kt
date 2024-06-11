@@ -14,6 +14,7 @@ import com.example.bcash.model.SessionModel
 import com.example.bcash.service.api.ApiService
 import com.example.bcash.service.paging.CategoryPagingSource
 import com.example.bcash.service.paging.PagingSource
+import com.example.bcash.service.paging.SearchPagingSource
 import com.example.bcash.service.response.AddProductResponse
 import com.example.bcash.service.response.GetInventoryResponse
 import com.example.bcash.service.response.GetProductResponse
@@ -387,6 +388,12 @@ class Repository(private val context: Context, private val preferences: SessionP
     fun getProductbyCategory(category: String): LiveData<PagingData<ProductItem>> {
         return Pager(config = PagingConfig(pageSize = 5), pagingSourceFactory = {
             CategoryPagingSource(preferences, api,category)
+        }).liveData
+    }
+
+    fun getProductbySearch(search: String): LiveData<PagingData<ProductItem>> {
+        return Pager(config = PagingConfig(pageSize = 5), pagingSourceFactory = {
+            SearchPagingSource(preferences, api,search)
         }).liveData
     }
 

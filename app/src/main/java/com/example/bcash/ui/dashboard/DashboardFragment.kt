@@ -107,8 +107,8 @@ class DashboardFragment : Fragment() {
         }
     }
 
-    private fun navigateToShopFragment(category: String) {
-        val action = DashboardFragmentDirections.actionDashboardToShop(category)
+    private fun navigateToShopFragment(data: String) {
+        val action = DashboardFragmentDirections.actionDashboardToShop(data)
         findNavController().navigate(action)
     }
 
