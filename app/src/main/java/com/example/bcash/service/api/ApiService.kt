@@ -1,6 +1,8 @@
 package com.example.bcash.service.api
 
 import com.example.bcash.service.response.AddProductResponse
+import com.example.bcash.service.response.AddToWishlistResponse
+import com.example.bcash.service.response.DeleteFromWishlistResponse
 import com.example.bcash.service.response.GetInventoryResponse
 import com.example.bcash.service.response.GetProductResponse
 import com.example.bcash.service.response.GetProfileResponse
@@ -95,7 +97,14 @@ interface ApiService {
         @Header("authorization") token: String,
         @Field("userId") userId: String,
         @Field("productId") productId: String
-    ): Call<GetWishlistResponse>
+    ): Call<AddToWishlistResponse>
+
+    @POST("wishlist")
+    fun deleteFromWishlist(
+        @Header("authorization") token: String,
+        @Field("userId") userId: String,
+        @Field("productId") productId: String
+    ): Call<DeleteFromWishlistResponse>
 
     @GET("inventory")
     suspend fun getUserInventory(

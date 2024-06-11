@@ -13,3 +13,17 @@ data class GetWishlistResponse (
     @field:SerializedName("message")
     val message: String? = null
 )
+
+data class DeleteFromWishlistResponse (
+    @field:SerializedName("error")
+    val error: Boolean? = null,
+    @field:SerializedName("message")
+    val message: String? = null
+)
+
+data class AddToWishlistResponse (
+    @field:SerializedName("error")
+    val error: Boolean? = null,
+    @field:SerializedName("message")
+    val message: String? = null
+    )

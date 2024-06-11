@@ -14,7 +14,10 @@
             android:id="@+id/action_dashboard_to_shop"
             app:destination="@id/navigation_shop">
             <argument
-                android:name="category"
+                android:name="data"
+                app:argType="string" />
+            <argument
+                android:name="action"
                 app:argType="string" />
         </action>
     </fragment>

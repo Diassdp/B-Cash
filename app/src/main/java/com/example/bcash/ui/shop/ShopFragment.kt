@@ -3,6 +3,7 @@ package com.example.bcash.ui.shop
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -26,7 +27,8 @@ class ShopFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var searchView: SearchView
 
-    private var category: String? = null
+    private var data: String? = "Barang 1" // Temporary
+    private var action: String? = "category"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentShopBinding.inflate(inflater, container, false)
@@ -35,19 +37,34 @@ class ShopFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.getString("category")?.let {
-            category = it
-            binding.tvCategory.text = it
-        }
+        setupActionData()
         setupView()
+        binding.searchView.setOnClickListener {
+            binding.searchView.isIconified = false
+            binding.searchView.requestFocus()
+        }
     }
 
+    private fun setupActionData(){
+        arguments?.getString("data")?.let {
+            data = it
+            Log.e("ShopFragment", "onViewCreated: $data")
+            binding.tvCategory.text = it
+        }
+        arguments?.getString("action")?.let {
+            action = it
+            Log.e("ShopFragment", "onViewCreated: $action")
+            binding.tvCategory.text = it
+        }
+    }
     private fun setupView(){
         setupAdapter()
-        if (category != null) {
-            setupProductByCategory(category!!)
-        } else {
-            // If category is null, don't fetch products by category
+        if (action =="category"){
+            binding.tvCategory.text = "Category: $data"
+            setupProductByCategory(data!!)
+        } else if (action == "search"){
+            binding.tvCategory.text = "Search: $data"
+            setupProductBySearch(data!!)
         }
         setupSearch()
     }
@@ -75,11 +92,13 @@ class ShopFragment : Fragment() {
             override fun onQueryTextSubmit(query: String): Boolean {
                 setupProductBySearch(query)
                 searchView.clearFocus()
+                binding.tvCategory.text = "Search: $query"
                 return true
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                setupProductBySearch(newText)
+//                setupProductBySearch(newText)
+//                binding.tvCategory.text = "Search: $newText"
                 return true
             }
         })
