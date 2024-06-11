@@ -26,51 +26,61 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_image"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_form"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/result_image"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@color/primary_light"
+                    android:scaleType="fitCenter"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="H,1:1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_default="percent"
+                    app:layout_constraintWidth_percent="0.9"
+                    app:srcCompat="@drawable/ic_place_holder" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_galery"
-                android:layout_width="120dp"
+                android:layout_width="150dp"
                 android:layout_height="43dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/bg_lightblue1"
-                android:text="Galery"
-                android:textAllCaps="false"
+                android:drawableEnd="@drawable/ic_place_holder"
+                android:drawableTint="@color/white"
+                android:text="Gallery"
                 android:textColor="@color/white"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 app:backgroundTint="@color/accent"
-                app:layout_constraintStart_toStartOf="@+id/result_image"
-                app:layout_constraintTop_toBottomOf="@+id/result_image" />
+                app:layout_constraintStart_toStartOf="@+id/cl_image"
+                app:layout_constraintTop_toBottomOf="@+id/cl_image" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_photo"
-                android:layout_width="120dp"
+                android:layout_width="150dp"
                 android:layout_height="43dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/bg_lightblue1"
+                android:drawableEnd="@drawable/ic_camera"
+                android:drawableTint="@color/white"
                 android:text="Photo"
-                android:textAllCaps="false"
                 android:textColor="@color/white"
-                android:textSize="16sp"
+                android:textSize="14sp"
                 app:backgroundTint="@color/accent"
-                app:layout_constraintEnd_toEndOf="@+id/result_image"
-                app:layout_constraintTop_toBottomOf="@+id/result_image" />
-
-            <ImageView
-                android:id="@+id/result_image"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="8dp"
-                android:background="@color/primary_light"
-                android:scaleType="fitCenter"
-                app:layout_constraintDimensionRatio="H,1:1"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent="0.9"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_place_holder" />
-
+                app:layout_constraintEnd_toEndOf="@+id/cl_image"
+                app:layout_constraintTop_toBottomOf="@+id/cl_image" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayout"
@@ -113,12 +123,14 @@
                 android:layout_width="191dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/bg_lightblue1"
                 android:text="Analyse"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 app:backgroundTint="@color/accent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
