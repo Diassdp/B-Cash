@@ -43,10 +43,6 @@ class FavoriteFragment : Fragment() {
         countFavoriteItems()
     }
 
-//    private fun dummyView(){
-//        adapter.submitData(viewLifecycleOwner.lifecycle, PagingData.from(dummyData))
-//    }
-
     private fun setupViewModel() {
         viewModel.getSession().observe(viewLifecycleOwner, Observer { session ->
             session?.let {
@@ -57,7 +53,13 @@ class FavoriteFragment : Fragment() {
         viewModel.wishlistResponse.observe(viewLifecycleOwner, Observer { response ->
             if (response.error == true) {
                 response.wishlist.let { list ->
-                    adapter.submitData(viewLifecycleOwner.lifecycle, PagingData.from(list))
+                    if (list != null){
+                        Log.e("InventoryFragment","Success fetching inventory")
+                        adapter.submitData(viewLifecycleOwner.lifecycle, PagingData.from(list))
+                    } else {
+                        Log.e("InventoryFragment","Error fetching inventory: ${response.message}")
+                        Toast.makeText(requireContext(), "Error fetching inventory", Toast.LENGTH_SHORT).show()
+                    }
                 }
             } else {
                 Log.e("InventoryFragment","Error fetching inventory: ${response.message}")
@@ -77,11 +79,4 @@ class FavoriteFragment : Fragment() {
         val favoriteItemsCount = adapter.itemCount
         binding.tvFavCount.text = "Favorite Items: $favoriteItemsCount"
     }
-
-//    val dummyData = listOf(
-//        ProductItem("1", "Product 1", "https://images-ext-1.discordapp.net/external/8YwJuF5LQA0QykOKHTHehSNHDbSnenl0QWtyVNszhe8/https/img.lazcdn.com/g/p/18de5a0582d6fbfbce7b3dffec049e6c.jpg_720x720q80.jpg_.webp?format=webp&width=676&height=676", "dummy_image_url","100K","baju","baru","Bob" ),
-//        ProductItem("2", "Product 2", "https://images-ext-1.discordapp.net/external/8YwJuF5LQA0QykOKHTHehSNHDbSnenl0QWtyVNszhe8/https/img.lazcdn.com/g/p/18de5a0582d6fbfbce7b3dffec049e6c.jpg_720x720q80.jpg_.webp?format=webp&width=676&height=676", "dummy_image_url","200K","baju","bekas","Builder"),
-//        ProductItem("3", "Product 3", "https://images-ext-1.discordapp.net/external/UtxCvcjDcuhkd4iWogrAkZdxPITsyGppglQdRBc7nUo/https/static4.depositphotos.com/1007248/289/i/450/depositphotos_2891812-stock-photo-plastic-dummy.jpg?format=webp", "dummy_image_url","300K","elektronik","baru","opak"),
-//        ProductItem("4", "Product 4", "https://images-ext-1.discordapp.net/external/UtxCvcjDcuhkd4iWogrAkZdxPITsyGppglQdRBc7nUo/https/static4.depositphotos.com/1007248/289/i/450/depositphotos_2891812-stock-photo-plastic-dummy.jpg?format=webp", "dummy_image_url","400K","elektronik","baru","yonathan"),
-//        )
 }

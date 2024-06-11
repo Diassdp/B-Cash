@@ -14,6 +14,7 @@ import com.example.bcash.ui.login.LoginViewModel
 import com.example.bcash.ui.main.MainViewModel
 import com.example.bcash.ui.profile.ProfileViewModel
 import com.example.bcash.ui.register.RegisterViewModel
+import com.example.bcash.ui.shop.ShopViewModel
 import com.example.bcash.utils.Injection.Injection
 
 class ViewModelFactory(private val repository: Repository) : ViewModelProvider.NewInstanceFactory() {
@@ -34,6 +35,10 @@ class ViewModelFactory(private val repository: Repository) : ViewModelProvider.N
 
             modelClass.isAssignableFrom(ProfileViewModel::class.java) -> {
                 ProfileViewModel(repository) as T
+            }
+
+            modelClass.isAssignableFrom(ShopViewModel::class.java) -> {
+                ShopViewModel(repository) as T
             }
 
             modelClass.isAssignableFrom(DashboardViewModel::class.java) -> {
