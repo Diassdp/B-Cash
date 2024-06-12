@@ -19,6 +19,7 @@ import com.example.bcash.R
 import com.example.bcash.databinding.FragmentDashboardBinding
 import com.example.bcash.model.ViewModelFactory
 import com.example.bcash.ui.bartertrade.feature.BarterTradeActivity
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 class DashboardFragment : Fragment() {
     private var _binding: FragmentDashboardBinding? = null
@@ -32,6 +33,7 @@ class DashboardFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var searchView: SearchView
+    private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
@@ -77,6 +79,7 @@ class DashboardFragment : Fragment() {
             val intent = Intent(requireContext(), BarterTradeActivity::class.java)
             startActivity(intent)
         }
+        setupSwipeRefresh()
     }
 
     private fun setupViewFlipper() {
@@ -123,6 +126,19 @@ class DashboardFragment : Fragment() {
             navigateToShopFragment(category, action)
         }
     }
+
+    private fun setupSwipeRefresh() {
+        swipeRefreshLayout = binding.swipeRefreshLayout
+        swipeRefreshLayout.setOnRefreshListener {
+            refreshFragment()
+        }
+    }
+
+    private fun refreshFragment() {
+        insertData()
+        swipeRefreshLayout.isRefreshing = false
+    }
+
 
     private fun navigateToShopFragment(data: String, action: String) {
         val navigate = DashboardFragmentDirections.actionDashboardToShop(data, action)

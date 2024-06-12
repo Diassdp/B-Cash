@@ -37,7 +37,6 @@ class FavoriteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         sharedElementReturnTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
         setupViewModel()
-        countFavoriteItems()
     }
 
     private fun setupView(){
@@ -57,6 +56,8 @@ class FavoriteFragment : Fragment() {
                 if (response.wishlist != null) {
                     Log.e("FavoriteFragment","Fetching Success")
                     adapter.setData(response.wishlist)
+                    var wishlistitemscount = response.wishlist.size
+                    binding.tvFavCount.text = "Wishlist Items: $wishlistitemscount"
                 } else {
                     Log.e("FavoriteFragment","Wishlist Empty")
                     Toast.makeText(context, response.message, Toast.LENGTH_SHORT).show()
@@ -74,11 +75,6 @@ class FavoriteFragment : Fragment() {
         recyclerView.layoutManager = GridLayoutManager(context, 2)
         adapter = FavoriteAdapter()
         recyclerView.adapter = adapter
-    }
-
-    private fun countFavoriteItems() {
-        val WishlistItemsCount = adapter.itemCount
-        binding.tvFavCount.text = "Wishlist Items: $WishlistItemsCount"
     }
 
     override fun onDestroyView() {
