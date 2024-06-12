@@ -16,6 +16,8 @@ import com.example.bcash.service.paging.CategoryPagingSource
 import com.example.bcash.service.paging.PagingSource
 import com.example.bcash.service.paging.SearchPagingSource
 import com.example.bcash.service.response.AddProductResponse
+import com.example.bcash.service.response.AddToWishlistResponse
+import com.example.bcash.service.response.DeleteFromWishlistResponse
 import com.example.bcash.service.response.GetInventoryResponse
 import com.example.bcash.service.response.GetProductResponse
 import com.example.bcash.service.response.GetProfileResponse
@@ -61,6 +63,12 @@ class Repository(private val context: Context, private val preferences: SessionP
 
     private val _getWishlistResponse = MutableLiveData<GetWishlistResponse>()
     val getWishlistResponse: LiveData<GetWishlistResponse> = _getWishlistResponse
+
+    private val _addWishlistResponse = MutableLiveData<AddToWishlistResponse>()
+    val addWishlistResponse: LiveData<AddToWishlistResponse> = _addWishlistResponse
+
+    private val _deleteWishlistResponse = MutableLiveData<DeleteFromWishlistResponse>()
+    val deleteWishlistResponse: LiveData<DeleteFromWishlistResponse> = _deleteWishlistResponse
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -224,9 +232,9 @@ class Repository(private val context: Context, private val preferences: SessionP
         })
     }
 
-    fun postAddProducts(token: String, name: String, price: String, description: RequestBody, condition: String, category: String, photo: MultipartBody.Part,username: String,userId: String) {
+    fun postAddProducts(token: String,productName : String,description : RequestBody, condition: String, category: String, price: String, image: MultipartBody.Part, username: String, userId: String) {
         toggleLoading(true)
-        val client = api.addProduct(token, name, description, condition, price,category, photo,username,userId)
+        val client = api.addProduct(token,productName,description,condition,category,price,image,username,userId)
 
         client.enqueue(object : Callback<AddProductResponse> {
             override fun onResponse(call: Call<AddProductResponse>, response: Response<AddProductResponse>) {
@@ -286,97 +294,108 @@ class Repository(private val context: Context, private val preferences: SessionP
         }
     }
 
-    suspend fun getWishlist(token: String, userId: String) {
+    suspend fun getWishlist(token: String, userId: String): GetWishlistResponse {
         toggleLoading(true)
-        val client = api.getWishlist(token, userId)
-
-        client.enqueue(object : Callback<GetWishlistResponse> {
-            override fun onResponse(call: Call<GetWishlistResponse>, response: Response<GetWishlistResponse>) {
-                toggleLoading(false)
-                if (response.isSuccessful) {
-                    _getWishlistResponse.value = response.body()
-                } else {
-                    val message = extractErrorMessage(response)
-                    _getWishlistResponse.value = GetWishlistResponse(wishlist = emptyList(), error = true, message = message)
-                    showToast(message)
-                    Log.e("Repository", "getWishlist onResponse: ${response.message()}, ${response.code()} $message")
-                }
+        return try {
+            val response = api.getWishlist(token, userId)
+            toggleLoading(false)
+            val responseBody = response.body()
+            val result = GetWishlistResponse(wishlist = responseBody?.wishlist ?: emptyList(), error = false, message = "")
+            _getWishlistResponse.postValue(result)
+            result
+        } catch (e: Exception) {
+            toggleLoading(false)
+            val message = if (e is UnknownHostException) {
+                "No Internet Connection"
+            } else {
+                e.message ?: "Unknown error occurred"
             }
-
-            override fun onFailure(call: Call<GetWishlistResponse>, t: Throwable) {
-                toggleLoading(false)
-                val message = if (t is UnknownHostException) {
-                    "No Internet Connection"
-                } else {
-                    t.message.toString()
-                }
-                _getWishlistResponse.value = GetWishlistResponse(wishlist = emptyList(), error = true, message = message)
-                showToast(message)
-                Log.e("Repository", "getWishlist onFailure: $message")
-            }
-        })
+            showToast(message)
+            Log.e("Repository", "getWishlist onFailure: $message")
+            val result = GetWishlistResponse(wishlist = emptyList(), error = true, message = message)
+            _getWishlistResponse.postValue(result)
+            result
+        }
     }
-
-    suspend fun postWishlist(token: String, userId: String, productId: String) {
+    fun postWishlist(token: String, userId: String, productId: String) {
         toggleLoading(true)
         val client = api.addToWishlist(token,userId,productId)
 
-        client.enqueue(object : Callback<GetWishlistResponse>{
-            override fun onResponse(call: Call<GetWishlistResponse>, response: Response<GetWishlistResponse>) {
+        client.enqueue(object : Callback<AddToWishlistResponse>{
+            override fun onResponse(call: Call<AddToWishlistResponse>, response: Response<AddToWishlistResponse>) {
                 toggleLoading(false)
                 if (response.isSuccessful) {
-                    _getWishlistResponse.value = response.body()
+                    _addWishlistResponse.value = response.body()
                     showToast("Product Added to Wishlist")
                 } else {
                     val message = extractErrorMessage(response)
-                    _getWishlistResponse.value = GetWishlistResponse(wishlist = emptyList(), error = true, message = message)
+                    _addWishlistResponse.value = AddToWishlistResponse(error = true, message = message)
                     showToast(message)
                     Log.e("Repository", "PostWishlist onResponse: ${response.message()}, ${response.code()} $message")
                 }
             }
-            override fun onFailure(call: Call<GetWishlistResponse>, t: Throwable) {
+            override fun onFailure(call: Call<AddToWishlistResponse>, t: Throwable) {
                 toggleLoading(false)
                 val message = if (t is UnknownHostException) {
                     "No Internet Connection"
                 } else {
                     t.message.toString()
                 }
-                _getWishlistResponse.value = GetWishlistResponse(wishlist = emptyList(), error = true, message = message)
+                _addWishlistResponse.value = AddToWishlistResponse(error = true, message = message)
                 showToast(message)
                 Log.e("Repository", "PostWishlist onFailure: $message")
             }
         })
     }
 
-    suspend fun getInventory(token: String, userId: String) {
+    fun deleteWishlist(token: String, userId: String, productId: String) {
         toggleLoading(true)
-        val client = api.getUserInventory(token, userId)
-
-        client.enqueue(object : Callback<GetInventoryResponse> {
-            override fun onResponse(call: Call<GetInventoryResponse>, response: Response<GetInventoryResponse>) {
+        val client = api.deleteFromWishlist(token, userId, productId)
+        client.enqueue(object : Callback<DeleteFromWishlistResponse> {
+            override fun onResponse(call: Call<DeleteFromWishlistResponse>, response: Response<DeleteFromWishlistResponse>) {
                 toggleLoading(false)
                 if (response.isSuccessful) {
-                    _getInventoryResponse.value = response.body()
+                    _deleteWishlistResponse.value = response.body()
+                    showToast("Product Removed from Wishlist")
                 } else {
                     val message = extractErrorMessage(response)
-                    _getInventoryResponse.value = GetInventoryResponse(listProduct = emptyList(), error = true, message = message)
+                    _deleteWishlistResponse.value = DeleteFromWishlistResponse(error = true, message = message)
                     showToast(message)
-                    Log.e("Repository", "getInventory onResponse: ${response.message()}, ${response.code()} $message")
                 }
             }
 
-            override fun onFailure(call: Call<GetInventoryResponse>, t: Throwable) {
+            override fun onFailure(call: Call<DeleteFromWishlistResponse>, t: Throwable) {
                 toggleLoading(false)
-                val message = if (t is UnknownHostException) {
-                    "No Internet Connection"
-                } else {
-                    t.message.toString()
-                }
-                _getInventoryResponse.value = GetInventoryResponse(listProduct = emptyList(), error = true, message = message)
+                val message = t.message ?: "Unknown error occurred"
+                _deleteWishlistResponse.value = DeleteFromWishlistResponse(error = true, message = message)
                 showToast(message)
-                Log.e("Repository", "getInventory onFailure: $message")
             }
         })
+    }
+
+
+    suspend fun getInventory(token: String, userId: String): GetInventoryResponse {
+        toggleLoading(true)
+        return try {
+            val response = api.getUserInventory(token, userId)
+            toggleLoading(false)
+            val responseBody = response.body()
+            val result = GetInventoryResponse(inventory = responseBody?.inventory ?: emptyList(), error = false, message = "")
+            _getInventoryResponse.postValue(result)
+            result
+        } catch (e: Exception) {
+            toggleLoading(false)
+            val message = if (e is UnknownHostException) {
+                "No Internet Connection"
+            } else {
+                e.message ?: "Unknown error occurred"
+            }
+            showToast(message)
+            Log.e("Repository", "getWishlist onFailure: $message")
+            val result = GetInventoryResponse(inventory = emptyList(), error = true, message = message)
+            _getInventoryResponse.postValue(result)
+            result
+        }
     }
 
     fun getProduct(): LiveData<PagingData<ProductItem>> {

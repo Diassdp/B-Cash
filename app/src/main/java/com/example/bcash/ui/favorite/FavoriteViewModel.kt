@@ -1,5 +1,6 @@
 package com.example.bcash.ui.favorite
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,12 +12,16 @@ import kotlinx.coroutines.launch
 class FavoriteViewModel(private val repository: Repository) : ViewModel() {
 
     private val _wishlistResponse: LiveData<GetWishlistResponse> = repository.getWishlistResponse
-    val wishlistResponse: LiveData<GetWishlistResponse>
-        get() = _wishlistResponse
+    val wishlistResponse: LiveData<GetWishlistResponse> get() = _wishlistResponse
 
     fun getWishlist(token: String, userId: String) {
         viewModelScope.launch {
-            repository.getWishlist(token, userId)
+            try {
+                repository.getWishlist(token, userId)
+                Log.d("FavoriteViewModel", "Wishlist fetched successfully")
+            } catch (e: Exception) {
+                Log.e("FavoriteViewModel", "Error fetching wishlist: ${e.message}", e)
+            }
         }
     }
 
@@ -24,3 +29,5 @@ class FavoriteViewModel(private val repository: Repository) : ViewModel() {
         return repository.getSession()
     }
 }
+
+

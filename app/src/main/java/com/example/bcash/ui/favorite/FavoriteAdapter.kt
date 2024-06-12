@@ -14,8 +14,16 @@ import com.example.bcash.R
 import com.example.bcash.databinding.ItemPopularBinding
 import com.example.bcash.service.response.data.ProductItem
 import com.example.bcash.ui.detail.DetailActivity
+import com.example.bcash.ui.detail.DetailFavoriteActivity
 
-class FavoriteAdapter : PagingDataAdapter<ProductItem, FavoriteAdapter.ListViewHolder>(DIFF_ITEM_CALLBACK) {
+class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.ListViewHolder>() {
+
+    private var productList: List<ProductItem> = emptyList()
+
+    fun setData(newList: List<ProductItem>) {
+        productList = newList
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val binding = ItemPopularBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -23,8 +31,10 @@ class FavoriteAdapter : PagingDataAdapter<ProductItem, FavoriteAdapter.ListViewH
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        getItem(position)?.let { holder.bind(it) }
+        holder.bind(productList[position])
     }
+
+    override fun getItemCount(): Int = productList.size
 
     inner class ListViewHolder(private val binding: ItemPopularBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -48,31 +58,10 @@ class FavoriteAdapter : PagingDataAdapter<ProductItem, FavoriteAdapter.ListViewH
         }
 
         private fun navigateToDetail(data: ProductItem) {
-            val intent = Intent(itemView.context, DetailActivity::class.java).apply {
+            val intent = Intent(itemView.context, DetailFavoriteActivity::class.java).apply {
                 putExtra(DetailActivity.EXTRA_DATA, data)
             }
-
-            val optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                itemView.context as Activity,
-                androidx.core.util.Pair(binding.ivImage, "image"),
-                androidx.core.util.Pair(binding.tvName, "title"),
-                androidx.core.util.Pair(binding.tvPrice, "price"),
-            )
-            itemView.context.startActivity(intent, optionsCompat.toBundle())
-        }
-    }
-    companion object {
-        val DIFF_ITEM_CALLBACK = object : DiffUtil.ItemCallback<ProductItem>() {
-            override fun areItemsTheSame(oldItem: ProductItem, newItem: ProductItem): Boolean {
-                return oldItem.id == newItem.id
-            }
-
-            override fun areContentsTheSame(
-                oldItem: ProductItem,
-                newItem: ProductItem
-            ): Boolean {
-                return oldItem == newItem
-            }
+            itemView.context.startActivity(intent)
         }
     }
 }

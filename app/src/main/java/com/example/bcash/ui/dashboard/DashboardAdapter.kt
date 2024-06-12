@@ -2,6 +2,7 @@ package com.example.bcash.ui.dashboard
 
 import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
@@ -41,6 +42,9 @@ class DashboardAdapter : PagingDataAdapter<ProductItem, DashboardAdapter.ListVie
                     )
                     .into(binding.ivImage)
 
+                // Log the data
+                Log.e("DashboardAdapter", "ProductItem: $data")
+
                 itemView.setOnClickListener {
                     navigateToDetail(data)
                 }
@@ -61,6 +65,7 @@ class DashboardAdapter : PagingDataAdapter<ProductItem, DashboardAdapter.ListVie
             itemView.context.startActivity(intent, optionsCompat.toBundle())
         }
     }
+
     companion object {
         val DIFF_ITEM_CALLBACK = object : DiffUtil.ItemCallback<ProductItem>() {
             override fun areItemsTheSame(oldItem: ProductItem, newItem: ProductItem): Boolean {

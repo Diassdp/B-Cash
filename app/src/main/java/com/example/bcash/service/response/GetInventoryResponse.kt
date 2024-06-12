@@ -4,8 +4,8 @@ import com.example.bcash.service.response.data.ProductItem
 import com.google.gson.annotations.SerializedName
 
 data class GetInventoryResponse (
-    @field:SerializedName("listProduct")
-    val listProduct: List<ProductItem>,
+    @field:SerializedName("inventory")
+    val inventory: List<ProductItem>,
 
     @field:SerializedName("error")
     val error: Boolean? = null,

@@ -3,7 +3,9 @@ package com.example.bcash.ui.detail
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.example.bcash.databinding.ActivityDetailBinding
 import com.example.bcash.databinding.ActivityDetailInventoryBinding
+import com.example.bcash.model.ViewModelFactory
 import com.example.bcash.service.response.data.ProductItem
 
 class DetailInventoryActivity : AppCompatActivity() {

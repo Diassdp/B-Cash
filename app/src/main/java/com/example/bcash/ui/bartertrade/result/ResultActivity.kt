@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.example.bcash.databinding.ActivityResultBinding
 import com.example.bcash.model.ViewModelFactory
+import com.example.bcash.ui.bartertrade.endportal.EndPortalActivity
 import com.example.bcash.ui.main.MainActivity
 import com.example.bcash.utils.ImageSettings.compressFileImage
 import com.example.bcash.utils.ImageSettings.convertUriToFile
@@ -104,9 +105,7 @@ class ResultActivity : AppCompatActivity() {
                 Log.e("TAG", "Request Image File: $requestImageFile")
                 Log.e("TAG", "Name: $name, Price: $price, Description: ${description.contentType()}, Condition: $condition, Category: $category")
 
-                Log.e("TAG", "Session: $session.token, $session.name, $session.userId")
-
-                resultViewModel.uploadProduct(session.token, name, price, description, condition, category, imageMultipart, session.name, session.userId)
+                resultViewModel.uploadProduct(session.token,name,description,condition,category,price,imageMultipart,session.name,session.userId)
 
                 resultViewModel.uploadProductResponse.observe(this@ResultActivity) { response ->
                     if (response.error != true && !binding.edtName.text.isNullOrEmpty()) {

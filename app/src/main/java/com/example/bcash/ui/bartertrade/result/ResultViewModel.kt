@@ -12,8 +12,8 @@ class ResultViewModel(private val repository: Repository) : ViewModel()  {
     val uploadProductResponse: LiveData<AddProductResponse> = repository.addProductsResponse
     val isLoading: LiveData<Boolean> = repository.isLoading
 
-    fun uploadProduct(token: String, name: String, price: String, description: RequestBody, condition: String, category: String,photo: MultipartBody.Part,username: String,userId: String) {
-        repository.postAddProducts(token,name,price,description,condition, category ,photo,username,userId)
+    fun uploadProduct(token: String,productName : String,description : RequestBody, condition: String, category: String, price: String, image: MultipartBody.Part, username: String, userId: String) {
+        repository.postAddProducts(token,productName,description,condition,category,price,image,username,userId)
     }
 
     fun getSession(): LiveData<SessionModel> {

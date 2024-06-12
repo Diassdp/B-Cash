@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.graphics.convertTo
 import androidx.fragment.app.viewModels
 import androidx.paging.PagingData
 import androidx.lifecycle.Observer
@@ -28,45 +29,45 @@ class FavoriteFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
+        setupView()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedElementReturnTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
-        setupView()
-    }
-
-    private fun setupView(){
-        setupAdapter()
         setupViewModel()
         countFavoriteItems()
     }
 
+    private fun setupView(){
+        setupAdapter()
+    }
+
     private fun setupViewModel() {
-        viewModel.getSession().observe(viewLifecycleOwner, Observer { session ->
+        viewModel.getSession().observe(viewLifecycleOwner) { session ->
             session?.let {
+                Log.e("FavoriteFragment","Starting Fetching")
                 viewModel.getWishlist(it.token, it.userId)
             }
-        })
+        }
 
-        viewModel.wishlistResponse.observe(viewLifecycleOwner, Observer { response ->
-            if (response.error == true) {
-                response.wishlist.let { list ->
-                    if (list != null){
-                        Log.e("InventoryFragment","Success fetching inventory")
-                        adapter.submitData(viewLifecycleOwner.lifecycle, PagingData.from(list))
-                    } else {
-                        Log.e("InventoryFragment","Error fetching inventory: ${response.message}")
-                        Toast.makeText(requireContext(), "Error fetching inventory", Toast.LENGTH_SHORT).show()
-                    }
+        viewModel.wishlistResponse.observe(viewLifecycleOwner) { response ->
+            if (response.error == false) {
+                if (response.wishlist != null) {
+                    Log.e("FavoriteFragment","Fetching Success")
+                    adapter.setData(response.wishlist)
+                } else {
+                    Log.e("FavoriteFragment","Wishlist Empty")
+                    Toast.makeText(context, response.message, Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Log.e("InventoryFragment","Error fetching inventory: ${response.message}")
-                Toast.makeText(requireContext(), "Error fetching inventory", Toast.LENGTH_SHORT).show()
+                Log.e("FavoriteFragment","Fetching Failed Error : ${response.message}")
+                Toast.makeText(context, response.message, Toast.LENGTH_SHORT).show()
             }
-        })
+        }
     }
+
 
     private fun setupAdapter() {
         recyclerView = binding.recyclerView
@@ -76,7 +77,12 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun countFavoriteItems() {
-        val favoriteItemsCount = adapter.itemCount
-        binding.tvFavCount.text = "Favorite Items: $favoriteItemsCount"
+        val WishlistItemsCount = adapter.itemCount
+        binding.tvFavCount.text = "Wishlist Items: $WishlistItemsCount"
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

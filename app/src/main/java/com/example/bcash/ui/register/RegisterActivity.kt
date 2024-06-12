@@ -26,18 +26,7 @@ class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupView()
-
-        // TODO: Uncomment this If you want to test Register
         setupListeners()
-
-
-        // TODO: Delete this after Register worked & Comment this if you want to test register
-//        findViewById<Button>(R.id.btn_register).setOnClickListener {
-//            val intent = Intent(this, LoginActivity::class.java)
-//            startActivity(intent)
-//            finish()
-//        }
-        //
     }
 
     private fun setupView(){
@@ -59,6 +48,7 @@ class RegisterActivity : AppCompatActivity() {
             val password = binding.edtPassword.text.toString()
             val address = binding.edtAddress.text.toString()
             val phone = binding.edtPhone.text.toString()
+
             if (email.isEmpty() || password.isEmpty() || name.isEmpty() || password.length < 8) {
                 if (name.isEmpty()) binding.edtName.error = "Email cannot be empty"
                 if (email.isEmpty()) binding.edtEmail.error = "Email cannot be empty"

@@ -4,7 +4,7 @@ import com.example.bcash.service.response.data.ProductItem
 import com.google.gson.annotations.SerializedName
 
 data class GetWishlistResponse (
-    @field:SerializedName("listProduct")
+    @field:SerializedName("products")
     val wishlist: List<ProductItem>,
 
     @field:SerializedName("error")

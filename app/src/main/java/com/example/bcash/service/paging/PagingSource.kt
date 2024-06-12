@@ -27,7 +27,11 @@ class PagingSource (private val preferences: SessionPreferences, private val api
             } else {
                 val responseData = apiService.getAllProduct(token, page, params.loadSize)
                 if (responseData.isSuccessful) {
+                    Log.e(TAG, "Data loaded successfully")
+
                     val responseBody = responseData.body()
+                    Log.e(TAG, "responseBody: $responseBody")
+
                     LoadResult.Page(
                         data = responseBody?.listProduct ?: emptyList(),
                         prevKey = if (page == 1) null else page - 1,

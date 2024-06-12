@@ -27,7 +27,7 @@ class ShopFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var searchView: SearchView
 
-    private var data: String? = "Barang 1" // Temporary
+    private var data: String? = "Elektronik" // Temporary
     private var action: String? = "category"
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

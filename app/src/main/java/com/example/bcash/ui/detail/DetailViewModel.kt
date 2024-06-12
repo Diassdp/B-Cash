@@ -21,4 +21,10 @@ class DetailViewModel(private val repository: Repository) : ViewModel() {
     fun getSession(): LiveData<SessionModel> {
         return repository.getSession()
     }
+
+    fun deleteWishlist(token: String, userId: String, productId: String) {
+        viewModelScope.launch {
+            repository.deleteWishlist(token, userId, productId)
+        }
+    }
 }

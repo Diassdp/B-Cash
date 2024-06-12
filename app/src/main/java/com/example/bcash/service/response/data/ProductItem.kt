@@ -6,13 +6,13 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class ProductItem(
-    @field:SerializedName("id")
+    @field:SerializedName("productId")
     val id: String,
 
-    @field:SerializedName("name")
+    @field:SerializedName("product")
     val name: String? = null,
 
-    @field:SerializedName("photo")
+    @field:SerializedName("photoUrl")
     val photo: String? = null,
 
     @field:SerializedName("description")

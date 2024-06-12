@@ -89,7 +89,7 @@ interface ApiService {
     suspend fun getWishlist(
         @Header("authorization") token: String,
         @Query("userId") userId: String
-    ): Call<GetWishlistResponse>
+    ): Response<GetWishlistResponse>
 
     @FormUrlEncoded
     @POST("wishlist")
@@ -99,6 +99,7 @@ interface ApiService {
         @Field("productId") productId: String
     ): Call<AddToWishlistResponse>
 
+    @FormUrlEncoded
     @POST("wishlist")
     fun deleteFromWishlist(
         @Header("authorization") token: String,
@@ -110,7 +111,7 @@ interface ApiService {
     suspend fun getUserInventory(
         @Header("authorization") token: String,
         @Query("userId") userId: String
-    ): Call<GetInventoryResponse>
+    ): Response<GetInventoryResponse>
 
     @FormUrlEncoded
     @POST("trade-request")
