@@ -45,6 +45,8 @@
         android:layout_margin="8dp"
         android:singleLine="true"
         android:text="Product Name"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/view5"
         app:layout_constraintTop_toTopOf="@+id/view5" />
 
@@ -53,6 +55,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Product price"
+        android:textSize="18sp"
+        android:textStyle="bold"
         android:textColor="@color/primary"
         app:layout_constraintBottom_toBottomOf="@+id/view5"
         app:layout_constraintStart_toStartOf="@+id/tv_name"

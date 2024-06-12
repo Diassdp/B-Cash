@@ -32,7 +32,7 @@
             android:layout_marginTop="10dp"
             android:fontFamily="@font/poppins_regular"
             android:text="All Wishlist"
-            android:textColor="@color/primary"
+            android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="4 items"
-            android:textColor="@color/primary"
+            android:textColor="@color/black"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="@+id/tv_inventory"
             app:layout_constraintTop_toBottomOf="@+id/tv_inventory" />

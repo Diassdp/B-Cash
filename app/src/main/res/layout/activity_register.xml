@@ -300,7 +300,7 @@
             android:text="Resigter"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="12sp"
+            android:textSize="14sp"
             app:backgroundTint="@color/accent"
             app:layout_constraintEnd_toEndOf="@+id/tl_phone"
             app:layout_constraintStart_toStartOf="@+id/tl_phone"

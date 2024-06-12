@@ -15,6 +15,8 @@ import com.example.bcash.databinding.ItemPopularBinding
 import com.example.bcash.service.response.data.ProductItem
 import com.example.bcash.ui.detail.DetailActivity
 import com.example.bcash.ui.detail.DetailFavoriteActivity
+import java.text.NumberFormat
+import java.util.Locale
 
 class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.ListViewHolder>() {
 
@@ -41,7 +43,7 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.ListViewHolder>() {
         fun bind(data: ProductItem) {
             binding.apply {
                 tvName.text = data.name
-                tvPrice.text = data.price.toString()
+                tvPrice.text = data.price?.let { formatPrice(it.toInt()) }
                 Glide.with(itemView.context)
                     .load(data.photo)
                     .fitCenter()
@@ -55,6 +57,11 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.ListViewHolder>() {
                     navigateToDetail(data)
                 }
             }
+        }
+
+        private fun formatPrice(price: Int): String {
+            val format = NumberFormat.getNumberInstance(Locale("in", "ID"))
+            return "Rp" + format.format(price)
         }
 
         private fun navigateToDetail(data: ProductItem) {

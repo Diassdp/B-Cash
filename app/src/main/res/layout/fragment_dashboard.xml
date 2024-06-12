@@ -1,331 +1,337 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/swipeRefreshLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fillViewport="true">
+    android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="20dp"
-            android:background="@drawable/bg_searchbar"
-            android:queryHint="Find your Dream"
-            android:searchIcon="@drawable/ic_search"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:clickable="true"
-            android:focusable="true" />
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_viewflipper"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:background="@color/primary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView">
+            android:layout_height="wrap_content">
 
-            <ViewFlipper
-                android:id="@+id/viewFlipper"
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="1dp"
-                android:inAnimation="@anim/slide_in_right"
-                android:outAnimation="@anim/slide_in_left"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_height="48dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/bg_searchbar"
+                android:clickable="true"
+                android:focusable="true"
+                android:queryHint="Find your Dream"
+                android:searchIcon="@drawable/ic_search"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/imageView8"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ads1" />
-
-                <ImageView
-                    android:id="@+id/imageView7"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ads2" />
-
-                <ImageView
-                    android:id="@+id/imageView6"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/ads3" />
-
-            </ViewFlipper>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/tv_catagory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/poppins_regular"
-            android:text="Category"
-            android:textColor="@color/primary"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cl_viewflipper" />
-
-        <HorizontalScrollView
-            android:id="@+id/horizontalScrollView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_catagory">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <!-- Item 1 -->
-                <LinearLayout
-                    android:id="@+id/btn_category1"
-                    style="@style/CategoryItemStyle">
-
-                    <ImageButton
-                        android:id="@+id/btn_barang1"
-                        style="@style/CategoryImageButtonStyle"
-                        android:contentDescription="barang 1" />
-
-                    <TextView
-                        android:id="@+id/tv_barang1"
-                        style="@style/CategoryTextViewStyle"
-                        android:text="Barang 1" />
-                </LinearLayout>
-
-                <!-- Item 2 -->
-                <LinearLayout
-                    android:id="@+id/btn_category2"
-                    style="@style/CategoryItemStyle">
-
-                    <ImageButton
-                        android:id="@+id/btn_barang2"
-                        style="@style/CategoryImageButtonStyle"
-                        android:contentDescription="barang 2" />
-
-                    <TextView
-                        android:id="@+id/tv_barang2"
-                        style="@style/CategoryTextViewStyle"
-                        android:text="Barang 2" />
-                </LinearLayout>
-
-                <!-- Item 3 -->
-                <LinearLayout
-                    android:id="@+id/btn_category3"
-                    style="@style/CategoryItemStyle">
-
-                    <ImageButton
-                        android:id="@+id/btn_barang3"
-                        style="@style/CategoryImageButtonStyle"
-                        android:contentDescription="barang 3" />
-
-                    <TextView
-                        android:id="@+id/tv_barang3"
-                        style="@style/CategoryTextViewStyle"
-                        android:text="Barang 3" />
-                </LinearLayout>
-
-                <!-- Item 4 -->
-                <LinearLayout
-                    android:id="@+id/btn_category4"
-                    style="@style/CategoryItemStyle">
-
-                    <ImageButton
-                        android:id="@+id/btn_barang4"
-                        style="@style/CategoryImageButtonStyle"
-                        android:contentDescription="barang 4" />
-
-                    <TextView
-                        android:id="@+id/tv_barang4"
-                        style="@style/CategoryTextViewStyle"
-                        android:text="Barang 4" />
-                </LinearLayout>
-
-                <!-- Item 5 -->
-                <LinearLayout
-                    android:id="@+id/btn_category5"
-                    style="@style/CategoryItemStyle">
-
-                    <ImageButton
-                        android:id="@+id/btn_barang5"
-                        style="@style/CategoryImageButtonStyle"
-                        android:contentDescription="barang 5" />
-
-                    <TextView
-                        android:id="@+id/tv_barang5"
-                        style="@style/CategoryTextViewStyle"
-                        android:text="Barang 5" />
-                </LinearLayout>
-
-                <!-- Item 6 -->
-                <LinearLayout
-                    android:id="@+id/btn_category6"
-                    style="@style/CategoryItemStyle">
-
-                    <ImageButton
-                        android:id="@+id/btn_barang6"
-                        style="@style/CategoryImageButtonStyle"
-                        android:contentDescription="barang 6" />
-
-                    <TextView
-                        android:id="@+id/tv_barang6"
-                        style="@style/CategoryTextViewStyle"
-                        android:text="Barang 6" />
-                </LinearLayout>
-
-                <!-- Item 7 -->
-                <LinearLayout
-                    android:id="@+id/btn_category7"
-                    style="@style/CategoryItemStyle">
-
-                    <ImageButton
-                        android:id="@+id/btn_barang7"
-                        style="@style/CategoryImageButtonStyle"
-                        android:contentDescription="barang 7" />
-
-                    <TextView
-                        android:id="@+id/tv_barang7"
-                        style="@style/CategoryTextViewStyle"
-                        android:text="Barang 7" />
-                </LinearLayout>
-
-                <!-- Item 8 -->
-                <LinearLayout
-                    android:id="@+id/btn_category8"
-                    style="@style/CategoryItemStyle">
-
-                    <ImageButton
-                        android:id="@+id/btn_barang8"
-                        style="@style/CategoryImageButtonStyle"
-                        android:contentDescription="barang 8" />
-
-                    <TextView
-                        android:id="@+id/tv_barang8"
-                        style="@style/CategoryTextViewStyle"
-                        android:text="Barang 8" />
-                </LinearLayout>
-            </LinearLayout>
-        </HorizontalScrollView>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/cl_trade_barter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="5dp"
-            android:background="@drawable/bg_searchbar"
-            android:padding="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/horizontalScrollView">
-
-            <TextView
-                android:id="@+id/tv_trade_barter_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Trade Barter"
-                android:textColor="@color/primary"
-                android:textSize="18sp"
-                android:textStyle="bold"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_viewflipper"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@color/primary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="HardcodedText" />
+                app:layout_constraintTop_toBottomOf="@+id/searchView">
+
+                <ViewFlipper
+                    android:id="@+id/viewFlipper"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="1dp"
+                    android:inAnimation="@anim/slide_in_right"
+                    android:outAnimation="@anim/slide_in_left"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/imageView8"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ads1" />
+
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ads2" />
+
+                    <ImageView
+                        android:id="@+id/imageView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ads3" />
+
+                </ViewFlipper>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                android:id="@+id/tv_sub_header"
+                android:id="@+id/tv_catagory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Belanja makin seru dengan tukar menukar!"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Category"
                 android:textColor="@color/black"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_trade_barter_title"
-                tools:ignore="HardcodedText" />
+                app:layout_constraintTop_toBottomOf="@+id/cl_viewflipper" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_trade_barter"
-                android:layout_width="254dp"
-                android:layout_height="39dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/bg_button"
-                android:text="Cobain Trade Barter"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="12sp"
-                app:backgroundTint="@color/accent"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_sub_header" />
+                app:layout_constraintTop_toBottomOf="@id/tv_catagory">
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="18dp"
-                android:layout_height="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <!-- Item 1 -->
+                    <LinearLayout
+                        android:id="@+id/btn_category1"
+                        style="@style/CategoryItemStyle">
+
+                        <ImageButton
+                            android:id="@+id/btn_barang1"
+                            style="@style/CategoryImageButtonStyle"
+                            android:contentDescription="barang 1" />
+
+                        <TextView
+                            android:id="@+id/tv_barang1"
+                            style="@style/CategoryTextViewStyle"
+                            android:text="Barang 1" />
+                    </LinearLayout>
+
+                    <!-- Item 2 -->
+                    <LinearLayout
+                        android:id="@+id/btn_category2"
+                        style="@style/CategoryItemStyle">
+
+                        <ImageButton
+                            android:id="@+id/btn_barang2"
+                            style="@style/CategoryImageButtonStyle"
+                            android:contentDescription="barang 2" />
+
+                        <TextView
+                            android:id="@+id/tv_barang2"
+                            style="@style/CategoryTextViewStyle"
+                            android:text="Barang 2" />
+                    </LinearLayout>
+
+                    <!-- Item 3 -->
+                    <LinearLayout
+                        android:id="@+id/btn_category3"
+                        style="@style/CategoryItemStyle">
+
+                        <ImageButton
+                            android:id="@+id/btn_barang3"
+                            style="@style/CategoryImageButtonStyle"
+                            android:contentDescription="barang 3" />
+
+                        <TextView
+                            android:id="@+id/tv_barang3"
+                            style="@style/CategoryTextViewStyle"
+                            android:text="Barang 3" />
+                    </LinearLayout>
+
+                    <!-- Item 4 -->
+                    <LinearLayout
+                        android:id="@+id/btn_category4"
+                        style="@style/CategoryItemStyle">
+
+                        <ImageButton
+                            android:id="@+id/btn_barang4"
+                            style="@style/CategoryImageButtonStyle"
+                            android:contentDescription="barang 4" />
+
+                        <TextView
+                            android:id="@+id/tv_barang4"
+                            style="@style/CategoryTextViewStyle"
+                            android:text="Barang 4" />
+                    </LinearLayout>
+
+                    <!-- Item 5 -->
+                    <LinearLayout
+                        android:id="@+id/btn_category5"
+                        style="@style/CategoryItemStyle">
+
+                        <ImageButton
+                            android:id="@+id/btn_barang5"
+                            style="@style/CategoryImageButtonStyle"
+                            android:contentDescription="barang 5" />
+
+                        <TextView
+                            android:id="@+id/tv_barang5"
+                            style="@style/CategoryTextViewStyle"
+                            android:text="Barang 5" />
+                    </LinearLayout>
+
+                    <!-- Item 6 -->
+                    <LinearLayout
+                        android:id="@+id/btn_category6"
+                        style="@style/CategoryItemStyle">
+
+                        <ImageButton
+                            android:id="@+id/btn_barang6"
+                            style="@style/CategoryImageButtonStyle"
+                            android:contentDescription="barang 6" />
+
+                        <TextView
+                            android:id="@+id/tv_barang6"
+                            style="@style/CategoryTextViewStyle"
+                            android:text="Barang 6" />
+                    </LinearLayout>
+
+                    <!-- Item 7 -->
+                    <LinearLayout
+                        android:id="@+id/btn_category7"
+                        style="@style/CategoryItemStyle">
+
+                        <ImageButton
+                            android:id="@+id/btn_barang7"
+                            style="@style/CategoryImageButtonStyle"
+                            android:contentDescription="barang 7" />
+
+                        <TextView
+                            android:id="@+id/tv_barang7"
+                            style="@style/CategoryTextViewStyle"
+                            android:text="Barang 7" />
+                    </LinearLayout>
+
+                    <!-- Item 8 -->
+                    <LinearLayout
+                        android:id="@+id/btn_category8"
+                        style="@style/CategoryItemStyle">
+
+                        <ImageButton
+                            android:id="@+id/btn_barang8"
+                            style="@style/CategoryImageButtonStyle"
+                            android:contentDescription="barang 8" />
+
+                        <TextView
+                            android:id="@+id/tv_barang8"
+                            style="@style/CategoryTextViewStyle"
+                            android:text="Barang 8" />
+                    </LinearLayout>
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_trade_barter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/bg_searchbar"
+                android:padding="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.667"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0"
-                app:srcCompat="@drawable/ic_sup_barter" />
+                app:layout_constraintTop_toBottomOf="@id/horizontalScrollView">
+
+                <TextView
+                    android:id="@+id/tv_trade_barter_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trade Barter"
+                    android:textColor="@color/primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/tv_sub_header"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Belanja makin seru dengan tukar menukar!"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_trade_barter_title"
+                    tools:ignore="HardcodedText" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_trade_barter"
+                    android:layout_width="254dp"
+                    android:layout_height="39dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/bg_button"
+                    android:text="Cobain Trade Barter"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    app:backgroundTint="@color/accent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_sub_header" />
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="18dp"
+                    android:layout_height="16dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.667"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0"
+                    app:srcCompat="@drawable/ic_sup_barter" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/tv_inventory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Popular"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cl_trade_barter" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_inventory"
+                tools:listitem="@layout/item_popular" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/tv_inventory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/poppins_regular"
-            android:text="Popular"
-            android:textColor="@color/primary"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cl_trade_barter" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_inventory"
-            tools:listitem="@layout/item_popular" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -14,6 +14,8 @@ import com.example.bcash.R
 import com.example.bcash.databinding.ItemPopularBinding
 import com.example.bcash.service.response.data.ProductItem
 import com.example.bcash.ui.detail.DetailActivity
+import java.text.NumberFormat
+import java.util.Locale
 
 class ShopAdapter : PagingDataAdapter<ProductItem, ShopAdapter.ListViewHolder>(DIFF_ITEM_CALLBACK) {
 
@@ -31,7 +33,7 @@ class ShopAdapter : PagingDataAdapter<ProductItem, ShopAdapter.ListViewHolder>(D
         fun bind(data: ProductItem) {
             binding.apply {
                 tvName.text = data.name
-                tvPrice.text = data.price.toString()
+                tvPrice.text = data.price?.let { formatPrice(it.toInt()) }
                 Glide.with(itemView.context)
                     .load(data.photo)
                     .fitCenter()
@@ -45,6 +47,11 @@ class ShopAdapter : PagingDataAdapter<ProductItem, ShopAdapter.ListViewHolder>(D
                     navigateToDetail(data)
                 }
             }
+        }
+
+        private fun formatPrice(price: Int): String {
+            val format = NumberFormat.getNumberInstance(Locale("in", "ID"))
+            return "Rp." + format.format(price)
         }
 
         private fun navigateToDetail(data: ProductItem) {

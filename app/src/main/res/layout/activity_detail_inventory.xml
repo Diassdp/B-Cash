@@ -36,8 +36,8 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_image"
-                    android:layout_width="250dp"
-                    android:layout_height="250dp"
+                    android:layout_width="281dp"
+                    android:layout_height="274dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/bg_form"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -97,7 +97,7 @@
                     android:fontFamily="@font/poppins_regular"
                     android:text="100K"
                     android:textColor="@color/primary"
-                    android:textSize="18sp"
+                    android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/tv_category"
                     app:layout_constraintTop_toBottomOf="@+id/tv_category" />
@@ -123,7 +123,7 @@
                     android:fontFamily="@font/poppins_regular"
                     android:text="Yonathan Syahadatputra"
                     android:textColor="@color/black"
-                    android:textSize="12sp"
+                    android:textSize="14sp"
                     app:layout_constraintStart_toEndOf="@+id/iv_user"
                     app:layout_constraintTop_toTopOf="@+id/iv_user" />
 

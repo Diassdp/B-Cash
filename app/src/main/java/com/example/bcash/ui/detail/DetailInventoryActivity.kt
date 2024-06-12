@@ -7,6 +7,8 @@ import com.example.bcash.databinding.ActivityDetailBinding
 import com.example.bcash.databinding.ActivityDetailInventoryBinding
 import com.example.bcash.model.ViewModelFactory
 import com.example.bcash.service.response.data.ProductItem
+import java.text.NumberFormat
+import java.util.Locale
 
 class DetailInventoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailInventoryBinding
@@ -32,7 +34,7 @@ class DetailInventoryActivity : AppCompatActivity() {
         binding.apply {
             tvNamePro.text = data.name
             tvDesc.text = data.description
-            tvPrice.text = data.price
+            tvPrice.text = data.price?.let { formatPrice(it.toInt()) }
             tvCategory.text = data.category
             tvCondition.text = data.condition
             tvNameUser.text = data.username
@@ -41,6 +43,11 @@ class DetailInventoryActivity : AppCompatActivity() {
                 .fitCenter()
                 .into(ivProduct)
         }
+    }
+
+    private fun formatPrice(price: Int): String {
+        val format = NumberFormat.getNumberInstance(Locale("in", "ID"))
+        return "Rp" + format.format(price)
     }
 
     override fun onSupportNavigateUp(): Boolean {

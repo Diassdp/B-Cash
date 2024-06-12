@@ -10,6 +10,8 @@ import com.example.bcash.databinding.ActivityDetailBinding
 import com.example.bcash.model.ViewModelFactory
 import com.example.bcash.service.response.data.ProductItem
 import com.example.bcash.ui.bartertrade.transaction.TransactionActivity
+import java.text.NumberFormat
+import java.util.Locale
 
 class DetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBinding
@@ -80,7 +82,7 @@ class DetailActivity : AppCompatActivity() {
         binding.apply {
             tvNamePro.text = data.name
             tvDesc.text = data.description
-            tvPrice.text = data.price
+            tvPrice.text = data.price?.let { formatPrice(it.toInt()) }
             tvCategory.text = data.category
             tvCondition.text = data.condition
             tvNameUser.text = data.username
@@ -90,6 +92,11 @@ class DetailActivity : AppCompatActivity() {
                 .fitCenter()
                 .into(ivProduct)
         }
+    }
+
+    private fun formatPrice(price: Int): String {
+        val format = NumberFormat.getNumberInstance(Locale("in", "ID"))
+        return "Rp" + format.format(price)
     }
 
     override fun onSupportNavigateUp(): Boolean {
