@@ -37,16 +37,23 @@ class BarterTradeFragment : Fragment() {
                 if (session.statusLogin) {
                     moveToBarterTrade()
                 } else {
-                    moveToLogin()
+                    binding.clLogin.visibility = View.VISIBLE
                 }
             }
             binding.btnStarted.setOnClickListener {
                 if (session.statusLogin) {
                     moveToBarterTrade()
                 } else {
-                    moveToLogin()
+                    binding.clLogin.visibility = View.VISIBLE
                 }
             }
+        }
+        binding.clLogin.setOnClickListener {
+            binding.clLogin.visibility = View.GONE
+        }
+
+        binding.btnLogin.setOnClickListener {
+            moveToLogin()
         }
     }
 
