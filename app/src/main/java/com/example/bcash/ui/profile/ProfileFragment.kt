@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.bcash.R
 import com.example.bcash.databinding.FragmentProfileBinding
 import com.example.bcash.model.ViewModelFactory
+import com.example.bcash.ui.dashboard.DashboardFragmentDirections
 import com.example.bcash.ui.login.LoginActivity
 
 class ProfileFragment : Fragment() {
@@ -78,10 +79,14 @@ class ProfileFragment : Fragment() {
         requireActivity().finish()
     }
 
+    private fun navigateToDashboard() {
+        findNavController().navigate(R.id.navigation_dashboard)
+    }
+
     private fun setupListener() {
         binding.btnLogout.setOnClickListener {
             viewModel.logout()
-            moveToLogin()
+            navigateToDashboard()
         }
 
         binding.clInventory.setOnClickListener {
