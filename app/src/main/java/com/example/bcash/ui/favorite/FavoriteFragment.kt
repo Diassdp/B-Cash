@@ -1,6 +1,7 @@
 package com.example.bcash.ui.favorite
 
 import android.animation.ObjectAnimator
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.transition.TransitionInflater
@@ -10,12 +11,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bcash.databinding.FragmentFavoriteBinding
 import com.example.bcash.model.ViewModelFactory
 import com.example.bcash.ui.login.LoginActivity
+import com.example.bcash.ui.detail.DetailFavoriteActivity
 
 class FavoriteFragment : Fragment() {
 
@@ -25,6 +29,15 @@ class FavoriteFragment : Fragment() {
     private val factory: ViewModelFactory by lazy { ViewModelFactory.getInstance(requireContext()) }
     private val viewModel: FavoriteViewModel by viewModels { factory }
     private lateinit var recyclerView: RecyclerView
+
+    private val detailLauncher: ActivityResultLauncher<Intent> = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            // Refresh the data
+            setupViewModel()
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
@@ -85,11 +98,15 @@ class FavoriteFragment : Fragment() {
         }
     }
 
-
     private fun setupAdapter() {
         recyclerView = binding.recyclerView
         recyclerView.layoutManager = GridLayoutManager(context, 2)
-        adapter = FavoriteAdapter()
+        adapter = FavoriteAdapter { productItem ->
+            val intent = Intent(requireContext(), DetailFavoriteActivity::class.java).apply {
+                putExtra(DetailFavoriteActivity.EXTRA_DATA, productItem)
+            }
+            detailLauncher.launch(intent)
+        }
         recyclerView.adapter = adapter
     }
 
@@ -105,7 +122,5 @@ class FavoriteFragment : Fragment() {
             repeatMode = ObjectAnimator.REVERSE
         }
         imageViewAnimation.start()
-
     }
-
 }

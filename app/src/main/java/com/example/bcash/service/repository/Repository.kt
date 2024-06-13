@@ -1,5 +1,6 @@
 package com.example.bcash.service.repository
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
@@ -499,8 +500,11 @@ class Repository(private val context: Context, private val preferences: SessionP
     }
 
     companion object {
+
+        @SuppressLint("StaticFieldLeak")
         @Volatile
         private var instance: Repository? = null
+
         fun getInstance(
             context: Context,
             preferences: SessionPreferences,

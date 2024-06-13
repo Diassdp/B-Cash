@@ -71,22 +71,14 @@ class DetailFavoriteActivity : AppCompatActivity() {
         viewModel.wishlistResponse.observe(this@DetailFavoriteActivity) {
             if (it.error != true) {
                 showToast("Product has been removed from wishlist")
-                moveToWishlist()
+                setResult(Activity.RESULT_OK)
+                finish()
 
             } else {
                 showToast("Failed to remove product from wishlist")
             }
         }
     }
-
-    private fun moveToWishlist() {
-//        val intent = Intent(this@DetailFavoriteActivity, MainActivity::class.java).apply {
-//            putExtra(MainActivity.EXTRA_FRAGMENT_ID, R.id.navigation_favorite)
-//        }
-//        startActivity(intent)
-        finish()
-    }
-
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

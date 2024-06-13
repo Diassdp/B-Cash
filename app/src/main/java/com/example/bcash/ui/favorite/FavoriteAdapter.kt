@@ -1,24 +1,17 @@
 package com.example.bcash.ui.favorite
 
-import android.app.Activity
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.app.ActivityOptionsCompat
-import androidx.paging.PagingDataAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.bcash.R
 import com.example.bcash.databinding.ItemPopularBinding
 import com.example.bcash.service.response.data.ProductItem
-import com.example.bcash.ui.detail.DetailActivity
-import com.example.bcash.ui.detail.DetailFavoriteActivity
 import java.text.NumberFormat
 import java.util.Locale
 
-class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.ListViewHolder>() {
+class FavoriteAdapter(private val onItemClicked: (ProductItem) -> Unit) : RecyclerView.Adapter<FavoriteAdapter.ListViewHolder>() {
 
     private var productList: List<ProductItem> = emptyList()
 
@@ -54,7 +47,7 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.ListViewHolder>() {
                     .into(binding.ivImage)
 
                 itemView.setOnClickListener {
-                    navigateToDetail(data)
+                    onItemClicked(data)
                 }
             }
         }
@@ -62,17 +55,6 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.ListViewHolder>() {
         private fun formatPrice(price: Int): String {
             val format = NumberFormat.getNumberInstance(Locale("in", "ID"))
             return "Rp" + format.format(price)
-        }
-
-        private fun navigateToDetail(data: ProductItem) {
-            val intent = Intent(itemView.context, DetailFavoriteActivity::class.java).apply {
-                putExtra(DetailActivity.EXTRA_DATA, data)
-            }
-
-            if (itemView.context is Activity) {
-                val activity = itemView.context as Activity
-                activity.startActivity(intent)
-            }
         }
     }
 }
