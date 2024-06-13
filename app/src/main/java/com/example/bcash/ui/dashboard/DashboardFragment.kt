@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -20,6 +21,7 @@ import com.example.bcash.databinding.FragmentDashboardBinding
 import com.example.bcash.model.ViewModelFactory
 import com.example.bcash.ui.bartertrade.feature.BarterTradeActivity
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.example.bcash.ui.login.LoginActivity
 
 class DashboardFragment : Fragment() {
     private var _binding: FragmentDashboardBinding? = null
@@ -68,16 +70,22 @@ class DashboardFragment : Fragment() {
 
     private fun insertData() {
         viewModel.getAllProduct.observe(viewLifecycleOwner) { pagingData ->
-            Log.d("DashboardFragment", "PagingData received: ${pagingData}")
             adapter.submitData(viewLifecycleOwner.lifecycle, pagingData)
         }
     }
 
-
     private fun setupListener() {
-        binding.btnTradeBarter.setOnClickListener {
-            val intent = Intent(requireContext(), BarterTradeActivity::class.java)
-            startActivity(intent)
+        viewModel.getSession().observe(viewLifecycleOwner) { session ->
+            binding.btnTradeBarter.setOnClickListener {
+                if (session.statusLogin) {
+                    val intent = Intent(requireContext(), BarterTradeActivity::class.java)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(requireContext(), "Anda belum login", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(requireContext(), LoginActivity::class.java)
+                    startActivity(intent)
+                }
+            }
         }
         setupSwipeRefresh()
     }

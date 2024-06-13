@@ -449,19 +449,19 @@ class Repository(private val context: Context, private val preferences: SessionP
 
     fun getProduct(): LiveData<PagingData<ProductItem>> {
         return Pager(config = PagingConfig(pageSize = 5), pagingSourceFactory = {
-            PagingSource(preferences, api)
+            PagingSource(api)
         }).liveData
     }
 
     fun getProductbyCategory(category: String): LiveData<PagingData<ProductItem>> {
         return Pager(config = PagingConfig(pageSize = 5), pagingSourceFactory = {
-            CategoryPagingSource(preferences, api,category)
+            CategoryPagingSource(api,category)
         }).liveData
     }
 
     fun getProductbySearch(search: String): LiveData<PagingData<ProductItem>> {
         return Pager(config = PagingConfig(pageSize = 5), pagingSourceFactory = {
-            SearchPagingSource(preferences, api,search)
+            SearchPagingSource(api,search)
         }).liveData
     }
 

@@ -30,22 +30,12 @@ class MainActivity : AppCompatActivity() {
         setupView()
         setupNavigation()
         setupToolbar()
-
         handleIntentExtras()
     }
 
     private fun setupUser() {
         factory = ViewModelFactory.getInstance(this)
 
-        mainViewModel.getSession().observe(this@MainActivity) { session ->
-            token = session.token
-            Log.d(TAG, "Token: $token")
-            Log.d(TAG, "statusLogin: ${session.statusLogin}")
-            if (!session.statusLogin) {
-                startActivity(Intent(this@MainActivity, LoginActivity::class.java))
-                finish()
-            }
-        }
     }
 
     private fun setupView() {
@@ -66,6 +56,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_profile
             )
         )
+
         navView.setupWithNavController(navController)
 
         navView.setOnNavigationItemSelectedListener { menuItem ->
@@ -76,26 +67,47 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupToolbar() {
-        findViewById<ImageView>(R.id.iv_logo).setOnClickListener {
-            navigateTo(R.id.navigation_dashboard)
-        }
+        mainViewModel.getSession().observe(this@MainActivity) { session ->
+            findViewById<ImageView>(R.id.iv_logo).setOnClickListener {
+                navigateTo(R.id.navigation_dashboard)
+            }
 
-        findViewById<TextView>(R.id.tv_logo).setOnClickListener {
-            navigateTo(R.id.navigation_dashboard)
-        }
+            findViewById<TextView>(R.id.tv_logo).setOnClickListener {
+                navigateTo(R.id.navigation_dashboard)
+            }
 
-        findViewById<ImageView>(R.id.iv_account).setOnClickListener {
-            navigateTo(R.id.navigation_profile)
-        }
+            findViewById<ImageView>(R.id.iv_account).setOnClickListener {
+                if (session.statusLogin) {
+                    navigateTo(R.id.navigation_profile)
+                } else {
+                    moveToLogin()
+                }
+            }
 
-        findViewById<ImageView>(R.id.iv_inventory).setOnClickListener {
-            navigateTo(R.id.navigation_inventory)
-        }
+            findViewById<ImageView>(R.id.iv_inventory).setOnClickListener {
+                if (session.statusLogin) {
+                    navigateTo(R.id.navigation_inventory)
 
-        findViewById<ImageView>(R.id.iv_favorite).setOnClickListener {
-            navigateTo(R.id.navigation_favorite)
+                } else {
+                    moveToLogin()
+                }
+            }
+
+            findViewById<ImageView>(R.id.iv_favorite).setOnClickListener {
+                if (session.statusLogin) {
+                    navigateTo(R.id.navigation_favorite)
+                } else {
+                    moveToLogin()
+                }
+            }
         }
     }
+
+    private fun moveToLogin() {
+        val intent = Intent(this@MainActivity, LoginActivity::class.java)
+        startActivity(intent)
+    }
+
 
     private fun navigateTo(fragmentId: Int) {
         val navController = findNavController(R.id.nav_host_fragment)

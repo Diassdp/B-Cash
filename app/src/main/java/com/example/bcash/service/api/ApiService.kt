@@ -62,14 +62,12 @@ interface ApiService {
 
     @GET("product")
     suspend fun getAllProduct(
-        @Header("authorization") token: String,
         @Query("page") page: Int,
         @Query("size") size: Int
     ): Response<GetProductResponse>
 
     @GET("product")
     suspend fun getProductByCategory(
-        @Header("authorization") token: String,
         @Query("category") category: String,
         @Query("page") page: Int,
         @Query("size") size: Int
@@ -77,7 +75,6 @@ interface ApiService {
 
     @GET("product")
     suspend fun getProductBySearch(
-        @Header("authorization") token: String,
         @Query("search") search: String,
         @Query("page") page: Int,
         @Query("size") size: Int

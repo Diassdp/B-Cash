@@ -1,5 +1,6 @@
 package com.example.bcash.ui.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +11,11 @@ import androidx.navigation.fragment.findNavController
 import com.example.bcash.R
 import com.example.bcash.databinding.FragmentProfileBinding
 import com.example.bcash.model.ViewModelFactory
+import com.example.bcash.ui.login.LoginActivity
 
 class ProfileFragment : Fragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var token: String
-    private lateinit var userId: String
-
     private val factory: ViewModelFactory by lazy {
         ViewModelFactory.getInstance(requireContext())
     }
@@ -25,18 +23,22 @@ class ProfileFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
-
-        binding.clInventory.setOnClickListener {
-            findNavController().navigate(R.id.action_profileFragment_to_inventoryFragment)
-        }
-
+        setupView()
         return binding.root
-
     }
+
+    private fun setupUser() {
+        viewModel.getSession().observe(viewLifecycleOwner) { session ->
+            if (!session.statusLogin) {
+                val intent = Intent(requireActivity(), LoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupView()
         setupListener()
     }
 
@@ -46,6 +48,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setupView() {
+        setupUser()
         setupViewModel()
     }
 
@@ -71,6 +74,10 @@ class ProfileFragment : Fragment() {
     private fun setupListener() {
         binding.btnLogout.setOnClickListener {
             viewModel.logout()
+        }
+
+        binding.clInventory.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_inventoryFragment)
         }
     }
 }

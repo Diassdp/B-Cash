@@ -1,5 +1,6 @@
 package com.example.bcash.ui.favorite
 
+import android.content.Intent
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.util.Log
@@ -8,15 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.graphics.convertTo
 import androidx.fragment.app.viewModels
-import androidx.paging.PagingData
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bcash.databinding.FragmentFavoriteBinding
 import com.example.bcash.model.ViewModelFactory
-import com.example.bcash.service.response.data.ProductItem
+import com.example.bcash.ui.login.LoginActivity
 
 class FavoriteFragment : Fragment() {
 
@@ -40,8 +38,19 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun setupView(){
+        setupUser()
         setupAdapter()
     }
+
+    private fun setupUser() {
+        viewModel.getSession().observe(viewLifecycleOwner) { session ->
+            if (!session.statusLogin) {
+                val intent = Intent(requireActivity(), LoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
+    }
+
 
     private fun setupViewModel() {
         viewModel.getSession().observe(viewLifecycleOwner) { session ->
@@ -80,4 +89,5 @@ class FavoriteFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

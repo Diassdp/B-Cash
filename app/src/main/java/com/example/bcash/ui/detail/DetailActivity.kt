@@ -42,13 +42,25 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setupListener(){
-        binding.apply {
-            btnTrade.setOnClickListener {
-                trade()
-            }
+        viewModel.getSession().observe(this@DetailActivity) { session ->
+            binding.apply {
+                btnTrade.setOnClickListener {
+                    if (session.statusLogin) {
+                        trade()
+                    } else {
+                        showToast("Please login first")
+                        finish()
+                    }
+                }
 
-            btnWishlist.setOnClickListener {
-                wishlist()
+                btnWishlist.setOnClickListener {
+                    if (session.statusLogin) {
+                        wishlist()
+                    } else {
+                        showToast("Please login first")
+                        finish()
+                    }
+                }
             }
         }
     }

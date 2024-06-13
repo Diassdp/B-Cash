@@ -8,7 +8,7 @@ import com.example.bcash.service.response.data.ProductItem
 import com.example.bcash.utils.session.SessionPreferences
 import kotlinx.coroutines.flow.first
 
-class SearchPagingSource (private val preferences: SessionPreferences, private val apiService: ApiService, private val search: String) : PagingSource<Int, ProductItem>() {
+class SearchPagingSource (private val apiService: ApiService, private val search: String) : PagingSource<Int, ProductItem>() {
     override fun getRefreshKey(state: PagingState<Int, ProductItem>): Int? {
         return state.anchorPosition?.let { anchorPosition ->
             val anchorPage = state.closestPageToPosition(anchorPosition)
@@ -19,12 +19,7 @@ class SearchPagingSource (private val preferences: SessionPreferences, private v
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ProductItem> {
         return try {
             val page = params.key ?: SearchPagingSource.INITIAL_PAGE_INDEX
-            val token = preferences.getSession().first().token
-            if (token.isEmpty()) {
-                Log.e(SearchPagingSource.TAG, "Token not found: $token")
-                return LoadResult.Error(Exception("Token not found"))
-            } else {
-                val responseData = apiService.getProductBySearch(token,search, page, params.loadSize)
+                val responseData = apiService.getProductBySearch(search, page, params.loadSize)
                 if (responseData.isSuccessful) {
                     val responseBody = responseData.body()
                     LoadResult.Page(
@@ -37,7 +32,7 @@ class SearchPagingSource (private val preferences: SessionPreferences, private v
                     Log.e(SearchPagingSource.TAG, "Error loading data: $message")
                     LoadResult.Error(Exception("Error loading data: $message"))
                 }
-            }
+
         } catch (e: Exception) {
             Log.e(SearchPagingSource.TAG, "Error loading data", e)
             LoadResult.Error(e)
