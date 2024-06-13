@@ -1,5 +1,6 @@
 package com.example.bcash.ui.bartertrade.feature
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -26,6 +27,7 @@ class BarterTradeFragment : Fragment() {
         binding = FragmentBarterTradeBinding.inflate(inflater, container, false)
         val view = binding.root
         setupListener()
+        playAnimation()
         return view
     }
 
@@ -58,5 +60,15 @@ class BarterTradeFragment : Fragment() {
     private fun moveToBarterTrade(){
         val intent = Intent(requireContext(), BarterTradeActivity::class.java)
         startActivity(intent)
+    }
+
+    private fun playAnimation() {
+        val imageViewAnimation = ObjectAnimator.ofFloat(binding.imgLock, View.TRANSLATION_X, -30f, 30f).apply {
+            duration = 6000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }
+        imageViewAnimation.start()
+
     }
 }

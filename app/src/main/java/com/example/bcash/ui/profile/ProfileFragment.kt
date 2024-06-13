@@ -1,5 +1,7 @@
 package com.example.bcash.ui.profile
 
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -32,6 +34,8 @@ class ProfileFragment : Fragment() {
             if (!session.statusLogin) {
                 val intent = Intent(requireActivity(), LoginActivity::class.java)
                 startActivity(intent)
+            }  else {
+                binding.clLogin.visibility=View.GONE
             }
         }
     }
@@ -50,6 +54,7 @@ class ProfileFragment : Fragment() {
     private fun setupView() {
         setupUser()
         setupViewModel()
+        playAnimation()
     }
 
     private fun setupViewModel() {
@@ -79,5 +84,15 @@ class ProfileFragment : Fragment() {
         binding.clInventory.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_inventoryFragment)
         }
+    }
+
+    private fun playAnimation() {
+        val imageViewAnimation = ObjectAnimator.ofFloat(binding.imgLock, View.TRANSLATION_X, -30f, 30f).apply {
+            duration = 6000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }
+        imageViewAnimation.start()
+
     }
 }

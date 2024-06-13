@@ -89,6 +89,7 @@ dependencies {
 
     // Image loading and caching
     implementation("com.github.bumptech.glide:glide:4.16.0") // Image loading library
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
 
     // Logging
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0") // For logging HTTP requests and responses
@@ -120,4 +121,6 @@ dependencies {
     implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    implementation ("com.eightbitlab:blurview:1.6.6")
 }

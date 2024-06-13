@@ -1,5 +1,6 @@
 package com.example.bcash.ui.favorite
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.transition.TransitionInflater
@@ -40,6 +41,7 @@ class FavoriteFragment : Fragment() {
     private fun setupView(){
         setupUser()
         setupAdapter()
+        playAnimation()
     }
 
     private fun setupUser() {
@@ -88,6 +90,16 @@ class FavoriteFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun playAnimation() {
+        val imageViewAnimation = ObjectAnimator.ofFloat(binding.imgLock, View.TRANSLATION_X, -30f, 30f).apply {
+            duration = 6000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }
+        imageViewAnimation.start()
+
     }
 
 }

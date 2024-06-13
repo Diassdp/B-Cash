@@ -1,5 +1,6 @@
 package com.example.bcash.ui.dashboard
 
+import android.animation.ObjectAnimator
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
@@ -59,7 +60,7 @@ class DashboardFragment : Fragment() {
         setupViewFlipper()
         setupAdapter()
         setupCategoryButtons()
-    }
+        playAnimation()    }
 
     private fun setupAdapter() {
         recyclerView = binding.recyclerView
@@ -170,5 +171,15 @@ class DashboardFragment : Fragment() {
                 return true
             }
         })
+    }
+
+    private fun playAnimation() {
+        val imageViewAnimation = ObjectAnimator.ofFloat(binding.imgLock, View.TRANSLATION_X, -30f, 30f).apply {
+            duration = 6000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }
+        imageViewAnimation.start()
+
     }
 }
