@@ -60,7 +60,7 @@ class BarterTradeFragment : Fragment() {
     private fun moveToLogin() {
         val intent = Intent(requireActivity(), LoginActivity::class.java)
         startActivity(intent)
-        requireActivity().finish()
+        requireActivity()
     }
 
 
