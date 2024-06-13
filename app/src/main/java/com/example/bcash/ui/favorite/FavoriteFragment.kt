@@ -28,6 +28,7 @@ class FavoriteFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
+        setupUser()
         setupView()
         return binding.root
     }
@@ -35,24 +36,29 @@ class FavoriteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         sharedElementReturnTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
-        setupViewModel()
     }
 
     private fun setupView(){
-        setupUser()
+        setupListener()
         setupAdapter()
         playAnimation()
+    }
+    private fun setupListener() {
+        binding.btnLogin.setOnClickListener {
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun setupUser() {
         viewModel.getSession().observe(viewLifecycleOwner) { session ->
             if (!session.statusLogin) {
-                val intent = Intent(requireActivity(), LoginActivity::class.java)
-                startActivity(intent)
+                binding.clLogin.visibility = View.VISIBLE
+            } else {
+                setupViewModel()
             }
         }
     }
-
 
     private fun setupViewModel() {
         viewModel.getSession().observe(viewLifecycleOwner) { session ->
@@ -67,7 +73,7 @@ class FavoriteFragment : Fragment() {
                     Log.e("FavoriteFragment","Fetching Success")
                     adapter.setData(response.wishlist)
                     var wishlistitemscount = response.wishlist.size
-                    binding.tvFavCount.text = "Wishlist Items: $wishlistitemscount"
+                    binding.tvFavCount.text = "$wishlistitemscount Items"
                 } else {
                     Log.e("FavoriteFragment","Wishlist Empty")
                     Toast.makeText(context, response.message, Toast.LENGTH_SHORT).show()

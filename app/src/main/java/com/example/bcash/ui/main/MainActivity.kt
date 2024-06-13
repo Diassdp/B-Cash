@@ -28,19 +28,27 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setupUser()
         setupView()
-        setupNavigation()
-        setupToolbar()
-        handleIntentExtras()
     }
 
     private fun setupUser() {
         factory = ViewModelFactory.getInstance(this)
-
+        mainViewModel.getSession().observe(this) { session ->
+            if (!session.statusLogin){
+                findViewById<ImageView>(R.id.iv_inventory).visibility = ImageView.GONE
+                findViewById<ImageView>(R.id.iv_favorite).visibility = ImageView.GONE
+            } else {
+                findViewById<ImageView>(R.id.iv_inventory).visibility = ImageView.VISIBLE
+                findViewById<ImageView>(R.id.iv_favorite).visibility = ImageView.VISIBLE
+            }
+        }
     }
 
     private fun setupView() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        setupNavigation()
+        setupToolbar()
+        handleIntentExtras()
     }
 
     private fun setupNavigation() {
@@ -77,28 +85,17 @@ class MainActivity : AppCompatActivity() {
             }
 
             findViewById<ImageView>(R.id.iv_account).setOnClickListener {
-                if (session.statusLogin) {
                     navigateTo(R.id.navigation_profile)
-                } else {
-                    moveToLogin()
-                }
             }
 
             findViewById<ImageView>(R.id.iv_inventory).setOnClickListener {
-                if (session.statusLogin) {
                     navigateTo(R.id.navigation_inventory)
-
-                } else {
-                    moveToLogin()
-                }
             }
 
             findViewById<ImageView>(R.id.iv_favorite).setOnClickListener {
-                if (session.statusLogin) {
                     navigateTo(R.id.navigation_favorite)
-                } else {
                     moveToLogin()
-                }
+
             }
         }
     }

@@ -41,7 +41,6 @@ class DashboardFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
         setupView()
-        setupListener()
         return binding.root
     }
 
@@ -50,17 +49,15 @@ class DashboardFragment : Fragment() {
         sharedElementReturnTransition = TransitionInflater.from(context).inflateTransition(android.R.transition.move)
         setupSearch()
         insertData()
-        binding.searchView.setOnClickListener {
-            binding.searchView.isIconified = false
-            binding.searchView.requestFocus()
-        }
     }
 
     private fun setupView() {
         setupViewFlipper()
         setupAdapter()
         setupCategoryButtons()
-        playAnimation()    }
+        setupListener()
+        playAnimation()
+    }
 
     private fun setupAdapter() {
         recyclerView = binding.recyclerView
@@ -76,18 +73,30 @@ class DashboardFragment : Fragment() {
     }
 
     private fun setupListener() {
+        binding.searchView.setOnClickListener {
+            binding.searchView.isIconified = false
+            binding.searchView.requestFocus()
+        }
         viewModel.getSession().observe(viewLifecycleOwner) { session ->
             binding.btnTradeBarter.setOnClickListener {
                 if (session.statusLogin) {
                     val intent = Intent(requireContext(), BarterTradeActivity::class.java)
                     startActivity(intent)
                 } else {
-                    Toast.makeText(requireContext(), "Anda belum login", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(requireContext(), LoginActivity::class.java)
-                    startActivity(intent)
+                    binding.clLogin.visibility = View.VISIBLE
                 }
             }
         }
+
+        binding.clLogin.setOnClickListener {
+            binding.clLogin.visibility = View.GONE
+        }
+
+        binding.btnLogin.setOnClickListener {
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
+        }
+
         setupSwipeRefresh()
     }
 

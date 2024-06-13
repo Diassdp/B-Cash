@@ -31,11 +31,9 @@ class ProfileFragment : Fragment() {
 
     private fun setupUser() {
         viewModel.getSession().observe(viewLifecycleOwner) { session ->
-            if (!session.statusLogin) {
-                val intent = Intent(requireActivity(), LoginActivity::class.java)
-                startActivity(intent)
-            }  else {
+            if (session.statusLogin) {
                 binding.clLogin.visibility=View.GONE
+                setupViewModel()
             }
         }
     }
@@ -53,7 +51,6 @@ class ProfileFragment : Fragment() {
 
     private fun setupView() {
         setupUser()
-        setupViewModel()
         playAnimation()
     }
 
@@ -83,6 +80,10 @@ class ProfileFragment : Fragment() {
 
         binding.clInventory.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_inventoryFragment)
+        }
+        binding.btnLogin.setOnClickListener {
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
         }
     }
 
