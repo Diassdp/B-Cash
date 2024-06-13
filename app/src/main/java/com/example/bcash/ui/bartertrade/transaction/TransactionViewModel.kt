@@ -7,18 +7,18 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.bcash.model.SessionModel
 import com.example.bcash.service.repository.Repository
-import com.example.bcash.service.response.TradeRequestResponse
+import com.example.bcash.service.response.PostTradeRequestResponse
 import kotlinx.coroutines.launch
 
 class TransactionViewModel(private val repository: Repository) : ViewModel() {
-    private val _tradeRequestResponse = MutableLiveData<TradeRequestResponse>()
+    private val _postTradeRequestResponse = MutableLiveData<PostTradeRequestResponse>()
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
-    val tradeRequestReponse: LiveData<TradeRequestResponse> get() = _tradeRequestResponse
+    val tradeRequestReponse: LiveData<PostTradeRequestResponse> get() = _postTradeRequestResponse
 
     init {
-        repository.tradeRequestResponse.observeForever {
-            _tradeRequestResponse.postValue(it)
+        repository.postTradeRequestResponse.observeForever {
+            _postTradeRequestResponse.postValue(it)
         }
     }
 

@@ -17,16 +17,18 @@ import com.example.bcash.service.paging.PagingSource
 import com.example.bcash.service.paging.SearchPagingSource
 import com.example.bcash.service.response.AddProductResponse
 import com.example.bcash.service.response.AddToWishlistResponse
+import com.example.bcash.service.response.ConfirmTradeRequestResponse
 import com.example.bcash.service.response.DeleteFromWishlistResponse
 import com.example.bcash.service.response.GetInventoryResponse
 import com.example.bcash.service.response.GetProductResponse
 import com.example.bcash.service.response.GetProfileResponse
+import com.example.bcash.service.response.GetTradeRequestResponse
 import com.example.bcash.service.response.GetWishlistResponse
 import com.example.bcash.service.response.LoginResponse
+import com.example.bcash.service.response.PostTradeRequestResponse
 import com.example.bcash.service.response.data.ProductItem
 import com.example.bcash.service.response.data.Profile
 import com.example.bcash.service.response.RegisterResponse
-import com.example.bcash.service.response.TradeRequestResponse
 import com.example.bcash.utils.session.SessionPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -55,8 +57,14 @@ class Repository(private val context: Context, private val preferences: SessionP
     private val _getProfileResponse = MutableLiveData<GetProfileResponse>()
     val getProfileResponse: LiveData<GetProfileResponse> = _getProfileResponse
 
-    private val _tradeRequestResponse = MutableLiveData<TradeRequestResponse>()
-    val tradeRequestResponse: LiveData<TradeRequestResponse> = _tradeRequestResponse
+    private val _postTradeRequestResponse = MutableLiveData<PostTradeRequestResponse>()
+    val postTradeRequestResponse: LiveData<PostTradeRequestResponse> = _postTradeRequestResponse
+
+    private val _confirmTradeRequestResponse = MutableLiveData<ConfirmTradeRequestResponse>()
+    val confirmTradeRequestResponse: LiveData<ConfirmTradeRequestResponse> = _confirmTradeRequestResponse
+
+    private val _getTradeRequestResponse = MutableLiveData<GetTradeRequestResponse>()
+    val getTradeRequestResponse: LiveData<GetTradeRequestResponse> = _getTradeRequestResponse
 
     private val _getInventoryResponse = MutableLiveData<GetInventoryResponse>()
     val getInventoryResponse: LiveData<GetInventoryResponse> = _getInventoryResponse
@@ -73,32 +81,32 @@ class Repository(private val context: Context, private val preferences: SessionP
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun createTradeRequest(token: String, itemIdSeller: String, itemIdBuyer: String, usernameSeller: String, usernameBuyer: String) {
+    fun createTradeRequest(token: String, itemIdSeller: String, itemIdBuyer: String, userIdSeller: String, userIdBuyer: String) {
         toggleLoading(true)
-        val client = api.createTradeRequest(token, itemIdSeller, itemIdBuyer, usernameSeller, usernameBuyer)
+        val client = api.createTradeRequest(token, itemIdSeller, itemIdBuyer, userIdSeller, userIdBuyer)
 
-        client.enqueue(object : Callback<TradeRequestResponse> {
-            override fun onResponse(call: Call<TradeRequestResponse>, response: Response<TradeRequestResponse>) {
+        client.enqueue(object : Callback<PostTradeRequestResponse> {
+            override fun onResponse(call: Call<PostTradeRequestResponse>, response: Response<PostTradeRequestResponse>) {
                 toggleLoading(false)
                 if (response.isSuccessful) {
-                    _tradeRequestResponse.value = response.body()
+                    _postTradeRequestResponse.value = response.body()
                     showToast("Trade Request Created")
                 } else {
                     val message = extractErrorMessage(response)
-                    _tradeRequestResponse.value = TradeRequestResponse(error = true, message = message)
+                    _postTradeRequestResponse.value = PostTradeRequestResponse(error = true, message = message)
                     showToast(message)
                     Log.e("Repository", "createTradeRequest onResponse: ${response.message()}, ${response.code()} $message")
                 }
             }
 
-            override fun onFailure(call: Call<TradeRequestResponse>, t: Throwable) {
+            override fun onFailure(call: Call<PostTradeRequestResponse>, t: Throwable) {
                 toggleLoading(false)
                 val message = if (t is UnknownHostException) {
                     "No Internet Connection"
                 } else {
                     t.message.toString()
                 }
-                _tradeRequestResponse.value = TradeRequestResponse(error = true, message = message)
+                _postTradeRequestResponse.value = PostTradeRequestResponse(error = true, message = message)
                 showToast(message)
                 Log.e("Repository", "createTradeRequest onFailure: $message")
             }
@@ -109,28 +117,28 @@ class Repository(private val context: Context, private val preferences: SessionP
         toggleLoading(true)
         val client = api.confirmTradeRequest(token, tradeId, userId, confirmed)
 
-        client.enqueue(object : Callback<TradeRequestResponse> {
-            override fun onResponse(call: Call<TradeRequestResponse>, response: Response<TradeRequestResponse>) {
+        client.enqueue(object : Callback<ConfirmTradeRequestResponse> {
+            override fun onResponse(call: Call<ConfirmTradeRequestResponse>, response: Response<ConfirmTradeRequestResponse>) {
                 toggleLoading(false)
                 if (response.isSuccessful) {
-                    _tradeRequestResponse.value = response.body()
+                    _confirmTradeRequestResponse.value = response.body()
                     showToast("Trade Request Confirmed")
                 } else {
                     val message = extractErrorMessage(response)
-                    _tradeRequestResponse.value = TradeRequestResponse(error = true, message = message)
+                    _confirmTradeRequestResponse.value = ConfirmTradeRequestResponse(error = true, message = message)
                     showToast(message)
                     Log.e("Repository", "confirmTradeRequest onResponse: ${response.message()}, ${response.code()} $message")
                 }
             }
 
-            override fun onFailure(call: Call<TradeRequestResponse>, t: Throwable) {
+            override fun onFailure(call: Call<ConfirmTradeRequestResponse>, t: Throwable) {
                 toggleLoading(false)
                 val message = if (t is UnknownHostException) {
                     "No Internet Connection"
                 } else {
                     t.message.toString()
                 }
-                _tradeRequestResponse.value = TradeRequestResponse(error = true, message = message)
+                _confirmTradeRequestResponse.value = ConfirmTradeRequestResponse(error = true, message = message)
                 showToast(message)
                 Log.e("Repository", "confirmTradeRequest onFailure: $message")
             }
@@ -140,28 +148,27 @@ class Repository(private val context: Context, private val preferences: SessionP
     fun getTradeRequest(token: String, tradeId: Int) {
         toggleLoading(true)
         val client = api.getTradeRequest(token, tradeId)
-
-        client.enqueue(object : Callback<TradeRequestResponse> {
-            override fun onResponse(call: Call<TradeRequestResponse>, response: Response<TradeRequestResponse>) {
+        client.enqueue(object : Callback<GetTradeRequestResponse> {
+            override fun onResponse(call: Call<GetTradeRequestResponse>, response: Response<GetTradeRequestResponse>) {
                 toggleLoading(false)
                 if (response.isSuccessful) {
-                    _tradeRequestResponse.value = response.body()
+                    _getTradeRequestResponse.value = response.body()
                 } else {
                     val message = extractErrorMessage(response)
-                    _tradeRequestResponse.value = TradeRequestResponse(error = true, message = message)
+                    _getTradeRequestResponse.value = GetTradeRequestResponse(error = true, message = message)
                     showToast(message)
                     Log.e("Repository", "getTradeRequest onResponse: ${response.message()}, ${response.code()} $message")
                 }
             }
 
-            override fun onFailure(call: Call<TradeRequestResponse>, t: Throwable) {
+            override fun onFailure(call: Call<GetTradeRequestResponse>, t: Throwable) {
                 toggleLoading(false)
                 val message = if (t is UnknownHostException) {
                     "No Internet Connection"
                 } else {
                     t.message.toString()
                 }
-                _tradeRequestResponse.value = TradeRequestResponse(error = true, message = message)
+                _getTradeRequestResponse.value = GetTradeRequestResponse(error = true, message = message)
                 showToast(message)
                 Log.e("Repository", "getTradeRequest onFailure: $message")
             }
@@ -317,6 +324,7 @@ class Repository(private val context: Context, private val preferences: SessionP
             result
         }
     }
+
     fun postWishlist(token: String, userId: String, productId: String) {
         toggleLoading(true)
         val client = api.addToWishlist(token,userId,productId)

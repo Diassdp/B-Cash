@@ -2,18 +2,21 @@ package com.example.bcash.service.api
 
 import com.example.bcash.service.response.AddProductResponse
 import com.example.bcash.service.response.AddToWishlistResponse
+import com.example.bcash.service.response.ConfirmTradeRequestResponse
 import com.example.bcash.service.response.DeleteFromWishlistResponse
 import com.example.bcash.service.response.GetInventoryResponse
 import com.example.bcash.service.response.GetProductResponse
 import com.example.bcash.service.response.GetProfileResponse
 import com.example.bcash.service.response.GetWishlistResponse
 import com.example.bcash.service.response.LoginResponse
+import com.example.bcash.service.response.PostTradeRequestResponse
 import com.example.bcash.service.response.RegisterResponse
-import com.example.bcash.service.response.TradeRequestResponse
+import com.example.bcash.service.response.GetTradeRequestResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Response
+import retrofit2.http.DELETE
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -99,12 +102,11 @@ interface ApiService {
         @Field("productId") productId: String
     ): Call<AddToWishlistResponse>
 
-    @FormUrlEncoded
-    @POST("wishlist")
+    @DELETE("wishlist")
     fun deleteFromWishlist(
         @Header("authorization") token: String,
-        @Field("userId") userId: String,
-        @Field("productId") productId: String
+        @Query("userId") userId: String,
+        @Query("productId") productId: String
     ): Call<DeleteFromWishlistResponse>
 
     @GET("inventory")
@@ -117,11 +119,11 @@ interface ApiService {
     @POST("trade-request")
     fun createTradeRequest(
         @Header("authorization") token: String,
-        @Field("itemId1") itemId1: String,
-        @Field("itemId2") itemId2: String,
-        @Field("userId1") userId1: String,
-        @Field("userId2") userId2: String,
-    ): Call<TradeRequestResponse>
+        @Field("itemId1") itemIdSeller: String,
+        @Field("itemId2") itemIdBuyer: String,
+        @Field("userId1") userIdSeller: String,
+        @Field("userId2") userIdBuyer: String,
+    ): Call<PostTradeRequestResponse>
 
     @FormUrlEncoded
     @PATCH("trade-request/{trade_id}/confirm")
@@ -130,11 +132,11 @@ interface ApiService {
         @Field("trade_id") tradeId: Int,
         @Field("userId") userId: String,
         @Field("confirmed") confirmed: Boolean
-    ): Call<TradeRequestResponse>
+    ): Call<ConfirmTradeRequestResponse>
 
     @GET("trade-request/{trade_id}")
     fun getTradeRequest(
         @Header("Authorization") token: String,
         @Field("trade_id") tradeId: Int
-    ): Call<TradeRequestResponse>
+    ): Call<GetTradeRequestResponse>
 }
