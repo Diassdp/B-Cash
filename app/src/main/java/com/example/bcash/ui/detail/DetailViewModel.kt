@@ -27,4 +27,10 @@ class DetailViewModel(private val repository: Repository) : ViewModel() {
             repository.deleteWishlist(token, userId, productId)
         }
     }
+
+    fun deleteInventory(token: String, userId: String, productId: String) {
+        viewModelScope.launch {
+            repository.deleteInventory(token, userId, productId)
+        }
+    }
 }

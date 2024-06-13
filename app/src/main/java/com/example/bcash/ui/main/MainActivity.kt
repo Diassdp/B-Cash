@@ -6,7 +6,6 @@ import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -15,8 +14,10 @@ import com.example.bcash.R
 import com.example.bcash.databinding.ActivityMainBinding
 import com.example.bcash.model.ViewModelFactory
 import com.example.bcash.ui.login.LoginActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityMainBinding
     private lateinit var factory: ViewModelFactory
     private var token = ""
@@ -29,16 +30,18 @@ class MainActivity : AppCompatActivity() {
         setupView()
         setupNavigation()
         setupToolbar()
+
+        handleIntentExtras()
     }
 
     private fun setupUser() {
         factory = ViewModelFactory.getInstance(this)
 
-        mainViewModel.getSession().observe(this@MainActivity) {
-            token = it.token
+        mainViewModel.getSession().observe(this@MainActivity) { session ->
+            token = session.token
             Log.d(TAG, "Token: $token")
-            Log.d(TAG, "statusLogin: ${it.statusLogin}")
-            if (!it.statusLogin) {
+            Log.d(TAG, "statusLogin: ${session.statusLogin}")
+            if (!session.statusLogin) {
                 startActivity(Intent(this@MainActivity, LoginActivity::class.java))
                 finish()
             }
@@ -66,21 +69,12 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
         navView.setOnNavigationItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.navigation_dashboard,
-                R.id.navigation_shop,
-                R.id.navigation_bartertrade,
-                R.id.navigation_favorite,
-                R.id.navigation_profile -> {
-                    menuItem.isChecked = true
-                    navigateTo(menuItem.itemId)
-                    true
-                }
-                else -> false
-            }
+            menuItem.isChecked = true
+            navigateTo(menuItem.itemId)
+            true
         }
     }
-    
+
     private fun setupToolbar() {
         findViewById<ImageView>(R.id.iv_logo).setOnClickListener {
             navigateTo(R.id.navigation_dashboard)
@@ -109,7 +103,15 @@ class MainActivity : AppCompatActivity() {
         navController.navigate(fragmentId)
     }
 
+    private fun handleIntentExtras() {
+        if (intent.hasExtra(EXTRA_FRAGMENT_ID)) {
+            val fragmentId = intent.getIntExtra(EXTRA_FRAGMENT_ID, 0)
+            navigateTo(fragmentId)
+        }
+    }
+
     companion object {
         private const val TAG = "MainActivity"
+        const val EXTRA_FRAGMENT_ID = "fragment_id"
     }
 }

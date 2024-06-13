@@ -1,9 +1,10 @@
 package com.example.bcash.ui.detail
 
 import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.example.bcash.databinding.ActivityDetailBinding
 import com.example.bcash.databinding.ActivityDetailInventoryBinding
 import com.example.bcash.model.ViewModelFactory
 import com.example.bcash.service.response.data.ProductItem
@@ -12,15 +13,21 @@ import java.util.Locale
 
 class DetailInventoryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailInventoryBinding
+    private lateinit var factory: ViewModelFactory
+    private lateinit var data: ProductItem
+    private val viewModel: DetailViewModel by viewModels { factory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupView()
+        setupData() // Make sure data is set up before calling insertData
+        setupListener()
         insertData()
     }
 
     private fun setupView(){
         binding = ActivityDetailInventoryBinding.inflate(layoutInflater)
+        factory = ViewModelFactory.getInstance(this)
         setContentView(binding.root)
 
         supportActionBar?.apply {
@@ -29,8 +36,37 @@ class DetailInventoryActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupData() {
+        data = intent.getParcelableExtra(EXTRA_DATA) ?: run {
+            showToast("No product data found")
+            finish()
+            return
+        }
+    }
+
+    private fun setupListener(){
+        binding.apply {
+            btnRemove.setOnClickListener {
+                removeFromInventory()
+            }
+        }
+    }
+
+    private fun removeFromInventory(){
+        viewModel.getSession().observe(this@DetailInventoryActivity){
+            viewModel.deleteWishlist(it.token, it.userId, data.id)
+        }
+
+        viewModel.wishlistResponse.observe(this@DetailInventoryActivity){
+            if (it.error != true){
+                showToast("Product has been removed from wishlist")
+            } else {
+                showToast("Failed to add product to wishlist")
+            }
+        }
+    }
+
     private fun insertData() {
-        val data = intent.getParcelableExtra<ProductItem>(EXTRA_DATA) as ProductItem
         binding.apply {
             tvNamePro.text = data.name
             tvDesc.text = data.description
@@ -43,6 +79,10 @@ class DetailInventoryActivity : AppCompatActivity() {
                 .fitCenter()
                 .into(ivProduct)
         }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun formatPrice(price: Int): String {

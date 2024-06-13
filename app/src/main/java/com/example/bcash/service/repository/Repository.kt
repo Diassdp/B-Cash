@@ -19,6 +19,7 @@ import com.example.bcash.service.response.AddProductResponse
 import com.example.bcash.service.response.AddToWishlistResponse
 import com.example.bcash.service.response.ConfirmTradeRequestResponse
 import com.example.bcash.service.response.DeleteFromWishlistResponse
+import com.example.bcash.service.response.DeleteInventoryResponse
 import com.example.bcash.service.response.GetInventoryResponse
 import com.example.bcash.service.response.GetProductResponse
 import com.example.bcash.service.response.GetProfileResponse
@@ -68,6 +69,9 @@ class Repository(private val context: Context, private val preferences: SessionP
 
     private val _getInventoryResponse = MutableLiveData<GetInventoryResponse>()
     val getInventoryResponse: LiveData<GetInventoryResponse> = _getInventoryResponse
+
+    private val _deleteInventoryResponse = MutableLiveData<DeleteInventoryResponse>()
+    val deleteInventoryResponse: LiveData<DeleteInventoryResponse> = _deleteInventoryResponse
 
     private val _getWishlistResponse = MutableLiveData<GetWishlistResponse>()
     val getWishlistResponse: LiveData<GetWishlistResponse> = _getWishlistResponse
@@ -279,10 +283,12 @@ class Repository(private val context: Context, private val preferences: SessionP
                 withContext(Dispatchers.Main) {
                     toggleLoading(false)
                     if (response.isSuccessful) {
+                        Log.d("Repository", "getProfile onResponse: ${response.body()}")
                         _getProfileResponse.value = response.body()
                     } else {
                         val message = extractErrorMessage(response)
                         _getProfileResponse.value = GetProfileResponse(Profile(id = "", name = "", email = "", phone = "", address = ""), error = true, message = message)
+                        showToast(message)
                         Log.e("Repository", "getProfile onResponse: ${response.message()}, ${response.code()} $message")
                     }
                 }
@@ -295,6 +301,7 @@ class Repository(private val context: Context, private val preferences: SessionP
                         t.message.toString()
                     }
                     _getProfileResponse.value = GetProfileResponse(Profile(id = "", name = "", email = "", phone = "", address = ""), error = true, message = message)
+                    showToast(message)
                     Log.e("Repository", "getProfile onFailure: $message")
                 }
             }
@@ -381,16 +388,50 @@ class Repository(private val context: Context, private val preferences: SessionP
         })
     }
 
+    fun deleteInventory(token: String, userId: String, productId: String) {
+        toggleLoading(true)
+        val client = api.deleteUserInventory(token, userId, productId)
+
+        client.enqueue(object : Callback<DeleteInventoryResponse> {
+            override fun onResponse(call: Call<DeleteInventoryResponse>, response: Response<DeleteInventoryResponse>) {
+                toggleLoading(false)
+                if (response.isSuccessful) {
+                    _deleteInventoryResponse.value = response.body()
+                    showToast("Product Removed from Wishlist")
+                } else {
+                    val message = extractErrorMessage(response)
+                    _deleteInventoryResponse.value = DeleteInventoryResponse(error = true, message = message)
+                    showToast(message)
+                }
+            }
+
+            override fun onFailure(call: Call<DeleteInventoryResponse>, t: Throwable) {
+                toggleLoading(false)
+                val message = t.message ?: "Unknown error occurred"
+                _deleteInventoryResponse.value = DeleteInventoryResponse(error = true, message = message)
+                showToast(message)
+            }
+        })
+    }
+
 
     suspend fun getInventory(token: String, userId: String): GetInventoryResponse {
         toggleLoading(true)
         return try {
             val response = api.getUserInventory(token, userId)
             toggleLoading(false)
-            val responseBody = response.body()
-            val result = GetInventoryResponse(inventory = responseBody?.inventory ?: emptyList(), error = false, message = "")
-            _getInventoryResponse.postValue(result)
-            result
+            if (response.isSuccessful) {
+                Log.d("Repository", "getProfile onResponse: ${response.body()}")
+                val responseBody = response.body()
+                val result = GetInventoryResponse(inventory = responseBody?.inventory ?: emptyList(), error = false, message = "")
+                _getInventoryResponse.postValue(result)
+                result
+            } else {
+                val message = extractErrorMessage(response)
+                val result = GetInventoryResponse(inventory = emptyList(), error = true, message = message)
+                _getInventoryResponse.postValue(result)
+                result
+            }
         } catch (e: Exception) {
             toggleLoading(false)
             val message = if (e is UnknownHostException) {
@@ -399,12 +440,12 @@ class Repository(private val context: Context, private val preferences: SessionP
                 e.message ?: "Unknown error occurred"
             }
             showToast(message)
-            Log.e("Repository", "getWishlist onFailure: $message")
             val result = GetInventoryResponse(inventory = emptyList(), error = true, message = message)
             _getInventoryResponse.postValue(result)
             result
         }
     }
+
 
     fun getProduct(): LiveData<PagingData<ProductItem>> {
         return Pager(config = PagingConfig(pageSize = 5), pagingSourceFactory = {

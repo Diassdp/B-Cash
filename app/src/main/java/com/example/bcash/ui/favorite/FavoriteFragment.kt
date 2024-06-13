@@ -46,7 +46,6 @@ class FavoriteFragment : Fragment() {
     private fun setupViewModel() {
         viewModel.getSession().observe(viewLifecycleOwner) { session ->
             session?.let {
-                Log.e("FavoriteFragment","Starting Fetching")
                 viewModel.getWishlist(it.token, it.userId)
             }
         }

@@ -4,6 +4,7 @@ import com.example.bcash.service.response.AddProductResponse
 import com.example.bcash.service.response.AddToWishlistResponse
 import com.example.bcash.service.response.ConfirmTradeRequestResponse
 import com.example.bcash.service.response.DeleteFromWishlistResponse
+import com.example.bcash.service.response.DeleteInventoryResponse
 import com.example.bcash.service.response.GetInventoryResponse
 import com.example.bcash.service.response.GetProductResponse
 import com.example.bcash.service.response.GetProfileResponse
@@ -114,6 +115,13 @@ interface ApiService {
         @Header("authorization") token: String,
         @Query("userId") userId: String
     ): Response<GetInventoryResponse>
+
+    @DELETE("inventory")
+    fun deleteUserInventory(
+        @Header("authorization") token: String,
+        @Query("userId") userId: String,
+        @Query("productId") productId: String
+    ): Call<DeleteInventoryResponse>
 
     @FormUrlEncoded
     @POST("trade-request")

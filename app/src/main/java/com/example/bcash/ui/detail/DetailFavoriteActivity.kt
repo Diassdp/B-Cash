@@ -1,20 +1,18 @@
 package com.example.bcash.ui.detail
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
 import com.example.bcash.R
-import com.example.bcash.databinding.ActivityDetailBinding
 import com.example.bcash.databinding.ActivityDetailFavoriteBinding
 import com.example.bcash.model.ViewModelFactory
 import com.example.bcash.service.response.data.ProductItem
 import com.example.bcash.ui.bartertrade.transaction.TransactionActivity
+import com.example.bcash.ui.main.MainActivity
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -31,7 +29,7 @@ class DetailFavoriteActivity : AppCompatActivity() {
         setupListener()
     }
 
-    private fun setupView(){
+    private fun setupView() {
         binding = ActivityDetailFavoriteBinding.inflate(layoutInflater)
         factory = ViewModelFactory.getInstance(this)
         setContentView(binding.root)
@@ -46,11 +44,11 @@ class DetailFavoriteActivity : AppCompatActivity() {
         insertData()
     }
 
-    private fun setupListener(){
+    private fun setupListener() {
         binding.apply {
-//            btnTrade.setOnClickListener {
-//                trade()
-//            }
+            btnTrade.setOnClickListener {
+                trade()
+            }
 
             btnRemove.setOnClickListener {
                 deleteWishlistItems()
@@ -58,26 +56,37 @@ class DetailFavoriteActivity : AppCompatActivity() {
         }
     }
 
-    private fun trade(){
+    private fun trade() {
         val intent = Intent(this@DetailFavoriteActivity, TransactionActivity::class.java)
         intent.putExtra(TransactionActivity.EXTRA_DATA, data)
         startActivity(intent)
         finish()
     }
 
-    private fun deleteWishlistItems(){
-        viewModel.getSession().observe(this@DetailFavoriteActivity){
-            viewModel.deleteWishlist(it.token,it.userId, data.id)
+    private fun deleteWishlistItems() {
+        viewModel.getSession().observe(this@DetailFavoriteActivity) {
+            viewModel.deleteWishlist(it.token, it.userId, data.id)
         }
 
-        viewModel.wishlistResponse.observe(this@DetailFavoriteActivity){
-            if (it.error != true){
+        viewModel.wishlistResponse.observe(this@DetailFavoriteActivity) {
+            if (it.error != true) {
                 showToast("Product has been removed from wishlist")
+                moveToWishlist()
+
             } else {
-                showToast("Failed to add product to wishlist")
+                showToast("Failed to remove product from wishlist")
             }
         }
     }
+
+    private fun moveToWishlist() {
+//        val intent = Intent(this@DetailFavoriteActivity, MainActivity::class.java).apply {
+//            putExtra(MainActivity.EXTRA_FRAGMENT_ID, R.id.navigation_favorite)
+//        }
+//        startActivity(intent)
+        finish()
+    }
+
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
