@@ -10,6 +10,7 @@ import com.example.bcash.databinding.ActivityDetailBinding
 import com.example.bcash.model.ViewModelFactory
 import com.example.bcash.service.response.data.ProductItem
 import com.example.bcash.ui.bartertrade.transaction.TransactionActivity
+import com.example.bcash.ui.login.LoginActivity
 import java.text.NumberFormat
 import java.util.Locale
 
@@ -48,8 +49,7 @@ class DetailActivity : AppCompatActivity() {
                     if (session.statusLogin) {
                         trade()
                     } else {
-                        showToast("Please login first")
-                        finish()
+                        binding.clLogin.visibility = android.view.View.VISIBLE
                     }
                 }
 
@@ -57,11 +57,19 @@ class DetailActivity : AppCompatActivity() {
                     if (session.statusLogin) {
                         wishlist()
                     } else {
-                        showToast("Please login first")
-                        finish()
+                        binding.clLogin.visibility = android.view.View.VISIBLE
                     }
                 }
             }
+        }
+
+        binding.clLogin.setOnClickListener {
+            binding.clLogin.visibility = android.view.View.GONE
+        }
+
+        binding.btnLogin.setOnClickListener {
+            startActivity(Intent(this@DetailActivity, LoginActivity::class.java))
+            finish()
         }
     }
 
