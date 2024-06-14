@@ -61,6 +61,7 @@ class TransactionActivity : AppCompatActivity(), InventoryTransactionAdapter.Ite
 
     private fun setupView() {
         binding = ActivityTransactionBinding.inflate(layoutInflater)
+        factory = ViewModelFactory.getInstance(this)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

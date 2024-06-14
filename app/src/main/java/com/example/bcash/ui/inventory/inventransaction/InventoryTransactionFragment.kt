@@ -52,9 +52,8 @@ class InventoryTransactionFragment : Fragment() {
 
     private fun setupView() {
         setupAdapter()
-//        dummyView()
-        setupViewModel()
         countInventoryItems()
+        setupViewModel()
     }
 
     private fun setupViewModel() {
@@ -95,4 +94,5 @@ class InventoryTransactionFragment : Fragment() {
         val inventoryItemsCount = adapter.itemCount
         binding.tvFavCount.text = "Inventory Items: $inventoryItemsCount"
     }
+
 }
