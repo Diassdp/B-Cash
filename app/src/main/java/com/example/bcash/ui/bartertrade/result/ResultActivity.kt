@@ -85,6 +85,9 @@ class ResultActivity : AppCompatActivity() {
         binding.btnPost.setOnClickListener {
             postProduct()
         }
+        binding.btnBack.setOnClickListener {
+            finish()
+        }
     }
 
     private fun postProduct() {
