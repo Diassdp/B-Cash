@@ -22,17 +22,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Bcash_toolbar">
 
-        <LinearLayout
-            android:id="@+id/ll_profile"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:layout_height="match_parent" >
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cl_content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/cl_image"
@@ -69,7 +69,7 @@
                     android:id="@+id/tv_name_pro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/poppins_regular"
                     android:text="Product Name"
@@ -179,7 +179,7 @@
                     android:id="@+id/btn_wishlist"
                     android:layout_width="165dp"
                     android:layout_height="43dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:background="@drawable/bg_lightblue1"
                     android:text="Wishlist"
@@ -194,7 +194,7 @@
                     android:id="@+id/btn_trade"
                     android:layout_width="165dp"
                     android:layout_height="43dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="20dp"
                     android:background="@drawable/bg_lightblue1"
                     android:text="Trade Barter"
                     android:textAllCaps="false"
@@ -206,7 +206,72 @@
                     app:layout_constraintStart_toEndOf="@+id/btn_wishlist"
                     app:layout_constraintTop_toTopOf="@+id/btn_wishlist" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_login"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="#E6000000"
+                android:padding="16dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="305dp"
+                    android:layout_height="317dp"
+                    android:background="@drawable/bg_searchbar"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_txt_login"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="You need to login first"
+                        android:textColor="@color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/img_lock" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_login"
+                        android:layout_width="200dp"
+                        android:layout_height="43dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/bg_lightblue1"
+                        android:text="Login"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:backgroundTint="@color/accent"
+                        app:iconPadding="0dp"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_txt_login"
+                        app:layout_constraintStart_toStartOf="@+id/tv_txt_login"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_txt_login" />
+
+                    <ImageView
+                        android:id="@+id/img_lock"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/img_lock" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
