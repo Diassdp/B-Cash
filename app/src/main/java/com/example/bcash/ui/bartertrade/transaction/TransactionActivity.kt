@@ -46,7 +46,7 @@ class TransactionActivity : AppCompatActivity(), InventoryTransactionAdapter.Ite
                 if (binding.checkboxSeller.isChecked.not() || binding.checkboxBuyer.isChecked.not()) {
                     showToast("Data Incomplete, Please Check Again")
                 } else {
-                    moveToEndPortal()
+                    actionTransaction()
                 }
             }
         }
@@ -120,7 +120,7 @@ class TransactionActivity : AppCompatActivity(), InventoryTransactionAdapter.Ite
         }
 
         viewModel.tradeRequestReponse.observe(this@TransactionActivity) { response ->
-            if (response.error != true) {
+            if (!response.error) {
                 showToast("Trade successfully")
                 moveToEndPortal()
             } else {

@@ -72,7 +72,7 @@ class LoginActivity : AppCompatActivity() {
     private fun loginAction() {
         binding.apply {
             loginViewModel.postLogin(
-                edtEmail.text.toString(),
+                edtEmail.text.toString().lowercase(),
                 edtPassword.text.toString()
             )
         }

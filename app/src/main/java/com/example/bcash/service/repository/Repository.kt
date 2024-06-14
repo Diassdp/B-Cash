@@ -372,11 +372,9 @@ class Repository(private val context: Context, private val preferences: SessionP
                 toggleLoading(false)
                 if (response.isSuccessful) {
                     _deleteWishlistResponse.value = response.body()
-                    showToast("Product Removed from Wishlist")
                 } else {
                     val message = extractErrorMessage(response)
                     _deleteWishlistResponse.value = DeleteFromWishlistResponse(error = true, message = message)
-                    showToast(message)
                 }
             }
 
@@ -398,11 +396,9 @@ class Repository(private val context: Context, private val preferences: SessionP
                 toggleLoading(false)
                 if (response.isSuccessful) {
                     _deleteInventoryResponse.value = response.body()
-                    showToast("Product Removed from Wishlist")
                 } else {
                     val message = extractErrorMessage(response)
                     _deleteInventoryResponse.value = DeleteInventoryResponse(error = true, message = message)
-                    showToast(message)
                 }
             }
 
@@ -422,7 +418,6 @@ class Repository(private val context: Context, private val preferences: SessionP
             val response = api.getUserInventory(token, userId)
             toggleLoading(false)
             if (response.isSuccessful) {
-                Log.d("Repository", "getProfile onResponse: ${response.body()}")
                 val responseBody = response.body()
                 val result = GetInventoryResponse(inventory = responseBody?.inventory ?: emptyList(), error = false, message = "")
                 _getInventoryResponse.postValue(result)

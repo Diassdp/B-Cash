@@ -44,7 +44,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun setupListeners() {
         binding.btnRegister.setOnClickListener {
             val name = binding.edtName.text.toString()
-            val email = binding.edtEmail.text.toString()
+            val email = binding.edtEmail.text.toString().lowercase()
             val password = binding.edtPassword.text.toString()
             val address = binding.edtAddress.text.toString()
             val phone = binding.edtPhone.text.toString()
