@@ -126,8 +126,8 @@ interface ApiService {
         @Header("authorization") token: String,
         @Field("itemId1") itemIdSeller: String,
         @Field("itemId2") itemIdBuyer: String,
-        @Field("userId1") userIdSeller: String,
-        @Field("userId2") userIdBuyer: String,
+        @Field("username1") userIdSeller: String,
+        @Field("username2") userIdBuyer: String,
     ): Call<PostTradeRequestResponse>
 
     @FormUrlEncoded

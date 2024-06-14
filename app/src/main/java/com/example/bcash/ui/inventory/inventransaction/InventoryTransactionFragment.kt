@@ -67,6 +67,8 @@ class InventoryTransactionFragment : Fragment() {
             if (response.error != true) {
                 response.inventory.let { list ->
                     adapter.submitData(viewLifecycleOwner.lifecycle, PagingData.from(list))
+                    var wishlistitemscount = response.inventory.size
+                    binding.tvFavCount.text = "Inventory Items: $wishlistitemscount"
                 }
             } else {
                 Log.e("InventoryFragment","Error fetching inventory: ${response.message}")
