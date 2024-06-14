@@ -54,7 +54,7 @@ class DetailInventoryActivity : AppCompatActivity() {
 
     private fun removeFromInventory(){
         viewModel.getSession().observe(this@DetailInventoryActivity){
-            viewModel.deleteWishlist(it.token, it.userId, data.id)
+            viewModel.deleteInventory(it.token, it.userId, data.id)
         }
 
         viewModel.wishlistResponse.observe(this@DetailInventoryActivity){

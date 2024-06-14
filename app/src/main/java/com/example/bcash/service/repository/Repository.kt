@@ -276,36 +276,28 @@ class Repository(private val context: Context, private val preferences: SessionP
         })
     }
 
-    suspend fun getProfile(token: String, userId: String) {
+    suspend fun getProfile(token: String, userId: String): GetProfileResponse {
         toggleLoading(true)
-        withContext(Dispatchers.IO) {
-            try {
-                val response = api.getProfile(token, userId)
-                withContext(Dispatchers.Main) {
-                    toggleLoading(false)
-                    if (response.isSuccessful) {
-                        Log.d("Repository", "getProfile onResponse: ${response.body()}")
-                        _getProfileResponse.value = response.body()
-                    } else {
-                        val message = extractErrorMessage(response)
-                        _getProfileResponse.value = GetProfileResponse(Profile(id = "", name = "", email = "", phone = "", address = ""), error = true, message = message)
-                        showToast(message)
-                        Log.e("Repository", "getProfile onResponse: ${response.message()}, ${response.code()} $message")
-                    }
-                }
-            } catch (t: Throwable) {
-                withContext(Dispatchers.Main) {
-                    toggleLoading(false)
-                    val message = if (t is UnknownHostException) {
-                        "No Internet Connection"
-                    } else {
-                        t.message.toString()
-                    }
-                    _getProfileResponse.value = GetProfileResponse(Profile(id = "", name = "", email = "", phone = "", address = ""), error = true, message = message)
-                    showToast(message)
-                    Log.e("Repository", "getProfile onFailure: $message")
-                }
+        return try {
+            val response = api.getProfile(token, userId)
+            toggleLoading(false)
+            val responseBody = response.body()
+            Log.d("Repository", "getProfile: $responseBody")
+            val result = GetProfileResponse(profile = responseBody?.profile ?: Profile(id = "", name = "", email = "", phone = "", address = ""), error = false, message = "")
+            _getProfileResponse.postValue(result)
+            result
+        } catch (e: Exception) {
+            toggleLoading(false)
+            val message = if (e is UnknownHostException) {
+                "No Internet Connection"
+            } else {
+                e.message ?: "Unknown error occurred"
             }
+            showToast(message)
+            Log.e("Repository", "getWishlist onFailure: $message")
+            val result = GetProfileResponse(Profile(id = "", name = "", email = "", phone = "", address = ""), error = true, message = message)
+            _getProfileResponse.postValue(result)
+            result
         }
     }
 

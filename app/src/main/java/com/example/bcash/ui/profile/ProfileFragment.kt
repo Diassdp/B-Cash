@@ -4,6 +4,7 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.bcash.R
 import com.example.bcash.databinding.FragmentProfileBinding
 import com.example.bcash.model.ViewModelFactory
-import com.example.bcash.ui.dashboard.DashboardFragmentDirections
 import com.example.bcash.ui.login.LoginActivity
 
 class ProfileFragment : Fragment() {
@@ -62,14 +62,15 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        viewModel.profile.observe(viewLifecycleOwner) { user ->
-            if (user != null) {
-                binding.tvName.text = user.profile.name
-                binding.tvMyname.text = user.profile.name
-                binding.tvEmail.text = user.profile.email
-                binding.tvMyemail.text = user.profile.name
-                binding.tvPhone.text = user.profile.phone
-                binding.tvAddress.text = user.profile.address
+        viewModel.profile.observe(viewLifecycleOwner) { response ->
+            Log.d("ProfileFragment", "setupViewModel: $response")
+            if (response.error == false) {
+                binding.tvName.text = response.profile.name
+                binding.tvMyname.text = response.profile.name
+                binding.tvEmail.text = response.profile.email
+                binding.tvMyemail.text = response.profile.email
+                binding.tvPhone.text = response.profile.phone
+                binding.tvAddress.text = response.profile.address
             }
         }
     }
