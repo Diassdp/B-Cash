@@ -33,13 +33,14 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setupView(){
         binding = ActivityDetailBinding.inflate(layoutInflater)
-        setupUser()
-        setupToolbar()
+        setContentView(binding.root)
+
         supportActionBar?.apply {
             setDisplayShowTitleEnabled(false)
             setDisplayHomeAsUpEnabled(true)
         }
-        setContentView(binding.root)
+        setupUser()
+        setupToolbar()
     }
 
     private fun setupUser() {
@@ -114,7 +115,7 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun navigateTo(fragmentId: Int) {
-        val intent = Intent(this, MainActivity::class.java).apply {
+        val intent = Intent(this@DetailActivity, MainActivity::class.java).apply {
             putExtra(MainActivity.EXTRA_FRAGMENT_ID, fragmentId)
         }
         startActivity(intent)
