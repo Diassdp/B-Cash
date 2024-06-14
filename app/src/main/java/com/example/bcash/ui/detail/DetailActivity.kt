@@ -71,13 +71,13 @@ class DetailActivity : AppCompatActivity() {
             startActivity(Intent(this@DetailActivity, LoginActivity::class.java))
             finish()
         }
+
     }
 
     private fun trade(){
         val intent = Intent(this@DetailActivity, TransactionActivity::class.java)
         intent.putExtra(TransactionActivity.EXTRA_DATA, data)
         startActivity(intent)
-        finish()
     }
 
     private fun wishlist(){

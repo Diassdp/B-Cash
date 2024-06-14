@@ -18,6 +18,7 @@ import com.example.bcash.service.response.data.ProductItem
 import com.example.bcash.ui.bartertrade.endportal.EndPortalActivity
 import com.example.bcash.ui.inventory.inventransaction.InventoryTransactionAdapter
 import com.example.bcash.ui.inventory.inventransaction.InventoryTransactionFragment
+import com.example.bcash.ui.main.MainActivity
 
 class TransactionActivity : AppCompatActivity(), InventoryTransactionAdapter.ItemClickListener {
     private lateinit var binding: ActivityTransactionBinding
@@ -49,8 +50,13 @@ class TransactionActivity : AppCompatActivity(), InventoryTransactionAdapter.Ite
                     actionTransaction()
                 }
             }
+
+            btnBack.setOnClickListener {
+                finish()
+            }
         }
     }
+
 
     private fun openInventoryFragment() {
         supportFragmentManager.commit {
