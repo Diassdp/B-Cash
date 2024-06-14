@@ -10,6 +10,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.bcash.R
 import com.example.bcash.databinding.ItemPopularBinding
 import com.example.bcash.service.response.data.ProductItem
+import java.text.NumberFormat
+import java.util.Locale
 
 class InventoryTransactionAdapter(private val itemClickListener: ItemClickListener) :
     PagingDataAdapter<ProductItem, InventoryTransactionAdapter.ListViewHolder>(DIFF_ITEM_CALLBACK) {
@@ -27,7 +29,7 @@ class InventoryTransactionAdapter(private val itemClickListener: ItemClickListen
         fun bind(data: ProductItem) {
             binding.apply {
                 tvName.text = data.name
-                tvPrice.text = data.price.toString()
+                tvPrice.text = data.price?.let { formatPrice(it.toInt()) }
                 Glide.with(itemView.context)
                     .load(data.photo)
                     .fitCenter()
@@ -46,6 +48,11 @@ class InventoryTransactionAdapter(private val itemClickListener: ItemClickListen
 
     interface ItemClickListener {
         fun onItemClick(data: ProductItem)
+    }
+
+    private fun formatPrice(price: Int): String {
+        val format = NumberFormat.getNumberInstance(Locale("in", "ID"))
+        return "Rp" + format.format(price)
     }
 
     companion object {

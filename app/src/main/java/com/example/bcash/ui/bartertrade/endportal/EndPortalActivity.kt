@@ -1,7 +1,9 @@
 package com.example.bcash.ui.bartertrade.endportal
 
+import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -19,6 +21,7 @@ class EndPortalActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setupView()
         setupListeners()
+        playAnimation()
     }
 
     private fun setupView(){
@@ -35,5 +38,15 @@ class EndPortalActivity : AppCompatActivity() {
         binding.btnHome.setOnClickListener {
             finish()
         }
+    }
+
+    private fun playAnimation() {
+        val imageViewAnimation = ObjectAnimator.ofFloat(binding.imgDone, View.TRANSLATION_X, -30f, 30f).apply {
+            duration = 6000
+            repeatCount = ObjectAnimator.INFINITE
+            repeatMode = ObjectAnimator.REVERSE
+        }
+        imageViewAnimation.start()
+
     }
 }

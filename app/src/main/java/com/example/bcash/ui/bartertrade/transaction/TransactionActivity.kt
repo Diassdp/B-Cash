@@ -19,6 +19,8 @@ import com.example.bcash.ui.bartertrade.endportal.EndPortalActivity
 import com.example.bcash.ui.inventory.inventransaction.InventoryTransactionAdapter
 import com.example.bcash.ui.inventory.inventransaction.InventoryTransactionFragment
 import com.example.bcash.ui.main.MainActivity
+import java.text.NumberFormat
+import java.util.Locale
 
 class TransactionActivity : AppCompatActivity(), InventoryTransactionAdapter.ItemClickListener {
     private lateinit var binding: ActivityTransactionBinding
@@ -81,7 +83,7 @@ class TransactionActivity : AppCompatActivity(), InventoryTransactionAdapter.Ite
         data?.let {
             binding.apply {
                 tvBuyerItem.text = it.name
-                tvBuyerPriceItem.text = it.price
+                tvBuyerPriceItem.text = it.price?.let { formatPrice(it.toInt()) }
                 tvUserBuyer.text = it.username
                 clChooseItem.visibility = View.GONE
 
@@ -98,7 +100,7 @@ class TransactionActivity : AppCompatActivity(), InventoryTransactionAdapter.Ite
         dataSeller?.let {
             binding.apply {
                 tvSellerItem.text = it.name
-                tvSellerPriceItem.text = it.price
+                tvSellerPriceItem.text = it.price?.let { formatPrice(it.toInt()) }
                 tvUserSeller.text = it.username
                 checkboxSeller.isChecked = true
 
@@ -140,6 +142,11 @@ class TransactionActivity : AppCompatActivity(), InventoryTransactionAdapter.Ite
         val intent = Intent(this@TransactionActivity, EndPortalActivity::class.java)
         startActivity(intent)
         finish()
+    }
+
+    private fun formatPrice(price: Int): String {
+        val format = NumberFormat.getNumberInstance(Locale("in", "ID"))
+        return "Rp" + format.format(price)
     }
 
     private fun showToast(message: String) {

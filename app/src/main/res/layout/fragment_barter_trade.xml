@@ -296,7 +296,7 @@
                 android:id="@+id/tv_txt_deal"
                 android:layout_width="289dp"
                 android:layout_height="67dp"
-                android:text="Both parties agree, you can return to the previous page and complete the transaction by selecting the checklist. "
+                android:text="Both parties agree, you can complete the transaction by selecting the checklist."
                 android:textColor="@color/black"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="@+id/tv_deal"

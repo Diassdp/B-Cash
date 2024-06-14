@@ -116,6 +116,9 @@
                         <ImageButton
                             android:id="@+id/btn_barang1"
                             style="@style/CategoryImageButtonStyle"
+                            android:background="@drawable/bg_lightblue1"
+                            android:padding="5dp"
+                            android:src="@drawable/img_tshirts"
                             android:contentDescription="barang 1" />
 
                         <TextView
@@ -132,6 +135,9 @@
                         <ImageButton
                             android:id="@+id/btn_barang2"
                             style="@style/CategoryImageButtonStyle"
+                            android:background="@drawable/bg_lightblue1"
+                            android:padding="5dp"
+                            android:src="@drawable/img_jeans"
                             android:contentDescription="barang 2" />
 
                         <TextView
@@ -148,6 +154,9 @@
                         <ImageButton
                             android:id="@+id/btn_barang3"
                             style="@style/CategoryImageButtonStyle"
+                            android:background="@drawable/bg_lightblue1"
+                            android:padding="5dp"
+                            android:src="@drawable/img_dresses"
                             android:contentDescription="barang 3" />
 
                         <TextView
@@ -164,12 +173,15 @@
                         <ImageButton
                             android:id="@+id/btn_barang4"
                             style="@style/CategoryImageButtonStyle"
+                            android:background="@drawable/bg_lightblue1"
+                            android:padding="5dp"
+                            android:src="@drawable/img_jackets"
                             android:contentDescription="barang 4" />
 
                         <TextView
                             android:id="@+id/tv_barang4"
                             style="@style/CategoryTextViewStyle"
-                            android:text="Barang 4" />
+                            android:text="Jackets" />
                     </LinearLayout>
 
                     <!-- Item 5 -->
@@ -180,12 +192,15 @@
                         <ImageButton
                             android:id="@+id/btn_barang5"
                             style="@style/CategoryImageButtonStyle"
+                            android:background="@drawable/bg_lightblue1"
+                            android:padding="5dp"
+                            android:src="@drawable/img_shirts"
                             android:contentDescription="barang 5" />
 
                         <TextView
                             android:id="@+id/tv_barang5"
                             style="@style/CategoryTextViewStyle"
-                            android:text="Barang 5" />
+                            android:text="Shirts" />
                     </LinearLayout>
 
                     <!-- Item 6 -->
@@ -196,12 +211,15 @@
                         <ImageButton
                             android:id="@+id/btn_barang6"
                             style="@style/CategoryImageButtonStyle"
+                            android:background="@drawable/bg_lightblue1"
+                            android:padding="5dp"
+                            android:src="@drawable/img_tops"
                             android:contentDescription="barang 6" />
 
                         <TextView
                             android:id="@+id/tv_barang6"
                             style="@style/CategoryTextViewStyle"
-                            android:text="Barang 6" />
+                            android:text="Tops" />
                     </LinearLayout>
 
                     <!-- Item 7 -->
@@ -212,12 +230,15 @@
                         <ImageButton
                             android:id="@+id/btn_barang7"
                             style="@style/CategoryImageButtonStyle"
+                            android:background="@drawable/bg_lightblue1"
+                            android:padding="5dp"
+                            android:src="@drawable/img_sweaters"
                             android:contentDescription="barang 7" />
 
                         <TextView
                             android:id="@+id/tv_barang7"
                             style="@style/CategoryTextViewStyle"
-                            android:text="Barang 7" />
+                            android:text="Sweaters" />
                     </LinearLayout>
 
                     <!-- Item 8 -->
@@ -228,12 +249,15 @@
                         <ImageButton
                             android:id="@+id/btn_barang8"
                             style="@style/CategoryImageButtonStyle"
+                            android:background="@drawable/bg_lightblue1"
+                            android:padding="5dp"
+                            android:src="@drawable/img_skirts"
                             android:contentDescription="barang 8" />
 
                         <TextView
                             android:id="@+id/tv_barang8"
                             style="@style/CategoryTextViewStyle"
-                            android:text="Barang 8" />
+                            android:text="Skirts" />
                     </LinearLayout>
                 </LinearLayout>
             </HorizontalScrollView>
@@ -307,13 +331,13 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
-                android:id="@+id/tv_inventory"
+                android:id="@+id/tv_recommendation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="12dp"
                 android:fontFamily="@font/poppins_regular"
-                android:text="Popular"
+                android:text="Recommendation"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -328,7 +352,7 @@
                 android:layout_marginEnd="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_inventory"
+                app:layout_constraintTop_toBottomOf="@id/tv_recommendation"
                 tools:listitem="@layout/item_popular" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
