@@ -2,6 +2,7 @@ package com.example.bcash.service.api
 
 import com.example.bcash.service.response.AddProductResponse
 import com.example.bcash.service.response.AddToWishlistResponse
+import com.example.bcash.service.response.AiProductResponse
 import com.example.bcash.service.response.ConfirmTradeRequestResponse
 import com.example.bcash.service.response.DeleteFromWishlistResponse
 import com.example.bcash.service.response.DeleteInventoryResponse
@@ -59,6 +60,13 @@ interface ApiService {
         @Part(value = "username") username: String,
         @Part(value = "userId") userId: String,
         ): Call<AddProductResponse>
+
+    @Multipart
+    @POST("product")
+    fun sendImageAI(
+        @Header("authorization") token: String,
+        @Part photo: MultipartBody.Part,
+        ): Call<AiProductResponse>
 
     @GET("product")
     suspend fun getAllProduct(

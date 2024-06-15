@@ -21,4 +21,13 @@ data class AddProductResponse (
     @field:SerializedName(value = "message")
     val message: String? = null
 )
+data class AiProductResponse (
+    @field:SerializedName(value = "error")
+    val error: Boolean? = true,
+
+    @field:SerializedName(value = "message")
+    val message: String? = null
+)
+
+
 
