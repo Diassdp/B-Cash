@@ -42,7 +42,6 @@ class DetailFavoriteActivity : AppCompatActivity() {
     private fun setupData() {
         data = intent.getParcelableExtra(EXTRA_DATA) ?: return
         insertData()
-        finish()
     }
 
     private fun setupListener() {

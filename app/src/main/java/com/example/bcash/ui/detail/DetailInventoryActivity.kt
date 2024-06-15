@@ -40,7 +40,6 @@ class DetailInventoryActivity : AppCompatActivity() {
     private fun setupData() {
         data = intent.getParcelableExtra(EXTRA_DATA) ?: run {
             showToast("No product data found")
-            finish()
             return
         }
     }
