@@ -1,5 +1,6 @@
 package com.example.bcash.ui.detail
 
+import android.app.Activity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -20,7 +21,7 @@ class DetailInventoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupView()
-        setupData() // Make sure data is set up before calling insertData
+        setupData()
         setupListener()
         insertData()
     }
@@ -57,11 +58,13 @@ class DetailInventoryActivity : AppCompatActivity() {
             viewModel.deleteInventory(it.token, it.userId, data.id)
         }
 
-        viewModel.wishlistResponse.observe(this@DetailInventoryActivity){
+        viewModel.inventoryResponse.observe(this@DetailInventoryActivity){
             if (it.error != true){
-                showToast("Product has been removed from wishlist")
+                showToast("Product has been removed from Inventory")
+                setResult(Activity.RESULT_OK)
+                finish()
             } else {
-                showToast("Failed to add product to wishlist")
+                showToast("Failed to add product to Inventory")
             }
         }
     }

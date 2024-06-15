@@ -42,6 +42,7 @@ class DetailFavoriteActivity : AppCompatActivity() {
     private fun setupData() {
         data = intent.getParcelableExtra(EXTRA_DATA) ?: return
         insertData()
+        finish()
     }
 
     private fun setupListener() {
@@ -73,7 +74,6 @@ class DetailFavoriteActivity : AppCompatActivity() {
                 showToast("Product has been removed from wishlist")
                 setResult(Activity.RESULT_OK)
                 finish()
-
             } else {
                 showToast("Failed to remove product from wishlist")
             }

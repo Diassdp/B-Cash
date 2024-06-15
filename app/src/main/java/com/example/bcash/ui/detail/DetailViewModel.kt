@@ -5,13 +5,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bcash.model.SessionModel
 import com.example.bcash.service.repository.Repository
+import com.example.bcash.service.response.GetInventoryResponse
 import com.example.bcash.service.response.GetWishlistResponse
 import kotlinx.coroutines.launch
 
 class DetailViewModel(private val repository: Repository) : ViewModel() {
     private val _wishlistResponse: LiveData<GetWishlistResponse> = repository.getWishlistResponse
+    private val _inventoryResponse: LiveData<GetInventoryResponse> = repository.getInventoryResponse
     val wishlistResponse: LiveData<GetWishlistResponse>
         get() = _wishlistResponse
+
+    val inventoryResponse: LiveData<GetInventoryResponse>
+        get() = _inventoryResponse
 
     fun postWishlist(token: String, userId: String, productId: String) {
         viewModelScope.launch {
