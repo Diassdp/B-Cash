@@ -127,7 +127,6 @@ class BarterTradeActivity : AppCompatActivity() {
     }
 
     private fun analyzeImage() {
-        val category = binding.dropdownCategory.text.toString()
         val condition = binding.dropdownCondition.text.toString()
         val uri = croppedImageUri
         if (uri != null && condition.isNotEmpty()) {
