@@ -51,7 +51,7 @@ class ResultActivity : AppCompatActivity() {
         val category = intent.getStringExtra("category")
         val condition = intent.getStringExtra("condition")
 
-        val categories = listOf("Dresses", "Jackets", "Jeans", "Shirts", "Skirts", "Sweaters", "Tops", "Tshirt")
+        val categories = listOf("Dresses", "Jackets", "Jeans", "Shirts", "Skirts", "Sweaters", "Tops", "Tshirt", "Misc")
         val conditions = listOf("Baru", "Bekas", "Rusak")
 
         if (imageUri != null) {
@@ -111,7 +111,7 @@ class ResultActivity : AppCompatActivity() {
                 resultViewModel.uploadProduct(session.token,name,description,condition,category,price,imageMultipart,session.name,session.userId)
 
                 resultViewModel.uploadProductResponse.observe(this@ResultActivity) { response ->
-                    if (response.error != true && !binding.edtName.text.isNullOrEmpty()) {
+                    if (response.error == false) {
                         showToast("Product uploaded successfully")
                         val intent = Intent(this@ResultActivity, MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK

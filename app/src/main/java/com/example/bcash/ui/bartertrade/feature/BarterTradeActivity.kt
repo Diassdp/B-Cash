@@ -17,7 +17,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.bumptech.glide.Glide
 import com.example.bcash.databinding.ActivityBarterTradeBinding
 import com.example.bcash.ui.bartertrade.result.ResultActivity
 import com.example.bcash.utils.getImageUri
@@ -29,7 +28,6 @@ import java.io.File
 import java.io.IOException
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
-import kotlin.math.min
 
 class BarterTradeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBarterTradeBinding
@@ -153,9 +151,9 @@ class BarterTradeActivity : AppCompatActivity() {
             for (i in 0 until imageSize) {
                 for (j in 0 until imageSize) {
                     val `val` = intValues[pixel++]
-                    byteBuffer.putFloat(((`val` shr 16) and 0xFF) / 255.0f)
-                    byteBuffer.putFloat(((`val` shr 8) and 0xFF) / 255.0f)
-                    byteBuffer.putFloat((`val` and 0xFF) / 255.0f)
+                    byteBuffer.putFloat(((`val` shr 16) and 0xFF) * (1f / 255))
+                    byteBuffer.putFloat(((`val` shr 8) and 0xFF) * (1f / 255))
+                    byteBuffer.putFloat((`val` and 0xFF) * (1f / 255))
                 }
             }
 
@@ -174,7 +172,7 @@ class BarterTradeActivity : AppCompatActivity() {
                 }
             }
             val classes = arrayOf("Dresses", "Jackets", "Jeans", "Shirts", "Skirts", "Sweaters", "Tops", "Tshirt")
-            val resultText = classes.getOrNull(maxPos) ?: "Unknown"
+            val resultText = classes.getOrNull(maxPos) ?: "Misc"
 
             showToast("Classified as: $resultText")
             var condition = binding.dropdownCondition.text.toString()
