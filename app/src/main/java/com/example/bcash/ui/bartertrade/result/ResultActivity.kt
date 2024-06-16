@@ -51,7 +51,7 @@ class ResultActivity : AppCompatActivity() {
         val category = intent.getStringExtra("category")
         val condition = intent.getStringExtra("condition")
 
-        val categories = listOf("Elektronik", "Pakaian", "Buku", "Peralatan Rumah Tangga")
+        val categories = listOf("Dresses", "Jackets", "Jeans", "Shirts", "Skirts", "Sweaters", "Tops", "Tshirt")
         val conditions = listOf("Baru", "Bekas", "Rusak")
 
         if (imageUri != null) {

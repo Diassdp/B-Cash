@@ -3,29 +3,39 @@ package com.example.bcash.ui.bartertrade.feature
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.bcash.databinding.ActivityBarterTradeBinding
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
+import com.example.bcash.databinding.ActivityBarterTradeBinding
 import com.example.bcash.ui.bartertrade.result.ResultActivity
 import com.example.bcash.utils.getImageUri
+import com.example.bcash.ml.Model1
 import com.yalantis.ucrop.UCrop
+import org.tensorflow.lite.DataType
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.io.File
+import java.io.IOException
+import java.nio.ByteBuffer
+import java.nio.ByteOrder
+import kotlin.math.min
 
 class BarterTradeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBarterTradeBinding
     private var currentImageUri: Uri? = null
     private var croppedImageUri: Uri? = null
+    private val imageSize = 150 // Update this to match your model's expected input size
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,12 +49,7 @@ class BarterTradeActivity : AppCompatActivity() {
         binding = ActivityBarterTradeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         // List of items for the dropdowns
-        val categories = listOf("Elektronik", "Pakaian", "Buku", "Peralatan Rumah Tangga")
         val conditions = listOf("Baru", "Bekas", "Rusak")
-
-        // Adapter for categories
-        val categoryAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, categories)
-        binding.dropdownCategory.setAdapter(categoryAdapter)
 
         // Adapter for conditions
         val conditionAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, conditions)
@@ -83,9 +88,9 @@ class BarterTradeActivity : AppCompatActivity() {
                 Log.d("BarterTradeActivity", "Image URI: $uri")
                 Log.d("BarterTradeActivity", "Cropped Image URI: $croppedImageUri")
                 showImage()
-                } ?: showToast("Failed to get image URI")
-            }
+            } ?: showToast("Failed to get image URI")
         }
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -125,11 +130,63 @@ class BarterTradeActivity : AppCompatActivity() {
         val category = binding.dropdownCategory.text.toString()
         val condition = binding.dropdownCondition.text.toString()
         val uri = croppedImageUri
-        if (uri != null && category.isNotEmpty() && condition.isNotEmpty()) {
-            moveToResult(category, condition, uri.toString())
-            Log.d("BarterTradeActivity", "Image URI: $uri")
+        if (uri != null && condition.isNotEmpty()) {
+            classifyImage(uri)
         } else {
             showToast("Please select an image, category, and condition")
+        }
+    }
+
+    private fun classifyImage(uri: Uri) {
+        try {
+            val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
+            val image = Bitmap.createScaledBitmap(bitmap, imageSize, imageSize, false)
+
+            val model: Model1 = Model1.newInstance(applicationContext)
+
+            val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, imageSize, imageSize, 3), DataType.FLOAT32)
+            val byteBuffer = ByteBuffer.allocateDirect(4 * imageSize * imageSize * 3)
+            byteBuffer.order(ByteOrder.nativeOrder())
+
+            val intValues = IntArray(imageSize * imageSize)
+            image.getPixels(intValues, 0, image.width, 0, 0, image.width, image.height)
+            var pixel = 0
+            for (i in 0 until imageSize) {
+                for (j in 0 until imageSize) {
+                    val `val` = intValues[pixel++]
+                    byteBuffer.putFloat(((`val` shr 16) and 0xFF) / 255.0f)
+                    byteBuffer.putFloat(((`val` shr 8) and 0xFF) / 255.0f)
+                    byteBuffer.putFloat((`val` and 0xFF) / 255.0f)
+                }
+            }
+
+            inputFeature0.loadBuffer(byteBuffer)
+
+            val outputs = model.process(inputFeature0)
+            val outputFeature0 = outputs.outputFeature0AsTensorBuffer
+
+            val confidences = outputFeature0.floatArray
+            var maxPos = 0
+            var maxConfidence = 0f
+            for (i in confidences.indices) {
+                if (confidences[i] > maxConfidence) {
+                    maxConfidence = confidences[i]
+                    maxPos = i
+                }
+            }
+            val classes = arrayOf("Dresses", "Jackets", "Jeans", "Shirts", "Skirts", "Sweaters", "Tops", "Tshirt")
+            val resultText = classes.getOrNull(maxPos) ?: "Unknown"
+
+            showToast("Classified as: $resultText")
+            var condition = binding.dropdownCondition.text.toString()
+
+            moveToResult(resultText, condition, uri.toString())
+
+            model.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
+            Log.e("BarterTradeActivity", "Image format not supported: ${e.message}")
+            showToast("Selected image format is not supported.")
         }
     }
 
@@ -152,11 +209,11 @@ class BarterTradeActivity : AppCompatActivity() {
     private val launcherIntentGallery = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
             val selectedImg = result.data?.data
-            selectedImg?.let{uri ->
+            selectedImg?.let { uri ->
                 currentImageUri = uri
                 startUCrop(uri)
                 showImage()
-            }?: Log.d("launcherIntentGallery", "Failed to get image URI")
+            } ?: Log.d("launcherIntentGallery", "Failed to get image URI")
         }
     }
 

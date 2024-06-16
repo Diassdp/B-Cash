@@ -46,6 +46,7 @@ android {
         viewBinding = true
         dataBinding = true
         buildConfig = true
+        mlModelBinding = true
     }
 
 }
@@ -65,6 +66,8 @@ dependencies {
 
     // Feature module Support
     implementation("androidx.navigation:navigation-dynamic-features-fragment:2.7.7")
+    implementation(libs.tensorflow.lite.support)
+    implementation(libs.tensorflow.lite.metadata)
 
     // Testing Navigation
     androidTestImplementation("androidx.navigation:navigation-testing:2.7.7")
