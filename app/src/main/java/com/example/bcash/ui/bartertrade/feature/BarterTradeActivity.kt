@@ -20,7 +20,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.bcash.databinding.ActivityBarterTradeBinding
 import com.example.bcash.ui.bartertrade.result.ResultActivity
 import com.example.bcash.utils.getImageUri
-import com.example.bcash.ml.Model1
+import com.example.bcash.ml.ModelImage
 import com.yalantis.ucrop.UCrop
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
@@ -33,7 +33,7 @@ class BarterTradeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBarterTradeBinding
     private var currentImageUri: Uri? = null
     private var croppedImageUri: Uri? = null
-    private val imageSize = 150 // Update this to match your model's expected input size
+    private val imageSize = 64 // Update this to match your model's expected input size
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -139,7 +139,7 @@ class BarterTradeActivity : AppCompatActivity() {
             val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
             val image = Bitmap.createScaledBitmap(bitmap, imageSize, imageSize, false)
 
-            val model: Model1 = Model1.newInstance(applicationContext)
+            val model: ModelImage = ModelImage.newInstance(applicationContext)
 
             val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, imageSize, imageSize, 3), DataType.FLOAT32)
             val byteBuffer = ByteBuffer.allocateDirect(4 * imageSize * imageSize * 3)
