@@ -155,15 +155,15 @@ class DashboardFragment : Fragment() {
             navigateToShopFragment(category, action)
         }
         binding.btnBarang6.setOnClickListener {
-            category = binding.tvBarang6.toString()
+            category = binding.tvBarang6.text.toString()
             navigateToShopFragment(category, action)
         }
         binding.btnBarang7.setOnClickListener {
-            category = binding.tvBarang7.toString()
+            category = binding.tvBarang7.text.toString()
             navigateToShopFragment(category, action)
         }
         binding.btnBarang8.setOnClickListener {
-            category = binding.tvBarang8.toString()
+            category = binding.tvBarang8.text.toString()
             navigateToShopFragment(category, action)
         }
     }
