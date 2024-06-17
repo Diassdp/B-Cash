@@ -87,7 +87,8 @@ class LoginActivity : AppCompatActivity() {
                         response.loginResult?.userId.toString(),
                         response.loginResult?.token.toString(),
                         response.loginResult?.name.toString(),
-                        true
+                        true,
+                        System.currentTimeMillis()
                     )
                 )
                 moveToMain()
@@ -103,7 +104,6 @@ class LoginActivity : AppCompatActivity() {
                 ).show()
             }
         }
-
     }
 
     private fun toastMessage(message: String) {

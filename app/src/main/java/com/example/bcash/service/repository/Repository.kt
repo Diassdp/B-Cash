@@ -457,6 +457,10 @@ class Repository(private val context: Context, private val preferences: SessionP
         return preferences.getSession().asLiveData()
     }
 
+    suspend fun isLogout(): Boolean {
+        return preferences.shouldLogout()
+    }
+
     suspend fun saveSession(session: SessionModel) {
         preferences.saveSession(session)
     }

@@ -54,10 +54,24 @@ class DashboardFragment : Fragment() {
     private fun setupView() {
         setupViewFlipper()
         setupAdapter()
+        sessionCheck()
         setupCategoryButtons()
         setupListener()
         playAnimation()
     }
+
+    private fun sessionCheck(){
+        viewModel.getSession().observe(viewLifecycleOwner){ session ->
+            if (session.statusLogin){
+                val shouldLogout = viewModel.isLogin()
+                if (shouldLogout){
+                    binding.clLogout.visibility = View.VISIBLE
+                    viewModel.logout()
+                }
+            }
+        }
+    }
+
 
     private fun setupAdapter() {
         recyclerView = binding.recyclerView
@@ -77,6 +91,7 @@ class DashboardFragment : Fragment() {
             binding.searchView.isIconified = false
             binding.searchView.requestFocus()
         }
+
         viewModel.getSession().observe(viewLifecycleOwner) { session ->
             binding.btnTradeBarter.setOnClickListener {
                 if (session.statusLogin) {
@@ -95,6 +110,14 @@ class DashboardFragment : Fragment() {
         binding.btnLogin.setOnClickListener {
             val intent = Intent(requireContext(), LoginActivity::class.java)
             startActivity(intent)
+        }
+
+        binding.btnOk.setOnClickListener{
+            binding.clLogout.visibility = View.GONE
+        }
+
+        binding.clLogout.setOnClickListener{
+            binding.clLogout.visibility = View.GONE
         }
 
         setupSwipeRefresh()
