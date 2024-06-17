@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_inventory"
+            android:layout_width="wrap_content"
+            android:layout_height="27dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Have a Question?"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_fav_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contact Us!"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/tv_inventory"
+            app:layout_constraintTop_toBottomOf="@+id/tv_inventory" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_header_md"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_profile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_fav_count">
+
+            <TextView
+                android:id="@+id/tv_md"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Android Developer"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_mdname1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Name : Dias Syahadatputra"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/tv_md"
+                app:layout_constraintTop_toBottomOf="@+id/tv_md" />
+
+            <TextView
+                android:id="@+id/tv_mdemail1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Email  : a295d4ky4431@bangkit.academy"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/tv_mdname1"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mdname1" />
+
+            <TextView
+                android:id="@+id/tv_mdname2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Name : Aufa Fakhri Tiyo Widodo"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/tv_mdemail1"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mdemail1" />
+
+            <TextView
+                android:id="@+id/tv_mdemail2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Email  : a295d4ky3989@bangkit.academy"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_mdname2"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mdname2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_header_cc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_profile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_header_md">
+
+            <TextView
+                android:id="@+id/tv_cc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Cloud Computing"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_myname1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Name : Askenas Salinding"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/tv_cc"
+                app:layout_constraintTop_toBottomOf="@+id/tv_cc" />
+
+            <TextView
+                android:id="@+id/tv_myemail1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Email  : c006d4ky0671@bangkit.academy"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/tv_myname1"
+                app:layout_constraintTop_toBottomOf="@+id/tv_myname1" />
+
+            <TextView
+                android:id="@+id/tv_myname2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Name : Dinda Desita Ayu"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/tv_myemail1"
+                app:layout_constraintTop_toBottomOf="@+id/tv_myemail1" />
+
+            <TextView
+                android:id="@+id/tv_myemail2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Email  : c324d4kx0520@bangkit.academy"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_myname2"
+                app:layout_constraintTop_toBottomOf="@+id/tv_myname2" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_header_ml"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/bg_profile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cl_header_cc">
+
+            <TextView
+                android:id="@+id/tv_ml"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Machine Learning"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_mlname1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Name : Yonathan"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/tv_ml"
+                app:layout_constraintTop_toBottomOf="@+id/tv_ml" />
+
+            <TextView
+                android:id="@+id/tv_mlemail1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Email  : m295d4ky3287@bangkit.academy"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/tv_mlname1"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mlname1" />
+
+            <TextView
+                android:id="@+id/tv_mlname2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Name : Yohana Muriana Sidabutar"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/tv_mlemail1"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mlemail1" />
+
+            <TextView
+                android:id="@+id/tv_mlemail2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Email  : m010d4kx3047@bangkit.academy"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/tv_mlname2"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mlname2" />
+
+            <TextView
+                android:id="@+id/tv_mlname3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Name : Amelia Adhariani"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="@+id/tv_mlemail2"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mlemail2" />
+
+            <TextView
+                android:id="@+id/tv_mlemail3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Email  : m198d4kx1406@bangkit.academy"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_mlname3"
+                app:layout_constraintTop_toBottomOf="@+id/tv_mlname3" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

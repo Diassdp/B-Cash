@@ -93,6 +93,12 @@ class ProfileFragment : Fragment() {
         binding.clInventory.setOnClickListener {
             findNavController().navigate(R.id.action_profileFragment_to_inventoryFragment)
         }
+        binding.clAboutapp.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_profile_to_aboutAppFragment)
+        }
+        binding.clHelp.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_profile_to_helpFragment)
+        }
         binding.btnLogin.setOnClickListener {
             val intent = Intent(requireContext(), LoginActivity::class.java)
             startActivity(intent)

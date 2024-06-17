@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+<androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -16,7 +22,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="16dp"
-            android:background="@drawable/bg_form"
+            android:background="@drawable/bg_profile"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -67,29 +73,27 @@
         <!-- Inventory Layout -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_inventory"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="70dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="16dp"
-            android:background="@drawable/bg_form"
+            android:layout_marginTop="10dp"
+            android:background="@color/primary_light"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cl_header">
+            app:layout_constraintTop_toBottomOf="@id/ll_profile">
             <!-- Add your inventory items here -->
 
             <TextView
                 android:id="@+id/tv_inventory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
+                android:layout_marginStart="20dp"
                 android:fontFamily="@font/poppins_regular"
                 android:text="My Inventory"
                 android:textColor="@color/black"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.511" />
 
@@ -97,13 +101,24 @@
                 android:id="@+id/imageView"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginStart="30dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.514"
                 app:srcCompat="@drawable/ic_inventory"
-                app:tint="@color/primary" />
+                app:tint="@color/accent" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_arrow" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- Profile Layout -->
@@ -116,7 +131,7 @@
             android:padding="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cl_inventory">
+            app:layout_constraintTop_toBottomOf="@id/cl_header">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -196,11 +211,106 @@
 
         </LinearLayout>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_aboutapp"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@color/primary_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_inventory">
+
+            <TextView
+                android:id="@+id/tv_aboutapp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="About App"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView2"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.511" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.514"
+                app:srcCompat="@drawable/ic_error"
+                app:tint="@color/accent" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_arrow" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_help"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@color/primary_light"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cl_aboutapp">
+
+            <TextView
+                android:id="@+id/tv_help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="Help"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.511" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.514"
+                app:srcCompat="@drawable/ic_help"
+                app:tint="@color/accent" />
+
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_arrow" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_logout"
             android:layout_width="200dp"
             android:layout_height="43dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="40dp"
             android:background="@drawable/bg_lightblue1"
             android:drawableEnd="@drawable/ic_logout"
             android:text="Logout"
@@ -209,10 +319,11 @@
             android:textSize="16sp"
             app:backgroundTint="@color/accent"
             app:iconPadding="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ll_profile" />
+            app:layout_constraintTop_toBottomOf="@+id/cl_help" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -221,7 +332,7 @@
         android:layout_height="0dp"
         android:background="#E6000000"
         android:padding="16dp"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -280,3 +391,4 @@
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
+</androidx.core.widget.NestedScrollView>
