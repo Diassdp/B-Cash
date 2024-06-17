@@ -421,6 +421,73 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_logout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="#E6000000"
+                android:padding="16dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="305dp"
+                    android:layout_height="317dp"
+                    android:layout_marginTop="200dp"
+                    android:background="@drawable/bg_searchbar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_txt_logout"
+                        android:layout_width="263dp"
+                        android:layout_height="46dp"
+                        android:layout_marginTop="15dp"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Your session has timed out. Kindly log in again"
+                        android:textColor="@color/black"
+                        android:textAlignment="center"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/img_locks" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_ok"
+                        android:layout_width="200dp"
+                        android:layout_height="43dp"
+                        android:layout_marginTop="15dp"
+                        android:background="@drawable/bg_lightblue1"
+                        android:text="Ok"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        app:backgroundTint="@color/accent"
+                        app:iconPadding="0dp"
+                        app:layout_constraintEnd_toEndOf="@+id/tv_txt_logout"
+                        app:layout_constraintStart_toStartOf="@+id/tv_txt_logout"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_txt_logout"/>
+
+                    <ImageView
+                        android:id="@+id/img_locks"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        android:layout_marginTop="20dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/img_timeout" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
