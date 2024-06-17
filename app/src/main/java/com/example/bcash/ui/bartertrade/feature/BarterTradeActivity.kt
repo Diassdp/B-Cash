@@ -47,7 +47,7 @@ class BarterTradeActivity : AppCompatActivity() {
         binding = ActivityBarterTradeBinding.inflate(layoutInflater)
         setContentView(binding.root)
         // List of items for the dropdowns
-        val conditions = listOf("Baru", "Bekas", "Rusak")
+        val conditions = listOf("New", "Used", "Like a new")
 
         // Adapter for conditions
         val conditionAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, conditions)

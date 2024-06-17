@@ -5,7 +5,6 @@
     <string name="password_length">Kolom ini tidak boleh kurang dari 8 karakter!</string>
     <string name="empty_field">Kolom ini tidak boleh kosong!</string>
     <string name="required_field">This field is required!</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="txt_dashboard">Home</string>
     <string name="txt_shop">Shop</string>
@@ -14,4 +13,30 @@
     <string name="txt_profile">Profile</string>
     <string name="search_hint">Enter Product Name</string>
     <string name="transition_image">transition_image</string>
+    <string name="txt_need_login">You need to login first</string>
+    <string name="txt_login">Login</string>
+
+    <!-- Portal Barter Trade -->
+    <string name="how_it_works">HOW IT WORKS</string>
+    <string name="packing">PACKING</string>
+    <string name="txt_packing">Prepare your used items that you want to post and take a photo of the item, then select the condition of the item and select analyze.</string>
+    <string name="analyze">ANALYZE</string>
+    <string name="txt_analyze">Our application will analyze the categories of goods that you have previously prepared.</string>
+    <string name="post">POST</string>
+    <string name="txt_post">Complete the Name, price, and Description of your item to provide information about the item, once everything is ready you can post the item and the item will go to your My Inventory.</string>
+    <string name="choose">CHOOSE</string>
+    <string name="txt_choose">Select or search for the item you want to exchange with your item, select Barter Trade to start the transaction.</string>
+    <string name="my_inventory">MY INVENTORY</string>
+    <string name="txt_my_inventory">Select an item in your My Inventory to trade with the item you want.</string>
+    <string name="deal">DEAL</string>
+    <string name="txt_deal">Both parties agree, you can complete the transaction by selecting the checklist.</string>
+    <string name="done">DONE</string>
+    <string name="txt_done">Congratulations! The transaction is complete and you get the item you want.</string>
+    <string name="get_started">Get Started</string>
+    <string name="txt_bartertrade">Barter Trade, an eco-friendly way to renew a zero-waste lifestyle</string>
+    <string name="txt_starts_here">STARTS HERE.</string>
+    <string name="txt_your_journey">YOUR JOURNEY</string>
+
+
+
 </resources>
