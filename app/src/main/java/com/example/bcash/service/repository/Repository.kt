@@ -192,6 +192,7 @@ class Repository(private val context: Context, private val preferences: SessionP
                 } else {
                     val message = extractErrorMessage(response)
                     _registerResponse.value = RegisterResponse(true, message)
+                    showToast(message)
                     Log.e("TAG", "postRegister onResponse: ${response.message()}, ${response.code()} $message")
                 }
             }
@@ -222,6 +223,7 @@ class Repository(private val context: Context, private val preferences: SessionP
                 } else {
                     val message = extractErrorMessage(response)
                     _loginResponse.value = LoginResponse(true, message)
+                    showToast(message)
                     Log.e("Repository", "postLogin onResponse: ${response.message()}, ${response.code()} $message")
                 }
             }
