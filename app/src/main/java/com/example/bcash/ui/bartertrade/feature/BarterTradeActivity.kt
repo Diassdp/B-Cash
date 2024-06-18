@@ -42,6 +42,8 @@ class BarterTradeActivity : AppCompatActivity() {
                 startUCrop(uri)
                 showImage()
             } ?: showToast("Failed to get image URI")
+        } else {
+            showToast("Failed to take picture")
         }
     }
 
@@ -86,8 +88,18 @@ class BarterTradeActivity : AppCompatActivity() {
 
     private fun startCamera() {
         if (checkPermission(Manifest.permission.CAMERA)) {
-            croppedImageUri = getImageUri(this)
-            launcherIntentCamera.launch(croppedImageUri!!)
+            try {
+                croppedImageUri = getImageUri(this)
+                val uri = croppedImageUri
+                if (uri != null) {
+                    launcherIntentCamera.launch(uri)
+                } else {
+                    showToast("Failed to create image URI")
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+                showToast("Error creating image file: ${e.message}")
+            }
         } else {
             requestPermission(Manifest.permission.CAMERA)
         }
@@ -156,9 +168,9 @@ class BarterTradeActivity : AppCompatActivity() {
             for (i in 0 until imageSize) {
                 for (j in 0 until imageSize) {
                     val `val` = intValues[pixel++]
-                    byteBuffer.putFloat(((`val` shr 16) and 0xFF) * (1f / 1))
-                    byteBuffer.putFloat(((`val` shr 8) and 0xFF) * (1f / 1))
-                    byteBuffer.putFloat((`val` and 0xFF) * (1f / 1))
+                    byteBuffer.putFloat(((`val` shr 16) and 0xFF) * (1f / 255))
+                    byteBuffer.putFloat(((`val` shr 8) and 0xFF) * (1f / 255))
+                    byteBuffer.putFloat((`val` and 0xFF) * (1f / 255))
                 }
             }
 
@@ -180,7 +192,7 @@ class BarterTradeActivity : AppCompatActivity() {
             val resultText = classes.getOrNull(maxPos) ?: "Misc"
 
             showToast("Classified as: $resultText")
-            var condition = binding.dropdownCondition.text.toString()
+            val condition = binding.dropdownCondition.text.toString()
 
             moveToResult(resultText, condition, uri.toString())
 
