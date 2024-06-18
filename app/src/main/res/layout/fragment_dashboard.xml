@@ -124,7 +124,7 @@
                         <TextView
                             android:id="@+id/tv_barang1"
                             style="@style/CategoryTextViewStyle"
-                            android:text="Tshirts" />
+                            android:text="Tshirt" />
                     </LinearLayout>
 
                     <!-- Item 2 -->
