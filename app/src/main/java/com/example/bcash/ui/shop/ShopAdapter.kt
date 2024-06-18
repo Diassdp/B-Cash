@@ -51,7 +51,7 @@ class ShopAdapter : PagingDataAdapter<ProductItem, ShopAdapter.ListViewHolder>(D
 
         private fun formatPrice(price: Int): String {
             val format = NumberFormat.getNumberInstance(Locale("in", "ID"))
-            return "Rp." + format.format(price)
+            return "Rp" + format.format(price)
         }
 
         private fun navigateToDetail(data: ProductItem) {
