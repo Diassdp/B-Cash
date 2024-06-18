@@ -313,7 +313,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/poppins_regular"
-            android:text="Don't have an account? Register"
+            android:text="Already have an account? Login"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/btn_register"

@@ -52,7 +52,7 @@ class ResultActivity : AppCompatActivity() {
         val condition = intent.getStringExtra("condition")
 
         val categories = listOf("Dresses", "Jackets", "Jeans", "Shirts", "Skirts", "Sweaters", "Tops", "Tshirt", "Misc")
-        val conditions = listOf("Baru", "Bekas", "Rusak")
+        val conditions = listOf("New", "Used", "Like a new")
 
         if (imageUri != null) {
             file = convertUriToFile(imageUri, this)
