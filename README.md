@@ -18,9 +18,9 @@
 - Dashboard\
   BCASH application main page, without logging in users can enter the application.
 - Log In\
-  Registered users can log into their accounts using their username and password. The sign-in process includes authentication to verify the user's credentials.
+  Registered users can log in to their accounts using their user email and password. 
 - Log Out\
-  The home screen serves as the main hub of the app, providing easy access to the main feature and guides.
+  Users can create a new account by entering their desired username, email address, user address, phone number, and password.
 - Shop\
   On this page there are product categories selected according to the dashboard page and then there are product search results via the search bar.
 - My Favorite\
