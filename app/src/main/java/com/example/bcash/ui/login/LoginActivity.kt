@@ -97,11 +97,6 @@ class LoginActivity : AppCompatActivity() {
                 Log.e(TAG, "Token: ${response.loginResult?.token}")
                 Log.e(TAG, "Username: ${response.loginResult?.name}")
                 Log.e(TAG, "UserId: ${response.loginResult?.userId}")
-                Toast.makeText(
-                    this@LoginActivity,
-                    "Login failed: ${response.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
             }
         }
     }
