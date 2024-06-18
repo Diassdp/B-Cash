@@ -18,9 +18,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.bcash.databinding.ActivityBarterTradeBinding
+import com.example.bcash.ml.Model2
 import com.example.bcash.ui.bartertrade.result.ResultActivity
 import com.example.bcash.utils.getImageUri
-import com.example.bcash.ml.ModelImage
 import com.yalantis.ucrop.UCrop
 import org.tensorflow.lite.DataType
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
@@ -33,27 +33,44 @@ class BarterTradeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBarterTradeBinding
     private var currentImageUri: Uri? = null
     private var croppedImageUri: Uri? = null
-    private val imageSize = 64 // Update this to match your model's expected input size
+    private val imageSize = 150 // Update this to match your model's expected input size
+
+    private val launcherIntentCamera = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
+        if (isSuccess) {
+            croppedImageUri?.let { uri ->
+                currentImageUri = uri
+                startUCrop(uri)
+                showImage()
+            } ?: showToast("Failed to get image URI")
+        }
+    }
+
+    private val launcherIntentGallery = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val selectedImg = result.data?.data
+            selectedImg?.let { uri ->
+                currentImageUri = uri
+                startUCrop(uri)
+                showImage()
+            } ?: Log.d("launcherIntentGallery", "Failed to get image URI")
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setupView()
-        setupListener()
+        setupListeners()
         setupPermissions()
     }
 
     private fun setupView() {
         binding = ActivityBarterTradeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        // List of items for the dropdowns
-        val conditions = listOf("New", "Used", "Like a new")
 
-        // Adapter for conditions
+        val conditions = listOf("New", "Used", "Like new")
         val conditionAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, conditions)
         binding.dropdownCondition.setAdapter(conditionAdapter)
 
-        // Set OnApplyWindowInsetsListener on the root view
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -61,42 +78,39 @@ class BarterTradeActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupListener() {
-        binding.btnGalery.setOnClickListener {
-            startGallery()
-        }
-        binding.btnPhoto.setOnClickListener {
-            startCamera()
-        }
-        binding.btnAnalyse.setOnClickListener {
-            analyzeImage()
-        }
+    private fun setupListeners() {
+        binding.btnGalery.setOnClickListener { startGallery() }
+        binding.btnPhoto.setOnClickListener { startCamera() }
+        binding.btnAnalyse.setOnClickListener { analyzeImage() }
     }
 
     private fun startCamera() {
-        croppedImageUri = getImageUri(this)
-        launcherIntentCamera.launch(croppedImageUri!!)
+        if (checkPermission(Manifest.permission.CAMERA)) {
+            croppedImageUri = getImageUri(this)
+            launcherIntentCamera.launch(croppedImageUri!!)
+        } else {
+            requestPermission(Manifest.permission.CAMERA)
+        }
     }
 
-    private val launcherIntentCamera = registerForActivityResult(ActivityResultContracts.TakePicture()) { isSuccess ->
-        if (isSuccess) {
-            croppedImageUri?.let { uri ->
-                currentImageUri = uri
-                startUCrop(uri)
-                Log.d("BarterTradeActivity", "Image URI: $uri")
-                Log.d("BarterTradeActivity", "Cropped Image URI: $croppedImageUri")
-                showImage()
-            } ?: showToast("Failed to get image URI")
-        }
+    private fun startGallery() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT).apply { type = "image/*" }
+        launcherIntentGallery.launch(Intent.createChooser(intent, "Choose a Picture"))
+    }
+
+    private fun startUCrop(sourceUri: Uri) {
+        val destinationUri = Uri.fromFile(File(cacheDir, "cropped_image_${System.currentTimeMillis()}.jpg"))
+        UCrop.of(sourceUri, destinationUri)
+            .withAspectRatio(1f, 1f)
+            .withMaxResultSize(1000, 1000)
+            .start(this)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
             val resultUri = UCrop.getOutput(data!!)
-            resultUri?.let {
-                showCroppedImage(resultUri)
-            } ?: showToast("Failed to crop image")
+            resultUri?.let { showCroppedImage(it) } ?: showToast("Failed to crop image")
         } else if (resultCode == UCrop.RESULT_ERROR) {
             val cropError = UCrop.getError(data!!)
             showToast("Crop error: ${cropError?.message}")
@@ -110,28 +124,19 @@ class BarterTradeActivity : AppCompatActivity() {
 
     private fun showImage() {
         croppedImageUri?.let { uri ->
-            Log.e("BarterTradeActivity", "Displaying image: $uri")
             binding.resultImage.setImageURI(uri)
         } ?: Log.d("BarterTradeActivity", "No image to display")
     }
 
-    private fun startUCrop(sourceUri: Uri) {
-        val fileName = "cropped_image_${System.currentTimeMillis()}.jpg"
-        val destinationUri = Uri.fromFile(File(cacheDir, fileName))
-        UCrop.of(sourceUri, destinationUri)
-            .withAspectRatio(1f, 1f)
-            .withMaxResultSize(1000, 1000)
-            .start(this)
-    }
-
     private fun analyzeImage() {
         val condition = binding.dropdownCondition.text.toString()
-        val uri = croppedImageUri
-        if (uri != null && condition.isNotEmpty()) {
-            classifyImage(uri)
-        } else {
-            showToast("Please select an image, category, and condition")
-        }
+        croppedImageUri?.let { uri ->
+            if (condition.isNotEmpty()) {
+                classifyImage(uri)
+            } else {
+                showToast("Please select a condition")
+            }
+        } ?: showToast("Please select an image")
     }
 
     private fun classifyImage(uri: Uri) {
@@ -139,7 +144,7 @@ class BarterTradeActivity : AppCompatActivity() {
             val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
             val image = Bitmap.createScaledBitmap(bitmap, imageSize, imageSize, false)
 
-            val model: ModelImage = ModelImage.newInstance(applicationContext)
+            val model: Model2 = Model2.newInstance(applicationContext)
 
             val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, imageSize, imageSize, 3), DataType.FLOAT32)
             val byteBuffer = ByteBuffer.allocateDirect(4 * imageSize * imageSize * 3)
@@ -151,9 +156,9 @@ class BarterTradeActivity : AppCompatActivity() {
             for (i in 0 until imageSize) {
                 for (j in 0 until imageSize) {
                     val `val` = intValues[pixel++]
-                    byteBuffer.putFloat(((`val` shr 16) and 0xFF) * (1f / 255))
-                    byteBuffer.putFloat(((`val` shr 8) and 0xFF) * (1f / 255))
-                    byteBuffer.putFloat((`val` and 0xFF) * (1f / 255))
+                    byteBuffer.putFloat(((`val` shr 16) and 0xFF) * (1f / 1))
+                    byteBuffer.putFloat(((`val` shr 8) and 0xFF) * (1f / 1))
+                    byteBuffer.putFloat((`val` and 0xFF) * (1f / 1))
                 }
             }
 
@@ -188,30 +193,12 @@ class BarterTradeActivity : AppCompatActivity() {
     }
 
     private fun moveToResult(category: String, condition: String, imageUri: String) {
-        Log.e("BarterTradeActivity", "Moving to ResultActivity with Category: $category, Condition: $condition, Image URI: $imageUri")
-        val intent = Intent(this, ResultActivity::class.java)
-        intent.putExtra("category", category)
-        intent.putExtra("condition", condition)
-        intent.putExtra("imageUri", imageUri)
-        startActivity(intent)
-    }
-
-    private fun startGallery() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.type = "image/*"
-        val chooser = Intent.createChooser(intent, "Choose a Picture")
-        launcherIntentGallery.launch(chooser)
-    }
-
-    private val launcherIntentGallery = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val selectedImg = result.data?.data
-            selectedImg?.let { uri ->
-                currentImageUri = uri
-                startUCrop(uri)
-                showImage()
-            } ?: Log.d("launcherIntentGallery", "Failed to get image URI")
+        val intent = Intent(this, ResultActivity::class.java).apply {
+            putExtra("category", category)
+            putExtra("condition", condition)
+            putExtra("imageUri", imageUri)
         }
+        startActivity(intent)
     }
 
     private fun setupPermissions() {
@@ -222,6 +209,14 @@ class BarterTradeActivity : AppCompatActivity() {
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
         ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun checkPermission(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestPermission(permission: String) {
+        ActivityCompat.requestPermissions(this, arrayOf(permission), REQUEST_CODE_PERMISSIONS)
     }
 
     private fun showToast(message: String) {

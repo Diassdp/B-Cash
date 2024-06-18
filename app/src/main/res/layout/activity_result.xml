@@ -131,7 +131,6 @@
                 android:layout_width="349dp"
                 android:layout_height="68dp"
                 android:layout_marginTop="5dp"
-                android:enabled="false"
                 app:hintTextColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
