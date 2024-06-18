@@ -3,7 +3,7 @@
 ## App Screens/Components
 
 <p align="center">
-    
+    <img src="https://github.com/Diassdp/B-Cash/assets/129014865/18424145-7945-4e0a-8788-6f88f2273e4d">
 </p>
 
 ## Wireframe and Prototype
