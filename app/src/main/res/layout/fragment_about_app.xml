@@ -66,16 +66,17 @@
 
         <TextView
             android:id="@+id/tv_decs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
+            android:layout_width="362dp"
+            android:layout_height="319dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/poppins_regular"
-            android:text="mau di isi apa saya tidak tahu"
+            android:text="Welcome to BCASH, your sustainable solution for thrifting! In an effort to combat the growing issue of textile waste, our app is designed to make buying, selling, and exchanging pre-owned clothing easier and more enjoyable than ever. By providing a platform dedicated to the thrifting experience, BCASH not only helps reduce waste but also fosters a community where sustainability and affordability are at the forefront.\n \nBCASH is an innovative mobile application designed to address these issues head-on. Our platform enables users to buy, sell, and exchange pre-owned clothing items easily and efficiently. By encouraging the reuse of clothing, we aim to significantly reduce textile waste and support sustainable fashion practices."
             android:textColor="@color/black"
             android:textSize="14sp"
+            android:justificationMode="inter_word"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -88,7 +89,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="10dp"
-        android:background="@drawable/bg_profile"
+        android:background="@drawable/bg_form"
         app:layout_constraintEnd_toEndOf="@+id/cl_decs"
         app:layout_constraintStart_toStartOf="@+id/cl_decs"
         app:layout_constraintTop_toBottomOf="@+id/cl_decs">
@@ -113,12 +114,15 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:fontFamily="@font/poppins_regular"
-            android:text="[link]"
+            android:text="https://github.com/Diassdp/B-Cash"
             android:textColor="@color/black"
             android:textSize="14sp"
+            android:autoLink="web"
+            android:linksClickable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/tv_txt_repo"
             app:layout_constraintTop_toBottomOf="@+id/tv_txt_repo" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
