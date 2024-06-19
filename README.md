@@ -1,10 +1,4 @@
-# Terralysis Mobile Development
-
-## Architecture
-
-<p align="center">
-    <img src="https://github.com/Diassdp/B-Cash/assets/129014865/c67cf265-95f3-46ce-a17d-c7d0875d6b24">
-</p>
+# B-Cash Mobile Development
 
 ## App Screens/Components
 
@@ -58,9 +52,11 @@
 ## Permission
 
 - Internet\
-  The app needs access to the internet to communicate with the server and retrieve data for various features, such as user authentication and soil analysis
+  The app needs access to the internet to communicate with the server and retrieve data for various features, such as posting product, getting product, and bartrade.
 - Camera\
-  The camera permission is required to allow the app to utilize the device's camera for capturing images of soil samples.
+  The camera permission is required to allow the app to utilize the device's camera for product images to be analyzed and posted for product posting.
+- Gallery\
+  The Gallery permission is required to allow the app to utilize the device's Gallery for product images to be analyzed and posted for product posting.
   
 ## Build With
 
@@ -103,7 +99,3 @@
 - Run the application
 
     Before running the application, Make sure that you have either connected your android device to your computer or set up an emulator as a target to run the application. Click on the “Run” button (green triangle) in the android studio’s toolbar to run the application. Now the application has been installed on the selected device or emulator
-
-
-
- 
