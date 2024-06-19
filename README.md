@@ -1,5 +1,11 @@
 # Terralysis Mobile Development
 
+## Architecture
+
+<p align="center">
+    <img src="https://github.com/Diassdp/B-Cash/assets/129014865/c67cf265-95f3-46ce-a17d-c7d0875d6b24">
+</p>
+
 ## App Screens/Components
 
 <p align="center">
