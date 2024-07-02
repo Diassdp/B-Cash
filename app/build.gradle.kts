@@ -27,11 +27,11 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            buildConfigField("String", "BASE_URL", "\"https://backend-y2k4wvszia-et.a.run.app/\"")
+            buildConfigField("String", "BASE_URL", "\"https://backend-uzee56iryq-et.a.run.app/\"")
         }
 
         debug {
-            buildConfigField("String", "BASE_URL", "\"https://backend-y2k4wvszia-et.a.run.app/\"")
+            buildConfigField("String", "BASE_URL", "\"https://backend-uzee56iryq-et.a.run.app/\"")
         }
     }
     compileOptions {
